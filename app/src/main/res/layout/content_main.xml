@@ -84,33 +84,8 @@
         app:layout_constraintStart_toEndOf="@+id/pswdLabel"
         app:layout_constraintTop_toBottomOf="@+id/userTextField" />
 
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
-        android:layout_marginLeft="152dp"
-        android:layout_marginTop="49dp"
-        android:layout_marginEnd="169dp"
-        android:layout_marginRight="169dp"
-        android:layout_marginBottom="228dp"
-        android:background="#1C1AB4"
-        android:text='"Login"'
-        android:textAllCaps="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#00F00A0A"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pswdTextField"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="Login"
-        tools:textColor="#FFFFFF" />
-
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/buddyIcon"
         android:layout_width="292dp"
         android:layout_height="194dp"
         android:layout_marginStart="59dp"
@@ -124,5 +99,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_launcher" />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="158dp"
+        android:layout_marginLeft="158dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginEnd="165dp"
+        android:layout_marginRight="165dp"
+        android:layout_marginBottom="209dp"
+        android:background="#1C1AB4"
+        android:text="Login"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pswdTextField" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

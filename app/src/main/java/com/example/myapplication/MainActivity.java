@@ -11,8 +11,12 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,18 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        ImageView loginImage = findViewById(R.id.buddyIcon);
+        loginImage.setOnClickListener(this);
+
+        Button loginButton = findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(this);
+
+        TextView userTextField = findViewById(R.id.userTextField);
+        userTextField.setOnClickListener(this);
+
+        TextView pswdTextField = findViewById(R.id.pswdTextField);
+        pswdTextField.setOnClickListener(this);
     }
 
     @Override
@@ -51,5 +67,35 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+
+            case R.id.loginButton:
+                //System.out.println("Login in initiated!!!!");
+                Toast.makeText(this,"Login initiated!!!",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.pswdTextField:
+                //System.out.println("Login in initiated!!!!");
+                Toast.makeText(this,"Password entered!!!",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.userTextField:
+                //System.out.println("Login in initiated!!!!");
+                Toast.makeText(this,"Username entered!!!",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.buddyIcon:
+                //System.out.println("Login in initiated!!!!");
+                Toast.makeText(this,"Welcome to Agenda Buddy!!!",Toast.LENGTH_SHORT).show();
+                break;
+
+             default:
+                 System.out.println("Somthing went wrong with one of the listeners.");
+
+        }
     }
 }
