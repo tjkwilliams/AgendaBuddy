@@ -28,7 +28,7 @@ import android.view.Menu;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class SideMenu extends AppCompatActivity implements View.OnClickListener{
+public class SideMenu extends AppCompatActivity{
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -64,15 +64,13 @@ public class SideMenu extends AppCompatActivity implements View.OnClickListener{
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send, R.id.nav_login)
+                R.id.nav_calendar, R.id.nav_notifications, R.id.nav_settings,
+                R.id.nav_help, R.id.nav_account)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-
 
     }
 
@@ -88,34 +86,5 @@ public class SideMenu extends AppCompatActivity implements View.OnClickListener{
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
-    }
-
-    @Override
-    public void onClick(View v) {
-        Toast.makeText(this,"Something was pressed!!!",Toast.LENGTH_SHORT).show();
-        Intent intent;
-        switch (v.getId()){
-            case R.id.loginFragButton:
-                intent = new Intent(this, LoginPage.class);
-                startActivity(intent);
-                break;
-            case R.id.nav_home:
-                //System.out.println("Login in initiated!!!!");
-                Toast.makeText(this,"Home pressed!!!",Toast.LENGTH_SHORT).show();
-                intent = new Intent(this, LoginPage.class);
-                startActivity(intent);
-                System.out.println("Home page selection was successful!");
-                /*
-                For later:
-
-                When login is pressed. We need to make that syncing doesn't actually happen unless
-                the user wants automatic updates.
-
-                 */
-                break;
-
-            default:
-                Toast.makeText(this, "Something went wrong. Try again.", Toast.LENGTH_SHORT).show();
-        }
     }
 }

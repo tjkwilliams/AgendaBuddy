@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.login;
+package com.example.myapplication.ui.account;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,35 +17,28 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.myapplication.LoginPage;
 import com.example.myapplication.R;
-import com.example.myapplication.SideMenu;
 
-public class LoginFragment extends Fragment implements View.OnClickListener{
+public class AccountFragment extends Fragment implements View.OnClickListener{
 
-    private LoginViewModel loginViewModel;
+    private AccountViewModel accountViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        loginViewModel =
-                ViewModelProviders.of(this).get(LoginViewModel.class);
-        View root = inflater.inflate(com.example.myapplication.R.layout.fragment_login, container, false);
-        final TextView textView = root.findViewById(R.id.text_login);
-        loginViewModel.getText().observe(this, new Observer<String>() {
+        accountViewModel =
+                ViewModelProviders.of(this).get(AccountViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_account, container, false);
+        final TextView textView = root.findViewById(R.id.text_account);
+        accountViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
         });
 
-        Button loginFragButton = (Button) root.findViewById(R.id.loginFragButton);
-        String text = "";
-        if(loginFragButton != null) {
-            loginFragButton.setOnClickListener(this);
-            text = "Successfully set Action Listener.";
-        } else {
-            text = "Action Listener not set.";
-        }
-        Toast.makeText(this.getContext(),text,Toast.LENGTH_SHORT).show();
+        Button loginFragButton = (Button) root.findViewById(R.id.accountNameButton);
+        loginFragButton.setOnClickListener(this);
+
 
         return root;
     }
@@ -55,5 +48,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         Intent intent = new Intent(this.getContext(), LoginPage.class);
         startActivity(intent);
+        Toast.makeText(this.getContext(),"Returned back to login!",Toast.LENGTH_SHORT).show();
     }
 }

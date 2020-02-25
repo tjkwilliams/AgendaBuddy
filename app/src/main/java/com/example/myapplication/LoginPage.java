@@ -1,6 +1,10 @@
 package com.example.myapplication;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -9,18 +13,27 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.text.InputType;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginPage extends AppCompatActivity implements View.OnClickListener {
 
+    private String userText, passwordText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        userText = "";
+        passwordText = "";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -52,6 +65,8 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
         TextView pswdTextField = findViewById(R.id.pswdTextField);
         pswdTextField.setOnClickListener(this);
+
+        //pswdTextField.setOn
     }
 
     @Override
@@ -76,20 +91,34 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
         return super.onOptionsItemSelected(item);
     }
 
+    public void hideKeyboard() {
+        /*
+        View v = this.getCurrentFocus();
+        if(v == null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
+        System.out.println("ODSUVBSIBU");
+
+         */
+    }
+
     @Override
     public void onClick(View v) {
+
         //Intent intent;
-        switch(v.getId()){
-            case R.id.loginFragButton:
+        switch(v.getId()) {
+            case R.id.accountNameButton:
                 Intent intent = new Intent(this, LoginPage.class);
                 startActivity(intent);
                 break;
 
             case R.id.loginButton:
                 //System.out.println("Login in initiated!!!!");
-                Toast.makeText(this,"Login initiated!!!",Toast.LENGTH_SHORT).show();
-                Intent intentt = new Intent(this, SideMenu.class);
-                startActivity(intentt);
+                Toast.makeText(this, "Login initiated!!!", Toast.LENGTH_SHORT).show();
+                Intent intents = new Intent(this, SideMenu.class);
+                startActivity(intents);
+                //System.out.println("ougyifuviuogfiuyf");
                 /*
                 For later:
 
@@ -101,13 +130,51 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
             case R.id.pswdTextField:
                 //System.out.println("Login in initiated!!!!");
-                Toast.makeText(this,"Password entered!!!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Password entered!!!", Toast.LENGTH_SHORT).show();
+                EditText text = (EditText) findViewById(R.id.userTextField);
+                userText = text.getText().toString();
+                EditText text2 = (EditText) findViewById(R.id.userTextField);
+                passwordText = text2.getText().toString();
+
+                hideKeyboard();
+
+                String upText = "Entered:\n" + userText + "\n" + passwordText;
+
+                Toast.makeText(this, upText, Toast.LENGTH_SHORT).show();
+
+
+                text.setText("");
+
+                // Not clearing text due to user still typing.
+                text2.setText("");
 
                 break;
 
             case R.id.userTextField:
                 //System.out.println("Login in initiated!!!!");
-                Toast.makeText(this,"Username entered!!!",Toast.LENGTH_SHORT).show();
+                EditText textt = (EditText) findViewById(R.id.userTextField);
+                String t = textt.getText().toString();
+
+                if(!t.isEmpty() && !userText.isEmpty()){
+                    if(!t.equals(userText)) {
+                        View view = findViewById(R.id.userTextField);
+                        Snackbar make = Snackbar.make(view, "Username updated.", Snackbar.LENGTH_LONG);
+                        make.setAction("Username Updated", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toast.makeText(v.getContext(), "Username updated.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        make.show();
+                    }
+                } else if(!t.isEmpty()){
+                    Toast.makeText(this,"Username entered!!!",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(v.getContext(), "Warning! Username is empty!.", Toast.LENGTH_SHORT).show();
+                }
+
+                userText = t;
+
                 break;
 
             case R.id.buddyIcon:
@@ -116,7 +183,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
                 break;
 
              default:
-                 System.out.println("Somthing went wrong with one of the listeners.");
+                 System.out.println("Something went wrong with one of the listeners.");
 
         }
     }

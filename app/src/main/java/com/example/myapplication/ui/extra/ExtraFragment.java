@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.tools;
+package com.example.myapplication.ui.extra;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.myapplication.R;
 
-public class ToolsFragment extends Fragment {
+public class ExtraFragment extends Fragment {
 
-    private ToolsViewModel toolsViewModel;
+    private ExtraViewModel extraViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        toolsViewModel =
-                ViewModelProviders.of(this).get(ToolsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_tools, container, false);
-        final TextView textView = root.findViewById(R.id.text_tools);
-        toolsViewModel.getText().observe(this, new Observer<String>() {
+        extraViewModel =
+                ViewModelProviders.of(this).get(ExtraViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_extra, container, false);
+        final TextView textView = root.findViewById(R.id.text_extra);
+        extraViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

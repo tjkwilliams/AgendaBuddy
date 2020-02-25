@@ -1,16 +1,16 @@
-package com.example.myapplication.ui.login;
+package com.example.myapplication.ui.account;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class LoginViewModel extends ViewModel {
+public class AccountViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public LoginViewModel() {
+    public AccountViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is login fragment (LoginViewModel.java");
+        mText.setValue("Where the user can decide to change accounts or simply sign out.");
     }
 
     public LiveData<String> getText() {
