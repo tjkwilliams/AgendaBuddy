@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Agenda Buddy</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_side_menu">Options</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -9,6 +9,7 @@
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="menu_home">Home</string>
+    <string name="menu_login">Login</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_tools">Tools</string>

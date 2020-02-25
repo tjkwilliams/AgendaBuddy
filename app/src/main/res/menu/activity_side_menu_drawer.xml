@@ -20,9 +20,13 @@
             android:id="@+id/nav_tools"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/menu_tools" />
+        <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/ic_menu_login"
+            android:title="@string/menu_login" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Other ISH">
         <menu>
             <item
                 android:id="@+id/nav_share"
