@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:background="#FC8600"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context=".LoginPage"
+    tools:showIn="@layout/login">
 
     <TextView
         android:id="@+id/userLabel"

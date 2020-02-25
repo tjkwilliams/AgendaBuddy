@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -16,12 +17,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginPage extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.login);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                //Toast.makeText(this,"",Toast.LENGTH_LONG);
+                //Toast.makeText(this,"Password entered!!!",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -76,11 +79,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.loginButton:
                 //System.out.println("Login in initiated!!!!");
                 Toast.makeText(this,"Login initiated!!!",Toast.LENGTH_SHORT).show();
+
+                /*
+                For later:
+
+                When login is pressed. We need to make that syncing doesn't actually happen unless
+                the user wants automatic updates.
+
+                 */
                 break;
 
             case R.id.pswdTextField:
                 //System.out.println("Login in initiated!!!!");
                 Toast.makeText(this,"Password entered!!!",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, SideMenu.class);
+                startActivity(intent);
                 break;
 
             case R.id.userTextField:
