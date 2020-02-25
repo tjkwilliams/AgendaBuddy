@@ -18,13 +18,43 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginPage extends AppCompatActivity implements View.OnClickListener {
-
+    private EditText name;
+    private EditText password;
+    private TextView info; //for displaying number incorrect attempts
+    private Button login;
+    private int count;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        name = (EditText)findViewById(R.id.userTextField);
+        password = (EditText)findViewById(R.id.pswdTextField);
+        info = (TextView)findViewById(R.id.tvInfo);
+        login = (Button)findViewById(R.id.loginButton);
+        //info.setText("Number of attempts remaining: 5")            ;
+        count = 5;
+        /*
+        Login.setOnClickListener( new View.OnClickListener(){
+
+                                      @Override
+                                      public void onClick(View v) {
+                                          validate(Name.getText())
+                                      }
+            });
+        */
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        login.setOnClickListener( new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                   validate(name.getText().toString(), password.getText().toString(), count);
+
+            }
+        });
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -37,6 +67,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
             }
         });
 
+        /*
         ImageView loginImage = findViewById(R.id.buddyIcon);
         loginImage.setOnClickListener(this);
 
@@ -48,6 +79,29 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
         TextView pswdTextField = findViewById(R.id.pswdTextField);
         pswdTextField.setOnClickListener(this);
+
+        
+         */
+    }
+
+    private void validate(String userName, String userPwd, int count){
+        if((userName.equals("Admin")) && (userPwd.equals("1234"))){
+            Intent intent = new Intent(this, SideMenu.class);
+            startActivity(intent);
+        }else{
+            count --;
+            info.setText("Number of attempts remaining: "+ String.valueOf(count));
+
+            if (count == 0) {
+                login.setEnabled(false); //if too many attempts, disable the button
+            }
+            /*
+            else{
+                Toast.makeText(this,count + " attempts left.",Toast.LENGTH_SHORT).show();
+            }
+
+             */
+        }
     }
 
     @Override
@@ -79,6 +133,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
             case R.id.loginButton:
                 //System.out.println("Login in initiated!!!!");
                 Toast.makeText(this,"Login initiated!!!",Toast.LENGTH_SHORT).show();
+                // validate(name.getText().toString(), password.getText().toString(), count);
 
                 /*
                 For later:
@@ -90,10 +145,13 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
                 break;
 
             case R.id.pswdTextField:
-                //System.out.println("Login in initiated!!!!");
+                Toast.makeText(this,"Password entered!!!",Toast.LENGTH_SHORT).show(); 
+                /*
                 Toast.makeText(this,"Password entered!!!",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, SideMenu.class);
                 startActivity(intent);
+                */
+
                 break;
 
             case R.id.userTextField:
