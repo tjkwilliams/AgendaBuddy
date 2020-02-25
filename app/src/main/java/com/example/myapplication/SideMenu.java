@@ -25,9 +25,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.Button;
 import android.widget.Toast;
 
-public class SideMenu extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+public class SideMenu extends AppCompatActivity implements View.OnClickListener{
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -59,7 +60,7 @@ public class SideMenu extends AppCompatActivity  implements NavigationView.OnNav
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -70,6 +71,8 @@ public class SideMenu extends AppCompatActivity  implements NavigationView.OnNav
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
 
     }
 
@@ -87,13 +90,19 @@ public class SideMenu extends AppCompatActivity  implements NavigationView.OnNav
                 || super.onSupportNavigateUp();
     }
 
-    public boolean onNavigationItemSelected(@NonNull MenuItem item){
+    @Override
+    public void onClick(View v) {
         Toast.makeText(this,"Something was pressed!!!",Toast.LENGTH_SHORT).show();
-        switch (item.getItemId()){
+        Intent intent;
+        switch (v.getId()){
+            case R.id.loginFragButton:
+                intent = new Intent(this, LoginPage.class);
+                startActivity(intent);
+                break;
             case R.id.nav_home:
                 //System.out.println("Login in initiated!!!!");
                 Toast.makeText(this,"Home pressed!!!",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, LoginPage.class);
+                intent = new Intent(this, LoginPage.class);
                 startActivity(intent);
                 System.out.println("Home page selection was successful!");
                 /*
@@ -108,6 +117,5 @@ public class SideMenu extends AppCompatActivity  implements NavigationView.OnNav
             default:
                 Toast.makeText(this, "Something went wrong. Try again.", Toast.LENGTH_SHORT).show();
         }
-        return true;
     }
 }

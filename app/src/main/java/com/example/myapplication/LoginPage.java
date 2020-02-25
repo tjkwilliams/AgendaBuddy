@@ -43,6 +43,10 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
         Button loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(this);
 
+        /*
+        Button loginFragButton = findViewById(R.id.loginFragButton);
+        loginFragButton.setOnClickListener(this);
+         */
         TextView userTextField = findViewById(R.id.userTextField);
         userTextField.setOnClickListener(this);
 
@@ -74,12 +78,18 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+        //Intent intent;
         switch(v.getId()){
+            case R.id.loginFragButton:
+                Intent intent = new Intent(this, LoginPage.class);
+                startActivity(intent);
+                break;
 
             case R.id.loginButton:
                 //System.out.println("Login in initiated!!!!");
                 Toast.makeText(this,"Login initiated!!!",Toast.LENGTH_SHORT).show();
-
+                Intent intentt = new Intent(this, SideMenu.class);
+                startActivity(intentt);
                 /*
                 For later:
 
@@ -92,8 +102,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
             case R.id.pswdTextField:
                 //System.out.println("Login in initiated!!!!");
                 Toast.makeText(this,"Password entered!!!",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, SideMenu.class);
-                startActivity(intent);
+
                 break;
 
             case R.id.userTextField:
