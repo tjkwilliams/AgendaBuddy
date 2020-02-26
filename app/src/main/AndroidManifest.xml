@@ -10,10 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MasterCalendar"
-            android:label="@string/title_activity_master_calendar"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
             android:name=".SideMenu"
             android:label="@string/title_activity_side_menu"
             android:theme="@style/AppTheme.NoActionBar">
