@@ -43,7 +43,6 @@ public class AccountFragment extends Fragment implements View.OnClickListener{
         return root;
     }
 
-
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this.getContext(), LoginPage.class);
