@@ -66,8 +66,8 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
         loginButton.setOnClickListener(this);
 
 
-        Button createAccountButton = findViewById(R.id.create_account);
-        createAccountButton.setOnClickListener(this);
+        //Button createAccountButton = findViewById(R.id.c);
+        //createAccountButton.setOnClickListener(this);
 
         //loginAccountButton.setOnClickListener(this);
 
@@ -150,7 +150,8 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
                  */
                 break;
 
-            case R.id.create_account:
+                /*
+            case R.id:
                 //Intent intent = new Intent(this, LoginPage.class);
                 //startActivity(intent);
 
@@ -168,6 +169,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
                 }
 
                 break;
+                */
 
             case R.id.pswdTextField:
                 //System.out.println("Login in initiated!!!!");
