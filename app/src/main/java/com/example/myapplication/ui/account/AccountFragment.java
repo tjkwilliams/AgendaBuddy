@@ -15,9 +15,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.myapplication.LoginPage;
+import com.example.myapplication.page.LoginPage;
 import com.example.myapplication.R;
 
+
+/**
+ *
+ *
+ * @author Timothy Williams
+ */
 public class AccountFragment extends Fragment implements View.OnClickListener{
 
     private AccountViewModel accountViewModel;
@@ -39,9 +45,11 @@ public class AccountFragment extends Fragment implements View.OnClickListener{
         Button loginFragButton = (Button) root.findViewById(R.id.accountNameButton);
         loginFragButton.setOnClickListener(this);
 
+        //TextView view = (TextView)findViewById(R.id.accountFragName);
 
         return root;
     }
+
 
     @Override
     public void onClick(View v) {

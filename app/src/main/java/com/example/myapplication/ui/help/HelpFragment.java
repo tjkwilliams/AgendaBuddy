@@ -14,6 +14,11 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.myapplication.R;
 
+/**
+ *
+ *
+ * @author Timothy Williams
+ */
 public class HelpFragment extends Fragment {
 
     private HelpViewModel helpViewModel;

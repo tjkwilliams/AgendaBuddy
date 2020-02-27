@@ -5,6 +5,10 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_account"
+            android:icon="@drawable/ic_menu_login"
+            android:title="@string/menu_account" />
+        <item
             android:id="@+id/nav_calendar"
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_calendar" />
@@ -30,14 +34,11 @@
 
     <item android:title="Other ISH">
         <menu>
-            <item
-                android:id="@+id/nav_account"
-                android:icon="@drawable/ic_menu_login"
-                android:title="@string/menu_account" />
+
             <item
                 android:id="@+id/nav_extra"
                 android:icon="@drawable/ic_menu_login"
-                android:title="@string/menu_extra" />
+                android:title="@string/menu_priority" />
         </menu>
     </item>
 

@@ -14,6 +14,11 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.myapplication.R;
 
+/**
+ *
+ *
+ * @author Timothy Williams
+ */
 public class ShareFragment extends Fragment {
 
     private ShareViewModel shareViewModel;
@@ -22,7 +27,7 @@ public class ShareFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         shareViewModel =
                 ViewModelProviders.of(this).get(ShareViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_extra, container, false);
+        View root = inflater.inflate(R.layout.fragment_prioritized, container, false);
         final TextView textView = root.findViewById(R.id.text_extra);
         shareViewModel.getText().observe(this, new Observer<String>() {
             @Override

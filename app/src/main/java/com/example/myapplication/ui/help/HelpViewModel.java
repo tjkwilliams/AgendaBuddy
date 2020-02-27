@@ -4,6 +4,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+/**
+ *
+ *
+ * @author Timothy Williams
+ */
 public class HelpViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;

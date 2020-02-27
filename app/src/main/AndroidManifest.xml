@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MasterCalendar"></activity>
         <activity
-            android:name=".SideMenu"
+            android:name=".page.MainPage"
             android:label="@string/title_activity_side_menu"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginPage"
+            android:name=".page.LoginPage"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.extra;
+package com.example.myapplication.ui.priority;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,15 +14,20 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.myapplication.R;
 
-public class ExtraFragment extends Fragment {
+/**
+ *
+ *
+ * @author Timothy Williams
+ */
+public class PriorityFragment extends Fragment {
 
-    private ExtraViewModel extraViewModel;
+    private PriorityViewModel extraViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         extraViewModel =
-                ViewModelProviders.of(this).get(ExtraViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_extra, container, false);
+                ViewModelProviders.of(this).get(PriorityViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_prioritized, container, false);
         final TextView textView = root.findViewById(R.id.text_extra);
         extraViewModel.getText().observe(this, new Observer<String>() {
             @Override

@@ -10,7 +10,7 @@ public class CalendarViewModel extends ViewModel {
 
     public CalendarViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is where the compacted version on\nthe calendar will go. Basically the view before the master calendar only showing the most events by priority.");
+        mText.setValue("This is where the compacted version on\nthe calendar will go. Basically the view before the master calendar only showing the most com.example.myapplication.events by priority.");
     }
 
     public LiveData<String> getText() {

@@ -1,25 +1,19 @@
-package com.example.myapplication;
+package com.example.myapplication.page;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 
+import com.example.myapplication.R;
+import com.example.myapplication.ui.account.Account;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.text.InputType;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,7 +22,15 @@ import android.widget.Toast;
 
 public class LoginPage extends AppCompatActivity implements View.OnClickListener {
 
+    /**
+     * The username and password entered in on the login page.
+     */
     private String userText, passwordText;
+
+    /**
+     * Account entity data that will be logged onto app.
+     */
+    private Account account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +58,9 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
         Button loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(this);
 
-        /*
-        Button loginFragButton = findViewById(R.id.loginFragButton);
-        loginFragButton.setOnClickListener(this);
-         */
+        //loginAccountButton.setOnClickListener(this);
+
+
         TextView userTextField = findViewById(R.id.userTextField);
         userTextField.setOnClickListener(this);
 
@@ -115,8 +116,13 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
             case R.id.loginButton:
                 //System.out.println("Login in initiated!!!!");
+
+                // Creates user account.
+                account = new Account(userText);
+
+
                 Toast.makeText(this, "Login initiated!!!", Toast.LENGTH_SHORT).show();
-                Intent intents = new Intent(this, SideMenu.class);
+                Intent intents = new Intent(this, MainPage.class);
                 startActivity(intents);
                 //System.out.println("ougyifuviuogfiuyf");
                 /*
@@ -133,7 +139,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
                 Toast.makeText(this, "Password entered!!!", Toast.LENGTH_SHORT).show();
                 EditText text = (EditText) findViewById(R.id.userTextField);
                 userText = text.getText().toString();
-                EditText text2 = (EditText) findViewById(R.id.userTextField);
+                EditText text2 = (EditText) findViewById(R.id.pswdTextField);
                 passwordText = text2.getText().toString();
 
                 hideKeyboard();
@@ -143,10 +149,10 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
                 Toast.makeText(this, upText, Toast.LENGTH_SHORT).show();
 
 
-                text.setText("");
+                //text.setText("");
 
                 // Not clearing text due to user still typing.
-                text2.setText("");
+                //text2.setText("");
 
                 break;
 
@@ -186,5 +192,14 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
                  System.out.println("Something went wrong with one of the listeners.");
 
         }
+    }
+
+    /**
+     * Prints a string as a Toast.
+     *
+     * @param s The string to print.
+     */
+    public void print(String s){
+        Toast.makeText(this,s,Toast.LENGTH_SHORT).show();
     }
 }
