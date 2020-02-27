@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.myapplication.R;
 import com.example.myapplication.ui.account.Account;
+import com.example.myapplication.ui.account.AccountMaster;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -20,6 +21,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Login activity that will get information necessary.
+ */
 public class LoginPage extends AppCompatActivity implements View.OnClickListener {
 
     /**
@@ -34,6 +38,9 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        AccountMaster.initialize();
+
         userText = "";
         passwordText = "";
         super.onCreate(savedInstanceState);
@@ -57,6 +64,10 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
         Button loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(this);
+
+
+        Button createAccountButton = findViewById(R.id.create_account);
+        createAccountButton.setOnClickListener(this);
 
         //loginAccountButton.setOnClickListener(this);
 
@@ -118,12 +129,17 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
                 //System.out.println("Login in initiated!!!!");
 
                 // Creates user account.
-                account = new Account(userText);
+                account = new Account(userText,passwordText);
+
+                boolean loginSuccessful = AccountMaster.login(account);
+
+                if(loginSuccessful){
+                    Toast.makeText(this, "Login initiated!!!", Toast.LENGTH_SHORT).show();
+                    Intent intents = new Intent(this, MainPage.class);
+                    startActivity(intents);
+                }
 
 
-                Toast.makeText(this, "Login initiated!!!", Toast.LENGTH_SHORT).show();
-                Intent intents = new Intent(this, MainPage.class);
-                startActivity(intents);
                 //System.out.println("ougyifuviuogfiuyf");
                 /*
                 For later:
@@ -134,13 +150,32 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
                  */
                 break;
 
-            case R.id.pswdTextField:
-                //System.out.println("Login in initiated!!!!");
-                Toast.makeText(this, "Password entered!!!", Toast.LENGTH_SHORT).show();
+            case R.id.create_account:
+                //Intent intent = new Intent(this, LoginPage.class);
+                //startActivity(intent);
+
                 EditText text = (EditText) findViewById(R.id.userTextField);
                 userText = text.getText().toString();
                 EditText text2 = (EditText) findViewById(R.id.pswdTextField);
                 passwordText = text2.getText().toString();
+
+                AccountMaster.createAccount(userText,passwordText);
+
+                if(AccountMaster.login(userText,passwordText)){
+                    Toast.makeText(this, "Account Created!!!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Create Account Failed!!!", Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+
+            case R.id.pswdTextField:
+                //System.out.println("Login in initiated!!!!");
+                Toast.makeText(this, "Password entered!!!", Toast.LENGTH_SHORT).show();
+                EditText text3 = (EditText) findViewById(R.id.userTextField);
+                userText = text3.getText().toString();
+                EditText text4 = (EditText) findViewById(R.id.pswdTextField);
+                passwordText = text4.getText().toString();
 
                 hideKeyboard();
 

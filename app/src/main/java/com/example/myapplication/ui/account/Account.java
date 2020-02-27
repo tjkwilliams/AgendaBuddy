@@ -20,7 +20,7 @@ public class Account {
     /**
      * Username of the account.
      */
-    private String username;
+    private String username, password;
 
     /**
      * MasterCalendar of account.
@@ -43,6 +43,7 @@ public class Account {
      */
     public Account(){
         username = "";
+        password = "";
         masterCalendar = new MasterCalendar();
         prioritizedEvents = new ArrayList<>(6);
     }
@@ -54,6 +55,19 @@ public class Account {
      */
     public Account(String u){
         username = u;
+        password = "";
+        masterCalendar = new MasterCalendar();
+        prioritizedEvents = new ArrayList<>(6);
+    }
+
+    /**
+     * Constructor for the data entity Account.
+     *
+     * @param u The username of the account.
+     */
+    public Account(String u, String pass){
+        username = u;
+        password = pass;
         masterCalendar = new MasterCalendar();
         prioritizedEvents = new ArrayList<>(6);
     }
@@ -73,6 +87,20 @@ public class Account {
     public String username(){ return username; }
 
     /**
+     * Changes the password of the account.
+     *
+     * @param s The name to change to.
+     */
+    public void setPassword(String s){ password = s; }
+
+    /**
+     * Getter for account password.
+     *
+     * @return Password of the account.
+     */
+    public String password(){ return password; }
+
+    /**
      * Sets the label that will be connected to the account.
      *
      * @param v The label holding the account username.
@@ -86,6 +114,14 @@ public class Account {
      * @return Returns the label with the account name.
      */
     public TextView textView() { return accountName; }
+
+
+    public boolean equals(Account other){
+        if(this.username.equals(other.username))
+            if(this.password.equals(other.password) || other.password.equals(""))
+                return true;
+        return false;
+    }
 
     /**
      * Updates account name text.
