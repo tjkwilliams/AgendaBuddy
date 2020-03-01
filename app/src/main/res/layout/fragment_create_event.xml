@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.events.CreateEventFragment">
 
-    <!-- TODO: Update blank fragment layout -->
 
     <TextView
         android:layout_width="match_parent"
@@ -41,6 +40,12 @@
             android:ems="10"
             android:hint="Time"
             android:inputType="time" />
+
+        <Button
+            android:id="@+id/createButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/create_event" />
 
     </LinearLayout>
 

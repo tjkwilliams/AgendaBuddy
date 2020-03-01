@@ -6,16 +6,22 @@ import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.example.myapplication.R;
+import com.example.myapplication.events.Event;
+
+import java.util.Date;
 
 /**
+ * @author pricejoshua
  * A simple {@link Fragment} subclass.
  * Use the {@link CreateEventFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CreateEventFragment extends Fragment {
+public class CreateEventFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -61,5 +67,17 @@ public class CreateEventFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create_event, container, false);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.createButton){
+            EditText date = (EditText) (getView().findViewById(R.id.dateText));
+            EditText name = (EditText) (getView().findViewById(R.id.nameText));
+            EditText time = (EditText) (getView().findViewById(R.id.timeText));
+
+            new Event(name.getText(), date)
+
+        }
     }
 }
