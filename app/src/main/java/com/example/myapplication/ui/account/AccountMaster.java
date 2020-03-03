@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.account;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -9,48 +10,55 @@ import java.util.HashMap;
 public class AccountMaster {
 
 
-    public static HashMap<String,Account> accountMap = new HashMap<>();
+    public static ArrayList<Account> accountMap;
 
 
     public static void initialize(){
-        accountMap.put("admin", new Account("admin","admin"));
+        if(accountMap == null){
+            accountMap = new ArrayList<>();
+            accountMap.add(new Account("admin","admin"));
+        }
+
     }
 
     public static boolean login(Account a){
         if(a == null) return false;
-        String username = a.username();
-        if(hasAccount(username)){
-            Account account = accountMap.get(username);
-            return a.equals(account);
+
+        for(Account acc : accountMap){
+            if(acc.equals(a))
+                return true;
         }
         return false;
     }
 
     public static boolean login(String username, String password){
-        if(hasAccount(username)){
-            Account account = accountMap.get(username);
-            String acPassword = account.password();
-            if(acPassword.equals(password) || acPassword.equals("")){
+
+        Account acc = getAccount(username);
+
+        if(acc != null)
+            if(acc.password().equals(password))
                 return true;
-            }
-        }
+
         return false;
     }
 
     public static void createAccount(String username, String password){
-        accountMap.put(username, new Account(username, password));
+        accountMap.add(new Account(username, password));
     }
 
     public static boolean hasAccount(String name){
-        return accountMap.get(name) != null;
+        return getAccount(name) != null;
     }
 
     public static boolean hasAccount(Account n){
-        return accountMap.get(n.username()) != null;
+        return accountMap.contains(n);
     }
 
     public static Account getAccount(String name){
-        return accountMap.get(name);
+        for(Account acc : accountMap)
+            if(acc.username().equals(name))
+                    return acc;
+        return null;
     }
 
 }
