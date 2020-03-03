@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -14,7 +15,9 @@ import android.view.ViewGroup;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
+import com.example.myapplication.MasterCalendar;
 import com.example.myapplication.R;
+import com.example.myapplication.events.Event;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,7 +32,7 @@ import java.util.List;
  * Use the {@link CreateEventFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CreateEventFragment extends Fragment implements View.OnClickListener {
+public class CreateEventFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -38,6 +41,8 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private int priority;
 
     public CreateEventFragment() {
         // Required empty public constructor
@@ -68,6 +73,9 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        //https://developer.android.com/guide/topics/ui/controls/spinner#Populate
+
         Spinner spinner = (Spinner) getView().findViewById(R.id.prioritySpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
@@ -89,28 +97,31 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.createButton){
-            EditText name = (EditText) (getView().findViewById(R.id.nameText));
+            EditText nameText = (EditText) (getView().findViewById(R.id.nameText));
             DatePicker startDatePicker = (DatePicker) (getView().findViewById(R.id.startDatePicker));
             TimePicker startTime = (TimePicker) (getView().findViewById(R.id.startTimePicker));
             DatePicker endDatePicker = (DatePicker) (getView().findViewById(R.id.endDatePicker));
             TimePicker endTime = (TimePicker) (getView().findViewById(R.id.endTimePicker));
             Button createButton = (Button) (getView().findViewById(R.id.createButton));
 
+            String name = nameText.getText().toString();
 
 
-            String startDate = "";
-            String endDate = "";
 
 
-            Calendar st = Calendar.getInstance();
-            //st.setTime(startDate);
-			
-			Calendar et = Calendar.getInstance();
-			//et.setTime(endDate);
 
-			//createEvent(
+            //events.add(new Event(name, , , priority));
 
         }
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        priority = pos;
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
     }
 
     /**
