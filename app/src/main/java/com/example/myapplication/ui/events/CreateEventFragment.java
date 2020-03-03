@@ -79,19 +79,21 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
             EditText name = (EditText) (getView().findViewById(R.id.nameText));
             EditText time = (EditText) (getView().findViewById(R.id.timeText));
 
-
+/*
 
             Calendar st = Calendar.getInstance();
             st.setTime(startDate);
-			
+
 			Calendar et = Calendar.getInstance();
 			et.setTime(endDate);
 
 			//createEvent(
 
+ */
+
         }
     }
-	
+
 	private Date getDate(String date){
 
 		//With help from https://stackoverflow.com/questions/17674308/date-from-edittext/30924811
@@ -103,6 +105,7 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
+		return toReturn;
+
 	}
 }
