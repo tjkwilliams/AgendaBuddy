@@ -128,10 +128,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
             case R.id.loginButton:
                 //System.out.println("Login in initiated!!!!");
 
-                // Creates user account.
-                account = new Account(userText,passwordText);
-
-                boolean loginSuccessful = AccountMaster.login(account);
+                boolean loginSuccessful = AccountMaster.login(userText,passwordText);
 
                 if(loginSuccessful){
                     Toast.makeText(this, "Login initiated!!!", Toast.LENGTH_SHORT).show();
