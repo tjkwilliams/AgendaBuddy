@@ -8,10 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.example.myapplication.R;
-import com.example.myapplication.events.Event;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -75,17 +73,19 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.createButton){
-            EditText startDateText = (EditText) (getView().findViewById(R.id.dateText));
+            EditText startDateText = (EditText) (getView().findViewById(R.id.startDateText));
             EditText name = (EditText) (getView().findViewById(R.id.nameText));
             EditText time = (EditText) (getView().findViewById(R.id.timeText));
 
+            String startDate = "";
+            String endDate = "";
 
 
             Calendar st = Calendar.getInstance();
-            st.setTime(startDate);
+            //st.setTime(startDate);
 			
 			Calendar et = Calendar.getInstance();
-			et.setTime(endDate);
+			//et.setTime(endDate);
 
 			//createEvent(
 
@@ -103,6 +103,6 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
+		return toReturn;
 	}
 }
