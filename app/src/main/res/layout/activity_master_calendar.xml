@@ -8,8 +8,31 @@
     tools:context=".MasterCalendar">
 
     <com.applandeo.materialcalendarview.CalendarView
+        app:abbreviationsBarColor="@color/appLogo"
+        app:pagesColor="@color/colorPrimary"
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+
+    </com.applandeo.materialcalendarview.CalendarView>
+
+    <TextView
+        android:id="@+id/myDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="140dp"
+        android:layout_marginTop="450dp"
+        android:text="Date Picked"
+        android:textSize="23sp"
+        />
+
+    <Button
+        android:id="@+id/newEventBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="155dp"
+        android:layout_marginTop="490dp"
+        android:background="@color/appLogo"
+        android:text="New Event" />
 
 </RelativeLayout>
