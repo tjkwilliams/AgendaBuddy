@@ -32,7 +32,7 @@ public class MasterCalendar extends AppCompatActivity {
         List<Event> events = new ArrayList<>();
 
         Calendar calendar = Calendar.getInstance();
-        // use local Event class made by @Joshua
+        // use local Event class made by @Joshua to create new event
 
         //events.add(new EventDay(calendar, R.drawable.ic_launcher_foreground, Color.parseColor("#228B22"))); from internet
 
