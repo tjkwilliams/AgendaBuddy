@@ -22,6 +22,7 @@ public class MasterCalendar extends AppCompatActivity {
      * To store a calenderView widget
      */
     private CalendarView calendarView;
+    List<Event> events;
 
 
     @Override
@@ -29,7 +30,7 @@ public class MasterCalendar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master_calendar);
 
-        List<Event> events = new ArrayList<>();
+        events = new ArrayList<Event>();
 
         Calendar calendar = Calendar.getInstance();
         // use local Event class made by @Joshua to create new event
@@ -46,9 +47,10 @@ public class MasterCalendar extends AppCompatActivity {
             }
         });
 
+    }
 
 
-
-
+    protected boolean createEvent(Event e){
+        return events.add(e);
     }
 }

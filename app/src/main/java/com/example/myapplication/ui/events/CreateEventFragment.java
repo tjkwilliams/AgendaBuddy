@@ -13,6 +13,9 @@ import android.widget.EditText;
 import com.example.myapplication.R;
 import com.example.myapplication.events.Event;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -72,12 +75,34 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.createButton){
-            EditText date = (EditText) (getView().findViewById(R.id.dateText));
+            EditText startDateText = (EditText) (getView().findViewById(R.id.dateText));
             EditText name = (EditText) (getView().findViewById(R.id.nameText));
             EditText time = (EditText) (getView().findViewById(R.id.timeText));
 
-            new Event(name.getText(), date)
+
+
+            Calendar st = Calendar.getInstance();
+            st.setTime(startDate);
+			
+			Calendar et = Calendar.getInstance();
+			et.setTime(endDate);
+
+			//createEvent(
 
         }
     }
+	
+	private Date getDate(String date){
+
+		//With help from https://stackoverflow.com/questions/17674308/date-from-edittext/30924811
+
+		SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+		Date toReturn = null;
+		try {
+			toReturn = df.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

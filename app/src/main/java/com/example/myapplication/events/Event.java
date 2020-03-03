@@ -1,16 +1,18 @@
 package com.example.myapplication.events;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Event {
 
     private String name;
     private int priority;
     private String details;
-    private Date startDate;
-    private Date endDate;
+    private Calendar startDate;
+    private Calendar endDate;
 
-    public Event(String name, Date startDate, Date endDate, int priority, String details){
+    public Event(String name, Calendar startDate, Calendar endDate, int priority, String details){
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -19,15 +21,11 @@ public class Event {
     }
 
     public void changeStartTime(int year, int month, int day, int hour, int minute){
-        startDate.setYear(year);
-        startDate.setMonth(month);
-        startDate.setDay(day);;
-        startDate.setHour(hour);
-        startDate.setMinute(minute);
+        startDate.set(year, month, day, hour, minute);
     }
 
     public void changeEndTime(int year, int month, int day, int hour, int minute){
-        endDate.setTime();
+        endDate.set(year, month, day, hour, minute);
     }
 
     /**
