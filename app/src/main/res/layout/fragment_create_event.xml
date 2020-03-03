@@ -15,10 +15,10 @@
             android:id="@+id/createButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="360dp"
+            android:layout_marginTop="484dp"
             android:text="@string/create_event"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="-43dp" />
+            tools:layout_editor_absoluteX="16dp" />
 
         <EditText
             android:id="@+id/nameText"
@@ -33,39 +33,66 @@
             app:layout_constraintVertical_bias="0.004"
             tools:layout_editor_absoluteX="0dp" />
 
-        <EditText
-            android:id="@+id/timeText"
-            android:layout_width="194dp"
-            android:layout_height="55dp"
-            android:ems="10"
-            android:hint="Time"
-            android:inputType="time"
+
+        <DatePicker
+            android:id="@+id/startDatePicker"
+            android:layout_width="215dp"
+            android:layout_height="143dp"
+            android:layout_marginBottom="496dp"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <DatePicker
+            android:id="@+id/endDatePicker"
+            android:layout_width="215dp"
+            android:layout_height="143dp"
+            android:layout_marginBottom="332dp"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/startDatePicker" />
+
+        <TimePicker
+            android:id="@+id/startTimePicker"
+            android:layout_width="154dp"
+            android:layout_height="89dp"
+            android:layout_marginTop="67dp"
+            android:timePickerMode="spinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/startDatePicker"
             app:layout_constraintTop_toBottomOf="@+id/nameText" />
 
-        <EditText
-            android:id="@+id/startDateText"
-            android:layout_width="193dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Date"
-            android:inputType="date|datetime"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.167" />
+        <TimePicker
+            android:id="@+id/endTimePicker"
+            android:layout_width="154dp"
+            android:layout_height="89dp"
+            android:layout_marginTop="228dp"
+            android:timePickerMode="spinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/startDatePicker"
+            app:layout_constraintTop_toBottomOf="@+id/nameText" />
 
-        <EditText
-            android:id="@+id/endDateText"
-            android:layout_width="193dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Date"
-            android:inputType="date|datetime"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <Spinner
+            android:id="@+id/prioritySpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="25dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="62dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toTopOf="@+id/createButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.345" />
+            app:layout_constraintTop_toBottomOf="@+id/endDatePicker"
+            app:layout_constraintVertical_bias="1.0" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

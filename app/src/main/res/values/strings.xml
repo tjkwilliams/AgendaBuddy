@@ -20,4 +20,12 @@
     <string name="action_calendar">Calendar</string>
 
     <string name="create_event">Create Event</string>
+
+    <string-array name="priority_array">
+        <item>High</item>
+        <item>Low</item>
+        <item>Medium</item>
+    </string-array>
+
+
 </resources>

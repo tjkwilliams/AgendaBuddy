@@ -6,15 +6,22 @@ import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.view.ViewGroup;
+import android.widget.Spinner;
+import android.widget.TimePicker;
 
 import com.example.myapplication.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author pricejoshua
@@ -61,11 +68,20 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        Spinner spinner = (Spinner) getView().findViewById(R.id.prioritySpinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.priority_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create_event, container, false);
     }
@@ -73,9 +89,14 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.createButton){
-            EditText startDateText = (EditText) (getView().findViewById(R.id.startDateText));
             EditText name = (EditText) (getView().findViewById(R.id.nameText));
-            EditText time = (EditText) (getView().findViewById(R.id.timeText));
+            DatePicker startDatePicker = (DatePicker) (getView().findViewById(R.id.startDatePicker));
+            TimePicker startTime = (TimePicker) (getView().findViewById(R.id.startTimePicker));
+            DatePicker endDatePicker = (DatePicker) (getView().findViewById(R.id.endDatePicker));
+            TimePicker endTime = (TimePicker) (getView().findViewById(R.id.endTimePicker));
+            Button createButton = (Button) (getView().findViewById(R.id.createButton));
+
+
 
             String startDate = "";
             String endDate = "";
@@ -91,7 +112,13 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
 
         }
     }
-	
+
+    /**
+     * Pulled up method
+     *
+     * @param date a string representation of the date
+     * @return A Date object based on that date
+     */
 	private Date getDate(String date){
 
 		//With help from https://stackoverflow.com/questions/17674308/date-from-edittext/30924811
