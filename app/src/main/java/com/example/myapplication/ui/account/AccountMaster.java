@@ -6,13 +6,17 @@ import java.util.HashMap;
 
 /**
  * Will serve as a mock database.
+ *
+ * @author Timothy Williams
  */
 public class AccountMaster {
 
     /**
      * The base of accounts.
      */
-    public static ArrayList<Account> accountMap;
+    private static ArrayList<Account> accountMap;
+
+    private static Account dedicatedUser;
 
     /**
      * Initializes the instance of the mock database of accounts.
@@ -38,6 +42,24 @@ public class AccountMaster {
         ret += "Password: " + a.password();
 
         return ret;
+    }
+
+    /**
+     * Sets the user that has loggin in to this app.
+     *
+     * @param a The user to set.
+     */
+    public void setDedicatedUser(Account a){
+        dedicatedUser = a;
+    }
+
+    /**
+     * Gets the username of the dedicated user.
+     *
+     * @return Dedicated user's username.
+     */
+    public static String username(){
+        return dedicatedUser.username();
     }
 
     /**

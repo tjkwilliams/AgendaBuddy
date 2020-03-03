@@ -16,14 +16,50 @@ import com.example.myapplication.R;
 import com.example.myapplication.ui.account.Account;
 import com.example.myapplication.ui.account.AccountMaster;
 
+/**
+ * Class for the LoginPage activity that will handle logging in the current
+ * user.
+ *
+ * @author Timothy Williams
+ */
 public class LoginPage extends AppCompatActivity implements View.OnClickListener{
-    //create instance variables
+
+    /**
+     * Username - The textfield that contains the username of the account that the user wants
+     * to login to.
+     * Password - The textfield that contains the password of the account that the user wants
+     * to login to.
+     */
     private EditText username, password;
-    private Button login, create;
+
+    /**
+     * LoginButton - Button that attempts a login for a user based on the credentials entered
+     * in the username and password text fields.
+     * CreateAccountButton - Button that creates an account for a user based on the credentials
+     * entered in the username and password text fields.
+     */
+    private Button loginButton, createAccountButton;
+
+    /**
+     * Info - Text that describes the create account button.
+     */
     private TextView info;
+
+    /**
+     * BuddyIcon - The icon that displays on the login screen.
+     */
     private ImageView buddyIcon;
+
+    /**
+     * Shake - Animation for when a user enters in incorrect credentials.
+     */
     private Animation shake;
 
+    /**
+     * Basically a constructor for an activity.
+     *
+     * @param savedInstanceState The apps instance of this activity.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,13 +69,13 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
         //associate instance variables with the objects on the login page
         username = (EditText)findViewById(R.id.userTextField);
         password = (EditText)findViewById(R.id.pswdTextField);
-        login = (Button)findViewById(R.id.loginButton);
-        create = (Button)findViewById(R.id.createButton);
+        loginButton = (Button)findViewById(R.id.loginButton);
+        createAccountButton = (Button)findViewById(R.id.createButton);
         info = (TextView)findViewById(R.id.tvinfo);
         buddyIcon = (ImageView)findViewById(R.id.buddyIcon);
 
-        login.setOnClickListener(this);
-        create.setOnClickListener(this);
+        loginButton.setOnClickListener(this);
+        createAccountButton.setOnClickListener(this);
         username.setOnClickListener(this);
         password.setOnClickListener(this);
         info.setOnClickListener(this);
@@ -98,7 +134,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
                     if (acc == null)
 
-                        Toast.makeText(this, "Account doesn't exist", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "There isn't an account associated with that username.", Toast.LENGTH_SHORT).show();
 
                     else {
 
@@ -139,12 +175,15 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
                     Toast.makeText(this, "Account exists.", Toast.LENGTH_SHORT).show();
 
+                    Intent intent = new Intent(this, MainPage.class);
+                    startActivity(intent);
+
                 } else {
 
                     Account acc = AccountMaster.getAccount(u);
 
                     if(acc == null)
-                        Toast.makeText(this, "Account doesn't exist", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "There isn't an account associated with that username.", Toast.LENGTH_SHORT).show();
 
                     else if(acc.password().equals(p)) {
 
