@@ -7,46 +7,65 @@
     tools:context=".ui.events.CreateEventFragment">
 
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/create_event" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/nameText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
-
-        <EditText
-            android:id="@+id/dateText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Date"
-            android:inputType="date" />
-
-        <EditText
-            android:id="@+id/timeText"
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:ems="10"
-            android:hint="Time"
-            android:inputType="time" />
+        android:layout_height="match_parent">
 
         <Button
             android:id="@+id/createButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/create_event" />
+            android:layout_marginTop="360dp"
+            android:text="@string/create_event"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="-43dp" />
 
-    </LinearLayout>
+        <EditText
+            android:id="@+id/nameText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.004"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <EditText
+            android:id="@+id/timeText"
+            android:layout_width="194dp"
+            android:layout_height="55dp"
+            android:ems="10"
+            android:hint="Time"
+            android:inputType="time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameText" />
+
+        <EditText
+            android:id="@+id/startDateText"
+            android:layout_width="193dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Date"
+            android:inputType="date|datetime"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.167" />
+
+        <EditText
+            android:id="@+id/endDateText"
+            android:layout_width="193dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Date"
+            android:inputType="date|datetime"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.345" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

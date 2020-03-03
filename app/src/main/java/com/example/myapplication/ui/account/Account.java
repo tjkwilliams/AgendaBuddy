@@ -118,7 +118,7 @@ public class Account {
 
     public boolean equals(Account other){
         if(this.username.equals(other.username))
-            if(this.password.equals(other.password) || other.password.equals(""))
+            if(this.password.equals(other.password))
                 return true;
         return false;
     }
