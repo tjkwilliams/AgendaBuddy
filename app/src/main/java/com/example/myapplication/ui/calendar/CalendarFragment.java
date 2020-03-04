@@ -64,10 +64,9 @@ public class CalendarFragment extends Fragment implements  View.OnClickListener{
                 }
             });
 
-            Toast.makeText(this.getContext(), "Calendar succeeded.", Toast.LENGTH_SHORT).show();
 
         } catch (Exception e){
-            Toast.makeText(this.getContext(), e.toString() +"1Calendar FAILED.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this.getContext(), e.toString() +"1Calendar FAILED.", Toast.LENGTH_SHORT).show();
         }
 
         newEventButton = (Button) root.findViewById(R.id.newEventBtn);
