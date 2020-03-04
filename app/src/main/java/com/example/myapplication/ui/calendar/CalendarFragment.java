@@ -66,8 +66,6 @@ public class CalendarFragment extends Fragment implements  View.OnClickListener{
         }
 
         newEventButton = (Button) root.findViewById(R.id.newEventBtn);
-
-        datePicked.setOnClickListener(this);
         newEventButton.setOnClickListener(this);
 
         try{
