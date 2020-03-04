@@ -2,10 +2,11 @@ package com.example.myapplication.ui.navigation;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class NavigationViewModel {
+public class NavigationViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 

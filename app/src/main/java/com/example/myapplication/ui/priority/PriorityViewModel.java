@@ -16,7 +16,7 @@ public class PriorityViewModel extends ViewModel {
 
     public PriorityViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is an extra fragment");
+        mText.setValue("This is where the prioritized events will go.\n\n\n\nEvent\n\n\nEvent\n\n\nEvent");
     }
 
     public LiveData<String> getText() {

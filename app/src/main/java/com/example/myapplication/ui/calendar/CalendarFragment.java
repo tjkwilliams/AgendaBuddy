@@ -14,7 +14,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.myapplication.R;
+import com.example.myapplication.events.Event;
 import com.example.myapplication.ui.account.AccountMaster;
+
+import java.util.ArrayList;
 
 public class CalendarFragment extends Fragment implements  View.OnClickListener{
 
@@ -23,6 +26,8 @@ public class CalendarFragment extends Fragment implements  View.OnClickListener{
     private CalendarView calendarView;
 
     private TextView accountName, myDate;
+
+    private static ArrayList<Event> events = new ArrayList<>();
 
     private Button newEventButton;
 
@@ -38,9 +43,7 @@ public class CalendarFragment extends Fragment implements  View.OnClickListener{
                 textView.setText(s);
             }
         });
-
          */
-        com.applandeo.materialcalendarview.CalendarView cv;
 
 
         myDate = (TextView) root.findViewById(R.id.myDateText);
@@ -53,7 +56,7 @@ public class CalendarFragment extends Fragment implements  View.OnClickListener{
             calendarView = (CalendarView) root.findViewById(R.id.calendarView);
             calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                 public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                    String date = "[ " + dayOfMonth + "/" + (1+month) + "/" + year + "]";
+                    String date = "[ " + (1+month) + " / " + dayOfMonth + " / " + year + " ]";
                     myDate.setText(date);
 
                 }
@@ -68,21 +71,28 @@ public class CalendarFragment extends Fragment implements  View.OnClickListener{
         newEventButton = (Button) root.findViewById(R.id.newEventBtn);
         newEventButton.setOnClickListener(this);
 
-        try{
-
-            /*
-            There is no account name TextView
-            accountName = (TextView) root.findViewById(R.id.accountName);
-
-            accountName.setText(AccountMaster.username());
-
-             */
-
-
-        } catch(Exception e){
-            Toast.makeText(this.getContext(), e.toString() + "2Calendar FAILED.", Toast.LENGTH_SHORT).show();
-        }
         return root;
+    }
+
+    /**
+     * Adds an new event to a calendar.
+     *
+     * @param event The event to add.
+     */
+    public static void addEvent(Event event){
+
+        // Put the event on the calendar.
+
+
+    }
+
+    /**
+     * Removes an event from a calendar.
+     *
+     * @param e The event to remove.
+     */
+    public static void removeEvent(Event e){
+
     }
 
     @Override
@@ -92,20 +102,29 @@ public class CalendarFragment extends Fragment implements  View.OnClickListener{
 
             case R.id.newEventBtn:
                 Toast.makeText(this.getContext(), "New Event needs to be started.", Toast.LENGTH_SHORT).show();
+/*
+                // Create an instance of Fragment1
+                Fragment firstFragment = new Fragment();
+
+                // In case this activity was started with special instructions from an Intent,
+                // pass the Intent's extras to the fragment as arguments
+                firstFragment.setArguments(getIntent().getExtras());
+
+                // Add the fragment to the 'fragment_container' FrameLayout
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, firstFragment).commit();*/
             break;
 
             case R.id.myDateText:
 
-                Toast.makeText(this.getContext(), "Date was clicked.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this.getContext(), "Date was clicked.", Toast.LENGTH_SHORT).show();
 
                 break;
 
 
 
             default:
-                Toast.makeText(this.getContext(), "Nothing was clicked.", Toast.LENGTH_SHORT).show();
-
-
+                //Toast.makeText(this.getContext(), "Nothing was clicked.", Toast.LENGTH_SHORT).show();
 
         }
 

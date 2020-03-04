@@ -219,6 +219,8 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
             case R.id.pswdLabel:
 
+            case R.id.tvinfo:
+
                 break;
 
             default:

@@ -42,7 +42,7 @@
         <menu>
 
             <item
-                android:id="@+id/nav_extra"
+                android:id="@+id/nav_prioritized"
                 android:icon="@drawable/ic_menu_login"
                 android:title="@string/menu_priority" />
         </menu>
