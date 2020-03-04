@@ -17,8 +17,20 @@ public class MasterCalendar extends AppCompatActivity implements View.OnClickLis
      * To store a calenderView widget
      */
     private CalendarView calendarView;
+
+    /*
+     * Data Structure to store events
+     */
     private List<Event> events;
+
+    /*
+     * To connect to button "New Event"
+     */
     private TextView myDate;
+
+    /*
+     * Current date
+     */
     private int currentDay, currentMonth, currentYear;
 
 
@@ -34,34 +46,13 @@ public class MasterCalendar extends AppCompatActivity implements View.OnClickLis
         currentYear = 2020;
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2020, 1, 1);
+        calendar.set(currentYear, currentMonth, currentDay);
 
+        calendarView = findViewById(R.id.calendarView); // get the calendar "object"
 
-        //events.add(new EventDay(calendar, R.drawable.ic_launcher_foreground, Color.parseColor("#228B22"))); from internet
+        myDate = findViewById(R.id.myDateText); // get the button "object"
 
-        calendarView = findViewById(R.id.calendarView); // get the calendar "object
-        //calendarView.setEvents(events); from internet;
-
-        myDate = findViewById(R.id.myDateText);
-
-        calendarView.setOnClickListener(this);
-
-/*
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                // do something when we select different dates at the calendar
-                String date = month + "/" + dayOfMonth + "/" + year;
-                myDate.setText(date);
-
-               // myDate.getText().
-                currentDay = dayOfMonth;
-                currentMonth = month;
-                currentYear = year;
-            }
-        });
-
- */
+        calendarView.setOnClickListener(this); // Connect to listener method
 
     }
 
