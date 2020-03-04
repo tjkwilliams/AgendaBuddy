@@ -72,11 +72,6 @@ public class MasterCalendar extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()){
 
-            case R.id.newEventBtn:
-                Intent intent = new Intent(MasterCalendar.this, CreateEventFragment.class);
-                startActivity(intent);
-                break;
-
             case R.id.calendarView:
                 long date = calendarView.getDate();
                 myDate.setText((int) date);
@@ -86,8 +81,4 @@ public class MasterCalendar extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    public void createEventFragment(View v) {
-        Intent intent = new Intent(MasterCalendar.this, CreateEventFragment.class);
-        startActivity(intent);
-    }
 }
