@@ -11,11 +11,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.myapplication.R;
 import com.example.myapplication.events.Event;
 import com.example.myapplication.ui.account.AccountMaster;
+import com.example.myapplication.ui.events.CreateEventFragment;
 
 import java.util.ArrayList;
 
@@ -101,7 +103,14 @@ public class CalendarFragment extends Fragment implements  View.OnClickListener{
         switch (v.getId()){
 
             case R.id.newEventBtn:
-                Toast.makeText(this.getContext(), "New Event needs to be started.", Toast.LENGTH_SHORT).show();
+                try {
+                    // TODO: send Month and day in newInstance arguments
+                    Fragment fragment = CreateEventFragment.newInstance("", "");
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.createEventFragment, fragment);
+                } catch(Exception e) {
+                    Toast.makeText(this.getContext(), "New Event needs to be started.", Toast.LENGTH_SHORT).show();
+                }
 /*
                 // Create an instance of Fragment1
                 Fragment firstFragment = new Fragment();
