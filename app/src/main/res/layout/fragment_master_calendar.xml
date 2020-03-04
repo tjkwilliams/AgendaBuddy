@@ -7,14 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".events.MasterCalendar">
 
-    <com.applandeo.materialcalendarview.CalendarView
+    <CalendarView
         android:id="@+id/calendarView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:abbreviationsBarColor="@color/appLogo"
-        app:pagesColor="@color/colorPrimary">
-
-    </com.applandeo.materialcalendarview.CalendarView>
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
 
     <TextView
         android:id="@+id/myDateText"

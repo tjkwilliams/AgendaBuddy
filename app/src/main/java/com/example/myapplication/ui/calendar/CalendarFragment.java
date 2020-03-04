@@ -30,7 +30,7 @@ public class CalendarFragment extends Fragment implements  View.OnClickListener{
                              ViewGroup container, Bundle savedInstanceState) {
         calendarViewModel =
                 ViewModelProviders.of(this).get(CalendarViewModel.class);
-        View root = inflater.inflate(R.layout.activity_master_calendar, container, false);
+        View root = inflater.inflate(R.layout.fragment_master_calendar, container, false);
         /*final TextView textView = root.findViewById(R.id.text_calendar);
         calendarViewModel.getText().observe(this, new Observer<String>() {
             @Override
@@ -40,6 +40,7 @@ public class CalendarFragment extends Fragment implements  View.OnClickListener{
         });
 
          */
+        com.applandeo.materialcalendarview.CalendarView cv;
 
 
         myDate = (TextView) root.findViewById(R.id.myDateText);
@@ -48,13 +49,11 @@ public class CalendarFragment extends Fragment implements  View.OnClickListener{
 
         try {
 
-            calendarView.setOnClickListener(this);
-
             //The problem is here.
-            calendarView = (CalendarView) getView().findViewById(R.id.calendarView);
+            calendarView = (CalendarView) root.findViewById(R.id.calendarView);
             calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                 public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                    String date = "[ " + dayOfMonth + "/" + month + "/" + year + "]";
+                    String date = "[ " + dayOfMonth + "/" + (1+month) + "/" + year + "]";
                     myDate.setText(date);
 
                 }
@@ -63,11 +62,10 @@ public class CalendarFragment extends Fragment implements  View.OnClickListener{
             Toast.makeText(this.getContext(), "Calendar succeeded.", Toast.LENGTH_SHORT).show();
 
         } catch (Exception e){
-            Toast.makeText(this.getContext(), "1Calendar FAILED.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getContext(), e.toString() +"1Calendar FAILED.", Toast.LENGTH_SHORT).show();
         }
 
         newEventButton = (Button) root.findViewById(R.id.newEventBtn);
-        datePicked = (TextView) root.findViewById(R.id.myDateText);
 
         datePicked.setOnClickListener(this);
         newEventButton.setOnClickListener(this);
@@ -80,7 +78,7 @@ public class CalendarFragment extends Fragment implements  View.OnClickListener{
 
 
         } catch(Exception e){
-            Toast.makeText(this.getContext(), "2Calendar FAILED.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getContext(), e.toString() + "2Calendar FAILED.", Toast.LENGTH_SHORT).show();
         }
         return root;
     }

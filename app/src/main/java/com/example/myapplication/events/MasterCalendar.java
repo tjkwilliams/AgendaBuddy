@@ -26,15 +26,15 @@ public class MasterCalendar extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_master_calendar);
+        setContentView(R.layout.fragment_master_calendar);
 
         events = new ArrayList<Event>(11);
-        currentDay = 01;
-        currentMonth = 01;
+        currentDay = 1;
+        currentMonth = 1;
         currentYear = 2020;
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2020,01,01);
+        calendar.set(2020, 1, 1);
 
 
         //events.add(new EventDay(calendar, R.drawable.ic_launcher_foreground, Color.parseColor("#228B22"))); from internet
