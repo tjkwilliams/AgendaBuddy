@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.events;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,15 +9,17 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CalendarView;
 import android.widget.TextView;
 
 import com.applandeo.materialcalendarview.EventDay;
+import com.example.myapplication.R;
 import com.example.myapplication.events.Event;
 
 import java.util.*;
 
-public class MasterCalendar extends AppCompatActivity {
+public class MasterCalendar extends AppCompatActivity implements View.OnClickListener{
 
     /*
      * To store a calenderView widget
@@ -25,6 +27,7 @@ public class MasterCalendar extends AppCompatActivity {
     private CalendarView calendarView;
     private List<Event> events;
     private TextView myDate;
+    private int currentDay, currentMonth, currentYear;
 
 
 
@@ -34,6 +37,9 @@ public class MasterCalendar extends AppCompatActivity {
         setContentView(R.layout.activity_master_calendar);
 
         events = new ArrayList<Event>(11);
+        currentDay = 01;
+        currentMonth = 01;
+        currentYear = 2020;
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(2020,01,01);
@@ -46,7 +52,9 @@ public class MasterCalendar extends AppCompatActivity {
 
         myDate = findViewById(R.id.myDate);
 
+        calendarView.setOnClickListener(this);
 
+/*
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -54,13 +62,37 @@ public class MasterCalendar extends AppCompatActivity {
                 String date = month + "/" + dayOfMonth + "/" + year;
                 myDate.setText(date);
 
+               // myDate.getText().
+                currentDay = dayOfMonth;
+                currentMonth = month;
+                currentYear = year;
             }
         });
+
+ */
 
     }
 
 
     public boolean createEvent(Event e){
         return events.add(e);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+
+            case R.id.myDate:
+
+                break;
+
+            case R.id.calendarView:
+                long date = calendarView.getDate();
+                myDate.setText("What in teh");
+                break;
+
+
+
+        }
     }
 }

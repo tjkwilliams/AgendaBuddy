@@ -97,6 +97,9 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
         if(a != null){
             Toast.makeText(this, "Account already exist!", Toast.LENGTH_SHORT).show();
             return;
+        } else if(user.length() > 15){
+            Toast.makeText(this, "Name can't be longer than 15 characters.", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         AccountMaster.createAccount(user,pass);
@@ -116,6 +119,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
         // Gets the text from the username and password textfields.
         String u = username.getText().toString(), p = password.getText().toString();
+        Account a;
         boolean loginSuccessful;
 
         switch(v.getId()) {
@@ -125,6 +129,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
                 if (loginSuccessful) {
 
+                    AccountMaster.setDedicatedUser(u);
                     Intent intent = new Intent(this, MainPage.class);
                     startActivity(intent);
 
@@ -140,6 +145,8 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
                         username.startAnimation(shake);
                         password.startAnimation(shake);
+
+                        password.getText().clear();
 
                     }
                 }
@@ -173,7 +180,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
                 if(loginSuccessful){
 
-                    Toast.makeText(this, "Account exists.", Toast.LENGTH_SHORT).show();
+                    AccountMaster.setDedicatedUser(u);
 
                     Intent intent = new Intent(this, MainPage.class);
                     startActivity(intent);
@@ -187,6 +194,8 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
                     else if(acc.password().equals(p)) {
 
+                        AccountMaster.setDedicatedUser(u);
+
                         Intent intent = new Intent(this, MainPage.class);
                         startActivity(intent);
 
@@ -195,6 +204,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
                         username.startAnimation(shake);
                         password.startAnimation(shake);
 
+                        password.getText().clear();
                     }
                 }
                 break;

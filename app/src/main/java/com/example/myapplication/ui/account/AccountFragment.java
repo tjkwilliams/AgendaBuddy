@@ -55,6 +55,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         Intent intent = new Intent(this.getContext(), LoginPage.class);
         startActivity(intent);
+        AccountMaster.removeDedicatedUser();
         Toast.makeText(this.getContext(),"Returned back to login!",Toast.LENGTH_SHORT).show();
     }
 }

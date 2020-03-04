@@ -15,16 +15,11 @@ import android.view.ViewGroup;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
-import com.example.myapplication.MasterCalendar;
 import com.example.myapplication.R;
-import com.example.myapplication.events.Event;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author pricejoshua

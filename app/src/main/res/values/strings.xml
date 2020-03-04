@@ -4,8 +4,8 @@
     <string name="title_activity_side_menu">Options</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Agenda Buddy</string>
+    <string name="nav_header_subtitle">username@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="menu_calendar">Calendar</string>

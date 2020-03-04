@@ -16,6 +16,9 @@ public class AccountMaster {
      */
     private static ArrayList<Account> accountMap;
 
+    /**
+     * The dedicated user for this session of the app;
+     */
     private static Account dedicatedUser;
 
     /**
@@ -49,18 +52,32 @@ public class AccountMaster {
      *
      * @param a The user to set.
      */
-    public void setDedicatedUser(Account a){
-        dedicatedUser = a;
+    public static void setDedicatedUser(Account a){ dedicatedUser = a; }
+
+    public static void setDedicatedUser(String name){
+        Account temp = getAccount(name);
+        if(temp != null)
+            dedicatedUser = temp;
     }
+
+    /**
+     * Checks if there is already a user logged in.
+     *
+     * @return If there is already a dedicated user.
+     */
+    public static boolean hasDedicatedUser(){ return dedicatedUser != null; }
+
+    /**
+     * Removes the dedicated user from the system.
+     */
+    public static void removeDedicatedUser(){ dedicatedUser = null; }
 
     /**
      * Gets the username of the dedicated user.
      *
      * @return Dedicated user's username.
      */
-    public static String username(){
-        return dedicatedUser.username();
-    }
+    public static String username(){ return dedicatedUser.username(); }
 
     /**
      * The logging in of an account.
@@ -101,9 +118,7 @@ public class AccountMaster {
      *
      * @return The list of accounts currently in the database.
      */
-    public ArrayList<Account> accounts(){
-        return accountMap;
-    }
+    public ArrayList<Account> accounts(){  return accountMap;  }
 
     /**
      * Fetches the names of all of the accounts' names.
@@ -129,9 +144,7 @@ public class AccountMaster {
      * @param username The username of the user's account.
      * @param password The password of the user's account.
      */
-    public static void createAccount(String username, String password){
-        accountMap.add(new Account(username, password));
-    }
+    public static void createAccount(String username, String password){  accountMap.add(new Account(username, password)); }
 
     /**
      * Sees if the account exists in the system.

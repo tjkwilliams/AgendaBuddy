@@ -1,19 +1,12 @@
 package com.example.myapplication.ui.account;
 
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.myapplication.MasterCalendar;
+import com.example.myapplication.events.MasterCalendar;
 
 import java.util.ArrayList;
 
-import com.example.myapplication.R;
 import com.example.myapplication.events.Event;
-import com.google.android.material.snackbar.Snackbar;
-
-import org.w3c.dom.Text;
 
 public class Account {
 

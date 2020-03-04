@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MasterCalendar">
+    tools:context=".events.MasterCalendar">
 
     <com.applandeo.materialcalendarview.CalendarView
-        app:abbreviationsBarColor="@color/appLogo"
-        app:pagesColor="@color/colorPrimary"
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        app:abbreviationsBarColor="@color/appLogo"
+        app:pagesColor="@color/colorPrimary">
 
     </com.applandeo.materialcalendarview.CalendarView>
 

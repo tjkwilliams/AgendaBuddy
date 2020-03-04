@@ -24,7 +24,13 @@
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/menu_help" />
+
         <!--
+        <item
+            android:id="@+id/nav_create_event"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/menu_create_event" />
+
         <item
             android:id="@+id/nav_login"
             android:icon="@drawable/ic_menu_login"

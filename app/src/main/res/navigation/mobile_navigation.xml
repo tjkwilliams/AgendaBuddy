@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_prioritized">
+    app:startDestination="@+id/nav_calendar">
 
     <fragment
         android:id="@+id/nav_calendar"
@@ -40,4 +40,11 @@
         android:name="com.example.myapplication.ui.priority.PriorityFragment"
         android:label="@string/menu_priority"
         tools:layout="@layout/fragment_prioritized" />
+
+    <fragment
+        android:id="@+id/createEventFragment"
+        android:name="com.example.myapplication.ui.events.CreateEventFragment"
+        android:label="fragment_create_event"
+        tools:layout="@layout/fragment_create_event" />
+
 </navigation>
