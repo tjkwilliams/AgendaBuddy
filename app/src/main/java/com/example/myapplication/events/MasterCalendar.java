@@ -2,12 +2,15 @@ package com.example.myapplication.events;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.ui.events.CreateEventFragment;
 
 import java.util.*;
 
@@ -27,6 +30,8 @@ public class MasterCalendar extends AppCompatActivity implements View.OnClickLis
      * To connect to button "New Event"
      */
     private TextView myDate;
+
+    private Button newEvent;
 
     /*
      * Current date
@@ -50,7 +55,8 @@ public class MasterCalendar extends AppCompatActivity implements View.OnClickLis
 
         calendarView = findViewById(R.id.calendarView); // get the calendar "object"
 
-        myDate = findViewById(R.id.myDateText); // get the button "object"
+        myDate = findViewById(R.id.myDateText); // get the text "object" (might not actually need this)
+        newEvent = findViewById(R.id.newEventBtn); // get the button "object" (might not needed either)
 
         calendarView.setOnClickListener(this); // Connect to listener method
 
@@ -66,14 +72,17 @@ public class MasterCalendar extends AppCompatActivity implements View.OnClickLis
         switch (v.getId()){
 
             case R.id.myDateText:
+                break;
 
+            case R.id.newEventBtn:
+                Intent intent = new Intent(MasterCalendar.this, CreateEventFragment.class);
+                startActivity(intent);
                 break;
 
             case R.id.calendarView:
                 long date = calendarView.getDate();
                 myDate.setText("What in teh");
                 break;
-
 
 
         }
