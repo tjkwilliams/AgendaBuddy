@@ -22,7 +22,7 @@ public class CalendarFragment extends Fragment implements  View.OnClickListener{
 
     private CalendarView calendarView;
 
-    private TextView accountName, datePicked, myDate;
+    private TextView accountName, myDate;
 
     private Button newEventButton;
 
@@ -70,9 +70,13 @@ public class CalendarFragment extends Fragment implements  View.OnClickListener{
 
         try{
 
+            /*
+            There is no account name TextView
             accountName = (TextView) root.findViewById(R.id.accountName);
+
             accountName.setText(AccountMaster.username());
 
+             */
 
 
         } catch(Exception e){
