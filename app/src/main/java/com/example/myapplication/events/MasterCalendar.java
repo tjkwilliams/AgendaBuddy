@@ -53,12 +53,13 @@ public class MasterCalendar extends AppCompatActivity implements View.OnClickLis
         Calendar calendar = Calendar.getInstance();
         calendar.set(currentYear, currentMonth, currentDay);
 
-        calendarView = findViewById(R.id.calendarView); // get the calendar "object"
+        calendarView = (CalendarView) findViewById(R.id.calendarView); // get the calendar "object"
 
-        myDate = findViewById(R.id.myDateText); // get the text "object" (might not actually need this)
-        newEvent = findViewById(R.id.newEventBtn); // get the button "object" (might not needed either)
+        myDate = (TextView) findViewById(R.id.myDateText); // get the text "object" (might not actually need this)
+        newEvent = (Button) findViewById(R.id.newEventBtn); // get the button "object" (might not needed either)
 
         calendarView.setOnClickListener(this); // Connect to listener method
+        newEvent.setOnClickListener(this);
 
     }
 
@@ -71,9 +72,6 @@ public class MasterCalendar extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()){
 
-            case R.id.myDateText:
-                break;
-
             case R.id.newEventBtn:
                 Intent intent = new Intent(MasterCalendar.this, CreateEventFragment.class);
                 startActivity(intent);
@@ -81,10 +79,15 @@ public class MasterCalendar extends AppCompatActivity implements View.OnClickLis
 
             case R.id.calendarView:
                 long date = calendarView.getDate();
-                myDate.setText("What in teh");
+                myDate.setText((int) date);
                 break;
 
 
         }
+    }
+
+    public void createEventFragment(View v) {
+        Intent intent = new Intent(MasterCalendar.this, CreateEventFragment.class);
+        startActivity(intent);
     }
 }
