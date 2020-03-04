@@ -28,6 +28,11 @@ public class AccountMaster {
         if(accountMap == null){
             accountMap = new ArrayList<>();
             accountMap.add(new Account("admin","admin"));
+            accountMap.add(new Account("brian","drown"));
+            accountMap.add(new Account("tyler","rios"));
+            accountMap.add(new Account("ally","lyle"));
+            accountMap.add(new Account("joshua","price"));
+            accountMap.add(new Account("tj","williams"));
         }
     }
 
