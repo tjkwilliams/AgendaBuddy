@@ -134,6 +134,7 @@ public class CalendarFragment extends Fragment implements  View.OnClickListener{
 
             default:
                 //Toast.makeText(this.getContext(), "Nothing was clicked.", Toast.LENGTH_SHORT).show();
+                break;
 
         }
 
