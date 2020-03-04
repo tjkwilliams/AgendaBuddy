@@ -17,7 +17,7 @@
     </com.applandeo.materialcalendarview.CalendarView>
 
     <TextView
-        android:id="@+id/myDate"
+        android:id="@+id/myDateText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="140dp"

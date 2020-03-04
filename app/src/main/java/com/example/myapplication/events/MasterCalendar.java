@@ -1,21 +1,13 @@
 package com.example.myapplication.events;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.TextView;
 
-import com.applandeo.materialcalendarview.EventDay;
 import com.example.myapplication.R;
-import com.example.myapplication.events.Event;
 
 import java.util.*;
 
@@ -50,7 +42,7 @@ public class MasterCalendar extends AppCompatActivity implements View.OnClickLis
         calendarView = findViewById(R.id.calendarView); // get the calendar "object
         //calendarView.setEvents(events); from internet;
 
-        myDate = findViewById(R.id.myDate);
+        myDate = findViewById(R.id.myDateText);
 
         calendarView.setOnClickListener(this);
 
@@ -82,7 +74,7 @@ public class MasterCalendar extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()){
 
-            case R.id.myDate:
+            case R.id.myDateText:
 
                 break;
 
