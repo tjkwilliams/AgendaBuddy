@@ -26,6 +26,9 @@ import com.example.myapplication.R;
  */
 public class AccountFragment extends Fragment implements View.OnClickListener{
 
+    /**
+     * Model that holds the view of the account fragment.
+     */
     private AccountViewModel accountViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -45,8 +48,6 @@ public class AccountFragment extends Fragment implements View.OnClickListener{
         Button loginFragButton = (Button) root.findViewById(R.id.accountNameButton);
         loginFragButton.setOnClickListener(this);
 
-        //TextView view = (TextView)findViewById(R.id.accountFragName);
-
         return root;
     }
 
@@ -55,7 +56,8 @@ public class AccountFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         Intent intent = new Intent(this.getContext(), LoginPage.class);
         startActivity(intent);
+        String oldUser = AccountMaster.username();
         AccountMaster.removeDedicatedUser();
-        Toast.makeText(this.getContext(),"Returned back to login!",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getContext(),"Goodbye " + oldUser + "!",Toast.LENGTH_SHORT).show();
     }
 }
