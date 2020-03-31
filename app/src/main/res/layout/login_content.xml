@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     android:background="#FC8600"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".LoginPage"
+    tools:context=".page.LoginPage"
     tools:showIn="@layout/login">
 
-    <TextView
+       <TextView
         android:id="@+id/userLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -118,15 +118,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pswdTextField" />
 
-    <TextView
-        android:id="@+id/tvInfo"
+    <Button
+        android:id="@+id/createButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Number of Incorrect Attempts:"
+        android:text="Create\nAccount"
+        android:background="#1C1AB4"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.788" />
+        app:layout_constraintVertical_bias="0.926" />
+
+    <TextView
+        android:id="@+id/tvinfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Don't have an account?"
+        app:layout_constraintBottom_toTopOf="@+id/createButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        app:layout_constraintVertical_bias="0.791" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
