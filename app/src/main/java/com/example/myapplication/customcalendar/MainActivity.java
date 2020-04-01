@@ -1,4 +1,4 @@
-package com.example.myapplication.CustomCalendar;
+package com.example.myapplication.customcalendar;
 
 import android.os.Bundle;
 
@@ -8,6 +8,7 @@ import com.example.myapplication.R;
 
 /**
  * The Page where the calendar is at
+ * If your wanna change or have change (i.e commit to gitHub) please tell me so I know (or I guess tell the group as well)
  */
 public class MainActivity extends AppCompatActivity {
 

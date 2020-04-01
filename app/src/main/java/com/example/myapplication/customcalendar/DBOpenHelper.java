@@ -1,4 +1,4 @@
-package com.example.myapplication.CustomCalendar;
+package com.example.myapplication.customcalendar;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
  * The database is written and readable as you can see from the method names
  *
  * ask me (Brian) for more info and I'll try to explain. I do not fully understand either
+ * If your wanna change or have change (i.e commit to gitHub) please tell me so I know (or I guess tell the group as well)
  */
 public class DBOpenHelper extends SQLiteOpenHelper {
 

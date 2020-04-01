@@ -33,6 +33,10 @@
         </activity>
 
 
+        <receiver android:name=".customcalendar.AlarmReceiver"
+            android:exported="true"
+            android:enabled="true">
+        </receiver>
 
     </application>
 
