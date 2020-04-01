@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/white"
+        android:hint="Type Event"
+        android:autofillHints=""
+        android:id="@+id/eventName"
+        android:inputType="textShortMessage"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        tools:targetApi="o"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@mipmap/timeicon"
+            android:layout_margin="10dp"
+            android:id="@+id/setEventTime"
+            android:contentDescription="TODO"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00 AM"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:id="@+id/eventTime"
+            android:layout_margin="10dp"
+            android:layout_weight="2"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/alarmMe"
+            android:text="Notify Me"
+            android:textColor="@android:color/white"
+            android:buttonTint="@android:color/white"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+    
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Event"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:background="@android:color/white"
+        android:id="@+id/addEvent"/>
+
+</LinearLayout>
