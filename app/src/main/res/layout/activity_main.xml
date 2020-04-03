@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".customcalendar.MainActivity">
 
-    <com.example.androidcustomcalendar.CustomCalendarView
+    <com.example.myapplication.customcalendar.CustomCalendarView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/customCalendarView" >
 
-    </com.example.androidcustomcalendar.CustomCalendarView>
+    </com.example.myapplication.customcalendar.CustomCalendarView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
