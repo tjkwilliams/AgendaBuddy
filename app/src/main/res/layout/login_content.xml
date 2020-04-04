@@ -111,6 +111,7 @@
         android:layout_marginRight="165dp"
         android:layout_marginBottom="209dp"
         android:background="#1C1AB4"
+        android:onClick="onClick"
         android:text="Login"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
