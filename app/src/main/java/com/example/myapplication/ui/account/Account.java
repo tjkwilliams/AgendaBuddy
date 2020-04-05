@@ -2,8 +2,6 @@ package com.example.myapplication.ui.account;
 
 import android.widget.TextView;
 
-import com.example.myapplication.events.MasterCalendar;
-
 import java.util.ArrayList;
 
 import com.example.myapplication.events.Event;
@@ -14,11 +12,6 @@ public class Account {
      * Username of the account.
      */
     private String username, password;
-
-    /**
-     * MasterCalendar of account.
-     */
-    private MasterCalendar masterCalendar;
 
     /**
      * Label that contains name of the account.
@@ -37,7 +30,6 @@ public class Account {
     public Account(){
         username = "";
         password = "";
-        masterCalendar = new MasterCalendar();
         prioritizedEvents = new ArrayList<>(6);
     }
 
@@ -49,7 +41,6 @@ public class Account {
     public Account(String u){
         username = u;
         password = "";
-        masterCalendar = new MasterCalendar();
         prioritizedEvents = new ArrayList<>(6);
     }
 
@@ -61,7 +52,6 @@ public class Account {
     public Account(String u, String pass){
         username = u;
         password = pass;
-        masterCalendar = new MasterCalendar();
         prioritizedEvents = new ArrayList<>(6);
     }
 

@@ -33,9 +33,8 @@
         </activity>
 
         <activity
-            android:name=".events.MasterCalendar"
-            android:label="@string/title_activity_master_calendar"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".customcalendar.MainActivity"
+            android:label="@string/title_activity_master_calendar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,6 +43,10 @@
         </activity>
 
 
+        <receiver android:name=".customcalendar.AlarmReceiver"
+            android:exported="true"
+            android:enabled="true">
+        </receiver>
 
     </application>
 

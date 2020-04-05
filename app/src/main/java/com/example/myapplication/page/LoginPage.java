@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.customcalendar.MainActivity;
 import com.example.myapplication.ui.account.Account;
 import com.example.myapplication.ui.account.AccountMaster;
 
@@ -200,7 +201,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
                if (loginSuccessful) {
 
                     AccountMaster.setDedicatedUser(u);
-                    Intent intent = new Intent(this, MainPage.class);
+                    Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
 
                     consecutiveFailedAttempts = 0;
