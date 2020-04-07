@@ -38,4 +38,6 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha01'
     implementation 'com.google.android.material:material:1.2.0-alpha05'
+
+    implementation 'org.jsoup:jsoup:1.11.1'
 }
