@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import com.example.myapplication.customcalendar.Events;
+
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -25,8 +27,7 @@ public class academicCalParser {
             month = d.text().substring(5,7);
             day = d.text().substring(8, 10);
 
-            Event n = new Event();
-            //Event n = wp.new Event(t.text(), getYear(d.text()), getMonth(d.text()), getDay(d.text()) );
+            Events n = new Events();
             //eventList.add(n);
         }
 
