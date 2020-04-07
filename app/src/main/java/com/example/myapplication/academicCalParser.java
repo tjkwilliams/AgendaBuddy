@@ -27,7 +27,7 @@ public class academicCalParser {
             month = d.text().substring(5,7);
             day = d.text().substring(8, 10);
 
-            Events n = new Events();
+            Events n = new Events(t.text(), "", day, month, year);
             //eventList.add(n);
         }
 
