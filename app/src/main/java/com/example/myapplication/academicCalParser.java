@@ -19,16 +19,16 @@ public class academicCalParser {
 
         String day, month, year;
         Elements items = doc.getElementsByTag("item");
-        for(Element item : items) {
+        for (Element item : items) {
             Elements t = item.getElementsByTag("title");
             System.out.println(t.text());
             Elements d = item.getElementsByTag("category");
-            year = d.text().substring(0,4);
-            month = d.text().substring(5,7);
+            year = d.text().substring(0, 4);
+            month = d.text().substring(5, 7);
             day = d.text().substring(8, 10);
 
             Events n = new Events(t.text(), "", day, month, year);
             //eventList.add(n);
         }
-
+    }
 }
