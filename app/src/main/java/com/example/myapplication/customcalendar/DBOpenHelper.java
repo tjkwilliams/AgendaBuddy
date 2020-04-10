@@ -22,8 +22,8 @@ import androidx.annotation.Nullable;
 public class DBOpenHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_EVENTS_TABLE = "create table " + DBStructure.EVENT_TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + DBStructure.EVENT + " TEXT, " + DBStructure.TIME + " TEXT, " + DBStructure.DATE + " TEXT, " + DBStructure.MONTH + " TEXT, "
-            + DBStructure.YEAR + " TEXT, "+DBStructure.Notify + " TEXT)";
+            + DBStructure.EVENT + " TEXT, " + DBStructure.START_TIME + " TEXT, " + DBStructure.END_TIME + " TEXT, " + DBStructure.DATE + " TEXT, " + DBStructure.MONTH + " TEXT, "
+            + DBStructure.YEAR + " TEXT, "+DBStructure.Notify + " TEXT, " + DBStructure.PRIORITY + " TEXT, " + DBStructure.NOTES + " TEXT)";
 
     private static final String DROP_EVENTS_TABLE = "DROP TABLE IF EXISTS " + DBStructure.EVENT_TABLE_NAME;
 
@@ -49,22 +49,27 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      * all attributes must be filled, hence why there is a lot of parameters
      *
      * @param event the event object
-     * @param time the time of event
+     * @param startTime the time of event
+     * @param endTime
      * @param date the date of event
      * @param month the month event is in
      * @param year the year event is in
      * @param notify boolean value of whether user wants to be notified or not when it is the time of the event
+     * @param priority
+     * @param notes
      * @param database the SQLite database
      */
-    public void SaveEvent(String event, String time, String date, String month, String year, String notify, SQLiteDatabase database) {
+    public void SaveEvent(String event, String startTime, String endTime, String date, String month, String year, String notify, String priority, String notes, SQLiteDatabase database) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBStructure.EVENT, event);
-        contentValues.put(DBStructure.TIME, time);
+        contentValues.put(DBStructure.START_TIME, startTime);
+        contentValues.put(DBStructure.END_TIME, endTime);
         contentValues.put(DBStructure.DATE, date);
         contentValues.put(DBStructure.MONTH, month);
         contentValues.put(DBStructure.YEAR, year);
         contentValues.put(DBStructure.Notify, notify);
-        // need to add priority here
+        contentValues.put(DBStructure.PRIORITY, priority);
+        contentValues.put(DBStructure.NOTES, notes);
         database.insert(DBStructure.EVENT_TABLE_NAME, null, contentValues);
     }
 
@@ -76,7 +81,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      * @return a query --> the data fetched from the database (im guessing)
      */
     public Cursor readEvents(String date, SQLiteDatabase database) {
-        String[] projections = {DBStructure.EVENT, DBStructure.TIME, DBStructure.DATE, DBStructure.MONTH, DBStructure.YEAR};
+        String[] projections = {DBStructure.EVENT, DBStructure.START_TIME, DBStructure.END_TIME, DBStructure.DATE, DBStructure.MONTH, DBStructure.YEAR};
         String selection = DBStructure.DATE + "=?";
         String[] selectionArgs = {date};
 
@@ -94,7 +99,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      */
     public Cursor readIDEvents(String date, String event, String time, SQLiteDatabase database) {
         String[] projections = {DBStructure.ID, DBStructure.Notify};
-        String selection = DBStructure.DATE + "=? and " + DBStructure.EVENT + "=? and " + DBStructure.TIME + "=?";
+        String selection = DBStructure.DATE + "=? and " + DBStructure.EVENT + "=? and " + DBStructure.START_TIME + "=?";
         String[] selectionArgs = {date, event, time};
         return database.query(DBStructure.EVENT_TABLE_NAME, projections, selection, selectionArgs, null, null, null);
     }
@@ -107,7 +112,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      * @return
      */
     public Cursor readEventsPerMonth(String month, String year, SQLiteDatabase database) {
-        String[] projections = {DBStructure.EVENT, DBStructure.TIME, DBStructure.DATE, DBStructure.MONTH, DBStructure.YEAR};
+        String[] projections = {DBStructure.EVENT, DBStructure.START_TIME, DBStructure.END_TIME, DBStructure.DATE, DBStructure.MONTH, DBStructure.YEAR};
         String selection = DBStructure.MONTH + "=? and " + DBStructure.YEAR + "=?";
         String[] selectionArgs = {month, year};
 
@@ -122,7 +127,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      * @param database
      */
     public void deleteEvent(String event, String date, String time, SQLiteDatabase database) {
-        String selection = DBStructure.EVENT + "=? and " + DBStructure.DATE + "=? and " + DBStructure.TIME + "=?";
+        String selection = DBStructure.EVENT + "=? and " + DBStructure.DATE + "=? and " + DBStructure.START_TIME + "=?";
         String[] selectionArg = {event, date, time};
         database.delete(DBStructure.EVENT_TABLE_NAME, selection, selectionArg);
     }
@@ -138,7 +143,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public void updateEvent(String date, String event, String time, String notify,  SQLiteDatabase database) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBStructure.Notify, notify);
-        String selection = DBStructure.DATE + "=? and " + DBStructure.EVENT + "=? and " + DBStructure.TIME + "=?";
+        String selection = DBStructure.DATE + "=? and " + DBStructure.EVENT + "=? and " + DBStructure.START_TIME + "=?";
         String[] selectionArgs = {date, event, time};
         database.update(DBStructure.EVENT_TABLE_NAME, contentValues, selection, selectionArgs);
         // add priority here

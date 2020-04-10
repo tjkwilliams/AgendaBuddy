@@ -130,7 +130,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
             super(itemView);
             DateTxt = itemView.findViewById(R.id.eventDate);
             Event = itemView.findViewById(R.id.eventname);
-            Time = itemView.findViewById(R.id.eventtime);
+            Time = itemView.findViewById(R.id.event_start_time);
             delete = itemView.findViewById(R.id.delete);
             setAlarm = itemView.findViewById(R.id.alarmMeBtn);
         }
