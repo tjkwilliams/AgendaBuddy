@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@android:color/white"
-        android:hint="Type Event"
+        android:hint="Title"
         android:autofillHints=""
         android:id="@+id/eventName"
         android:inputType="textShortMessage"
@@ -24,11 +24,11 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_height="40dp"
             android:background="@mipmap/timeicon"
             android:layout_margin="10dp"
-            android:id="@+id/setEventTime"
+            android:id="@+id/setEventStartTime"
             android:contentDescription="TODO"
             android:layout_weight="1"/>
 
@@ -40,7 +40,7 @@
             android:textSize="30sp"
             android:textColor="@android:color/white"
             android:textStyle="bold"
-            android:id="@+id/eventTime"
+            android:id="@+id/eventStartTime"
             android:layout_margin="10dp"
             android:layout_weight="2"/>
 
@@ -51,14 +51,64 @@
             android:text="Notify Me"
             android:textColor="@android:color/white"
             android:buttonTint="@android:color/white"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:paddingBottom="10dp"/>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:background="@mipmap/timeicon"
+            android:layout_margin="10dp"
+            android:id="@+id/setEventEndTime"
+            android:contentDescription="TODO"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00 AM"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:id="@+id/eventEndTime"
+            android:layout_margin="10dp"
+            android:layout_weight="2"/>
+
+        <EditText
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:background="@android:color/white"
+            android:layout_marginRight="13dp"
+            android:paddingBottom="11dp"
+            android:hint="set priority"
+            android:autofillHints=""
+            android:gravity="center"
+            android:id="@+id/eventPriority" />
+
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/white"
+        android:hint="Notes"
+        android:autofillHints=""
+        android:id="@+id/eventNotes"
+        android:layout_margin="20dp"
+        android:gravity="start" />
     
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Event"
+        android:text="Save"
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:textAllCaps="false"
