@@ -61,18 +61,21 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
         assert test != null;
         holder.Event.setText(events.getEVENT());
         holder.DateTxt.setText(events.getDATE());
-        holder.Time.setText(events.getTIME());
+        holder.start_TIME.setText(events.getStartTIME());
+        holder.end_TIME.setText(events.getEndTIME());
+        holder.Priority.setText(events.getPRIORITY());
+        holder.Notes.setText(events.getNOTES());
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteCalendarEvent(events.getEVENT(), events.getDATE(), events.getTIME());
+                deleteCalendarEvent(events.getEVENT(), events.getDATE(), events.getStartTIME());
                 arrayList.remove(position);
                 notifyDataSetChanged();
             }
         });
 
         /* toggle between 'on' and 'off' notification icon */
-        if(isAlarmed(events.getDATE(), events.getEVENT(), events.getTIME())) {
+        if(isAlarmed(events.getDATE(), events.getEVENT(), events.getStartTIME())) {
             holder.setAlarm.setImageResource(R.drawable.ic_action_notification_on);
         } else {
             holder.setAlarm.setImageResource(R.drawable.ic_action_notification_off);
@@ -84,7 +87,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
         final int alarmMonth = dateCalendar.get(Calendar.MONTH);
         final int alarmDay = dateCalendar.get(Calendar.DAY_OF_MONTH);
         Calendar timeCalendar = Calendar.getInstance();
-        timeCalendar.setTime(convertStringToTime(events.getTIME()));
+        timeCalendar.setTime(convertStringToTime(events.getStartTIME()));
         final int alarmHour = timeCalendar.get(Calendar.HOUR_OF_DAY);
         final int alarmMinute = timeCalendar.get(Calendar.MINUTE);
 
@@ -92,17 +95,17 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
         holder.setAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isAlarmed(events.getDATE(), events.getEVENT(), events.getTIME())) {
+                if(isAlarmed(events.getDATE(), events.getEVENT(), events.getStartTIME())) {
                     holder.setAlarm.setImageResource(R.drawable.ic_action_notification_off);
-                    cancelAlarm(getRequestCode(events.getDATE(), events.getEVENT(), events.getTIME()));
-                    updateEvent(events.getDATE(), events.getEVENT(), events.getTIME(), "off");
+                    cancelAlarm(getRequestCode(events.getDATE(), events.getEVENT(), events.getStartTIME()));
+                    updateEvent(events.getDATE(), events.getEVENT(), events.getStartTIME(), "off");
                     notifyDataSetChanged();
                 } else {
                     holder.setAlarm.setImageResource(R.drawable.ic_action_notification_on);
                     Calendar alarmCalendar = Calendar.getInstance();
                     alarmCalendar.set(alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute);
-                    setAlarm(alarmCalendar, events.getEVENT(), events.getTIME(), getRequestCode(events.getDATE(), events.getEVENT(), events.getTIME()));
-                    updateEvent(events.getDATE(), events.getEVENT(), events.getTIME(), "on");
+                    setAlarm(alarmCalendar, events.getEVENT(), events.getStartTIME(), getRequestCode(events.getDATE(), events.getEVENT(), events.getStartTIME()));
+                    updateEvent(events.getDATE(), events.getEVENT(), events.getStartTIME(), "on");
                     notifyDataSetChanged();
 
                 }
@@ -122,7 +125,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
      */
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView DateTxt, Event, Time;
+        TextView DateTxt, Event, start_TIME, end_TIME, Notes, Priority;
         Button delete;
         ImageButton setAlarm;
 
@@ -130,7 +133,10 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
             super(itemView);
             DateTxt = itemView.findViewById(R.id.eventDate);
             Event = itemView.findViewById(R.id.eventname);
-            Time = itemView.findViewById(R.id.event_start_time);
+            start_TIME = itemView.findViewById(R.id.event_start_time);
+            end_TIME = itemView.findViewById(R.id.event_end_time);
+            Notes = itemView.findViewById(R.id.event_notes);
+            Priority = itemView.findViewById(R.id.event_priority);
             delete = itemView.findViewById(R.id.delete);
             setAlarm = itemView.findViewById(R.id.alarmMeBtn);
         }

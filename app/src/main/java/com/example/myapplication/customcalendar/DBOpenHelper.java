@@ -23,7 +23,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_EVENTS_TABLE = "create table " + DBStructure.EVENT_TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,"
             + DBStructure.EVENT + " TEXT, " + DBStructure.START_TIME + " TEXT, " + DBStructure.END_TIME + " TEXT, " + DBStructure.DATE + " TEXT, " + DBStructure.MONTH + " TEXT, "
-            + DBStructure.YEAR + " TEXT, "+DBStructure.Notify + " TEXT, " + DBStructure.PRIORITY + " TEXT, " + DBStructure.NOTES + " TEXT)";
+            + DBStructure.YEAR + " TEXT, "+DBStructure.PRIORITY + " TEXT, " + DBStructure.NOTES + " TEXT, " + DBStructure.Notify + " TEXT)";
 
     private static final String DROP_EVENTS_TABLE = "DROP TABLE IF EXISTS " + DBStructure.EVENT_TABLE_NAME;
 
@@ -59,7 +59,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      * @param notes
      * @param database the SQLite database
      */
-    public void SaveEvent(String event, String startTime, String endTime, String date, String month, String year, String notify, String priority, String notes, SQLiteDatabase database) {
+    public void SaveEvent(String event, String startTime, String endTime, String date, String month, String year, String priority, String notes, String notify, SQLiteDatabase database) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBStructure.EVENT, event);
         contentValues.put(DBStructure.START_TIME, startTime);
@@ -67,9 +67,9 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         contentValues.put(DBStructure.DATE, date);
         contentValues.put(DBStructure.MONTH, month);
         contentValues.put(DBStructure.YEAR, year);
-        contentValues.put(DBStructure.Notify, notify);
         contentValues.put(DBStructure.PRIORITY, priority);
         contentValues.put(DBStructure.NOTES, notes);
+        contentValues.put(DBStructure.Notify, notify);
         database.insert(DBStructure.EVENT_TABLE_NAME, null, contentValues);
     }
 
@@ -146,8 +146,21 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         String selection = DBStructure.DATE + "=? and " + DBStructure.EVENT + "=? and " + DBStructure.START_TIME + "=?";
         String[] selectionArgs = {date, event, time};
         database.update(DBStructure.EVENT_TABLE_NAME, contentValues, selection, selectionArgs);
-        // add priority here
 
+    }
+
+    public void updateEvent(String event, String startTime, String endTime, String date, String month, String year, String priority, String notes, String notify) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBStructure.EVENT, event);
+        contentValues.put(DBStructure.START_TIME, startTime);
+        contentValues.put(DBStructure.END_TIME, endTime);
+        contentValues.put(DBStructure.DATE, date);
+        contentValues.put(DBStructure.MONTH, month);
+        contentValues.put(DBStructure.YEAR, year);
+        contentValues.put(DBStructure.PRIORITY, priority);
+        contentValues.put(DBStructure.NOTES, notes);
+        contentValues.put(DBStructure.Notify, notify);
+        // work in progress here --> want to update all event fields here
     }
 
 }

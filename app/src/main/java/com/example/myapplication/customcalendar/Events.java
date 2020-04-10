@@ -14,42 +14,57 @@ package com.example.myapplication.customcalendar;
  * If your wanna change or have change (i.e commit to gitHub) please tell me so I know (or I guess tell the group as well)
  */
 public class Events {
-    String EVENT, TIME, DATE, MONTH, YEAR;
-    int PRIORITY;
+    String EVENT, startTIME, endTIME, DATE, MONTH, YEAR, PRIORITY, NOTES;
 
     /**
-     * To be most likely used for community events
+     * Old constructor
      * @param EVENT
-     * @param TIME
+     * @param startTIME
      * @param DATE
      * @param MONTH
      * @param YEAR
      */
-    public Events(String EVENT, String TIME, String DATE, String MONTH, String YEAR) {
+    public Events(String EVENT, String startTIME, String DATE, String MONTH, String YEAR) {
         this.EVENT = EVENT;
-        this.TIME = TIME;
+        this.startTIME = startTIME;
         this.DATE = DATE;
         this.MONTH = MONTH;
         this.YEAR = YEAR;
+        PRIORITY = "N/A";
+        NOTES = "";
     }
 
     /**
-     * To be most likely used by personal events
+     * New Constructor
      * @param EVENT
-     * @param TIME
+     * @param startTIME
      * @param DATE
      * @param MONTH
      * @param YEAR
      * @param PRIORITY
      */
-    public Events(String EVENT, String TIME, String DATE, String MONTH, String YEAR, int PRIORITY) {
+    public Events(String EVENT, String startTIME, String endTIME, String DATE, String MONTH, String YEAR, String PRIORITY, String NOTES) {
         this.EVENT = EVENT;
-        this.TIME = TIME;
+        this.startTIME = startTIME;
+        this.endTIME = endTIME;
         this.DATE = DATE;
         this.MONTH = MONTH;
         this.YEAR = YEAR;
         this.PRIORITY = PRIORITY;
+        this.NOTES = NOTES;
     }
+
+    public Events(String EVENT, String startTIME, String endTIME, String DATE, String MONTH, String YEAR) {
+        this.EVENT = EVENT;
+        this.startTIME = startTIME;
+        this.endTIME = endTIME;
+        this.DATE = DATE;
+        this.MONTH = MONTH;
+        this.YEAR = YEAR;
+        this.PRIORITY = "N/A";
+        this.NOTES = "";
+    }
+
 
     public String getEVENT() {
         return EVENT;
@@ -59,12 +74,20 @@ public class Events {
         this.EVENT = EVENT;
     }
 
-    public String getTIME() {
-        return TIME;
+    public String getStartTIME() {
+        return startTIME;
     }
 
-    public void setTIME(String TIME) {
-        this.TIME = TIME;
+    public void setStartTIME(String startTIME) {
+        this.startTIME = startTIME;
+    }
+
+    public String getEndTIME() {
+        return endTIME;
+    }
+
+    public void setEndTIME(String endTIME) {
+        this.endTIME = endTIME;
     }
 
     public String getDATE() {
@@ -91,11 +114,19 @@ public class Events {
         this.YEAR = YEAR;
     }
 
-    public int getPRIORITY() {
+    public String getPRIORITY() {
         return PRIORITY;
     }
 
-    public void setPRIORITY(int PRIORITY) {
+    public void setPRIORITY(String PRIORITY) {
         this.PRIORITY = PRIORITY;
+    }
+
+    public String getNOTES() {
+        return NOTES;
+    }
+
+    public void setNOTES(String NOTES) {
+        this.NOTES = NOTES;
     }
 }

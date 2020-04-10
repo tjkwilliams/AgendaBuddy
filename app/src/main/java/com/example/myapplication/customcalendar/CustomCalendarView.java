@@ -204,7 +204,7 @@ public class CustomCalendarView extends LinearLayout {
 
                         /* check if the 'notify me' checkbox is checked or not --> basically check if user wants to be notified or not */
                         if(alarmMe.isChecked()) {
-                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year,"on", eventPriority.getText().toString(), eventNotes.getText().toString());
+                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on");
                             SetUpCalendar();
                             Calendar calendar = Calendar.getInstance();
                             calendar.set(alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute);
@@ -212,7 +212,7 @@ public class CustomCalendarView extends LinearLayout {
                                 , eventName.getText().toString(), eventStartTime.getText().toString()));
                             alertDialog.dismiss();
                         } else {
-                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year,"off", eventPriority.getText().toString(), eventNotes.getText().toString());
+                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off");
                             SetUpCalendar();
                             alertDialog.dismiss();
                         }
@@ -315,12 +315,14 @@ public class CustomCalendarView extends LinearLayout {
         Cursor cursor = dbOpenHelper.readEvents(date, database);
         while(cursor.moveToNext()) {
             String event = cursor.getString(cursor.getColumnIndex(DBStructure.EVENT));
-            String time = cursor.getString(cursor.getColumnIndex(DBStructure.START_TIME));
+            String startTime = cursor.getString(cursor.getColumnIndex(DBStructure.START_TIME));
+            String endTime = cursor.getString(cursor.getColumnIndex(DBStructure.END_TIME));
             String Date = cursor.getString(cursor.getColumnIndex(DBStructure.DATE));
             String month = cursor.getString(cursor.getColumnIndex(DBStructure.MONTH));
             String year = cursor.getString(cursor.getColumnIndex(DBStructure.YEAR));
-            // need to add priority here
-            Events events = new Events(event,time, Date, month, year);
+            //String priority = cursor.getString(cursor.getColumnIndex(DBStructure.PRIORITY));
+            //String notes = cursor.getString(cursor.getColumnIndex(DBStructure.NOTES));
+            Events events = new Events(event, startTime, endTime, Date, month, year);
             arrayList.add(events);
         }
         cursor.close();
@@ -354,11 +356,10 @@ public class CustomCalendarView extends LinearLayout {
      * @param priority
      * @param notes
      */
-    private void saveEvent(String event, String startTime, String endTime, String date, String month, String year, String notify, String priority, String notes) {
+    private void saveEvent(String event, String startTime, String endTime, String date, String month, String year, String priority, String notes, String notify) {
         dbOpenHelper = new DBOpenHelper(context);
         SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
-        // need to add priority here
-        dbOpenHelper.SaveEvent(event, startTime, endTime, date, month, year, notify, priority, notes, database);
+        dbOpenHelper.SaveEvent(event, startTime, endTime, date, month, year, priority, notes, notify, database);
         dbOpenHelper.close();
         Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
     }
@@ -414,11 +415,14 @@ public class CustomCalendarView extends LinearLayout {
         Cursor cursor = dbOpenHelper.readEventsPerMonth(Month, Year, database);
         while(cursor.moveToNext()) {
             String event = cursor.getString(cursor.getColumnIndex(DBStructure.EVENT));
-            String time = cursor.getString(cursor.getColumnIndex(DBStructure.START_TIME));
+            String startTime = cursor.getString(cursor.getColumnIndex(DBStructure.START_TIME));
+            String endTime = cursor.getString(cursor.getColumnIndex(DBStructure.END_TIME));
             String date = cursor.getString(cursor.getColumnIndex(DBStructure.DATE));
             String month = cursor.getString(cursor.getColumnIndex(DBStructure.MONTH));
             String year = cursor.getString(cursor.getColumnIndex(DBStructure.YEAR));
-            Events events = new Events(event, time, date, month, year);
+            //String priority = cursor.getString(cursor.getColumnIndex(DBStructure.PRIORITY));
+            //String notes = cursor.getString(cursor.getColumnIndex(DBStructure.NOTES));
+            Events events = new Events(event, startTime, endTime, date, month, year);
             eventsList.add(events);
         }
         cursor.close();
