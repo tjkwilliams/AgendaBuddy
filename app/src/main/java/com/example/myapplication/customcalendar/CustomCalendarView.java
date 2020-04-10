@@ -283,6 +283,7 @@ public class CustomCalendarView extends LinearLayout {
             String Date = cursor.getString(cursor.getColumnIndex(DBStructure.DATE));
             String month = cursor.getString(cursor.getColumnIndex(DBStructure.MONTH));
             String year = cursor.getString(cursor.getColumnIndex(DBStructure.YEAR));
+            // need to add priority here
             Events events = new Events(event,time, Date, month, year);
             arrayList.add(events);
         }
@@ -317,6 +318,7 @@ public class CustomCalendarView extends LinearLayout {
     private void saveEvent(String event, String time, String date, String month, String year, String notify) {
         dbOpenHelper = new DBOpenHelper(context);
         SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
+        // need to add priority here
         dbOpenHelper.SaveEvent(event, time, date, month, year, notify, database);
         dbOpenHelper.close();
         Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
@@ -361,7 +363,7 @@ public class CustomCalendarView extends LinearLayout {
     }
 
     /**
-     * Get (and i think displays) all the events on the month we are in
+     * Get all the events on the month we are in
      *
      * @param Month the month displayed on the calendar
      * @param Year the year displayed on the calendar

@@ -22,4 +22,5 @@ public class DBStructure {
     public static final String YEAR = "year";
     public static final String ID = "ID";
     public static final String Notify = "notify";
+    // add priority here
 }

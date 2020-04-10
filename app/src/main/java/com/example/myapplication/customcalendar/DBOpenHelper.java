@@ -64,6 +64,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         contentValues.put(DBStructure.MONTH, month);
         contentValues.put(DBStructure.YEAR, year);
         contentValues.put(DBStructure.Notify, notify);
+        // need to add priority here
         database.insert(DBStructure.EVENT_TABLE_NAME, null, contentValues);
     }
 
@@ -95,7 +96,6 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         String[] projections = {DBStructure.ID, DBStructure.Notify};
         String selection = DBStructure.DATE + "=? and " + DBStructure.EVENT + "=? and " + DBStructure.TIME + "=?";
         String[] selectionArgs = {date, event, time};
-
         return database.query(DBStructure.EVENT_TABLE_NAME, projections, selection, selectionArgs, null, null, null);
     }
 
@@ -141,6 +141,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         String selection = DBStructure.DATE + "=? and " + DBStructure.EVENT + "=? and " + DBStructure.TIME + "=?";
         String[] selectionArgs = {date, event, time};
         database.update(DBStructure.EVENT_TABLE_NAME, contentValues, selection, selectionArgs);
+        // add priority here
+
     }
 
 }

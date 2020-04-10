@@ -15,13 +15,40 @@ package com.example.myapplication.customcalendar;
  */
 public class Events {
     String EVENT, TIME, DATE, MONTH, YEAR;
+    int PRIORITY;
 
+    /**
+     * To be most likely used for community events
+     * @param EVENT
+     * @param TIME
+     * @param DATE
+     * @param MONTH
+     * @param YEAR
+     */
     public Events(String EVENT, String TIME, String DATE, String MONTH, String YEAR) {
         this.EVENT = EVENT;
         this.TIME = TIME;
         this.DATE = DATE;
         this.MONTH = MONTH;
         this.YEAR = YEAR;
+    }
+
+    /**
+     * To be most likely used by personal events
+     * @param EVENT
+     * @param TIME
+     * @param DATE
+     * @param MONTH
+     * @param YEAR
+     * @param PRIORITY
+     */
+    public Events(String EVENT, String TIME, String DATE, String MONTH, String YEAR, int PRIORITY) {
+        this.EVENT = EVENT;
+        this.TIME = TIME;
+        this.DATE = DATE;
+        this.MONTH = MONTH;
+        this.YEAR = YEAR;
+        this.PRIORITY = PRIORITY;
     }
 
     public String getEVENT() {
@@ -62,5 +89,13 @@ public class Events {
 
     public void setYEAR(String YEAR) {
         this.YEAR = YEAR;
+    }
+
+    public int getPRIORITY() {
+        return PRIORITY;
+    }
+
+    public void setPRIORITY(int PRIORITY) {
+        this.PRIORITY = PRIORITY;
     }
 }
