@@ -1,9 +1,5 @@
 package com.example.myapplication.customcalendar;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
 /**
  * Part of the open source code
  *
@@ -17,32 +13,58 @@ import androidx.room.PrimaryKey;
  * ask me (Brian) for more info and I'll try to explain
  * If your wanna change or have change (i.e commit to gitHub) please tell me so I know (or I guess tell the group as well)
  */
-@Entity(tableName = "academic_events")
 public class Events {
-    @PrimaryKey(autoGenerate = true) //will automatically generate a new, unique key for each event
-    private int id; //will act as primary key in SQLite database
+    String EVENT, startTIME, endTIME, DATE, MONTH, YEAR, PRIORITY, NOTES;
 
-    @ColumnInfo(name = "title")
-    private String title;
-
-    String EVENT, TIME, DATE, MONTH, YEAR;
-
-    public Events(String EVENT, String TIME, String DATE, String MONTH, String YEAR) {
+    /**
+     * Old constructor
+     * @param EVENT
+     * @param startTIME
+     * @param DATE
+     * @param MONTH
+     * @param YEAR
+     */
+    public Events(String EVENT, String startTIME, String DATE, String MONTH, String YEAR) {
         this.EVENT = EVENT;
-        this.TIME = TIME;
+        this.startTIME = startTIME;
         this.DATE = DATE;
         this.MONTH = MONTH;
         this.YEAR = YEAR;
-        this.title = EVENT;
+        PRIORITY = "N/A";
+        NOTES = "";
     }
 
-    public int getId() {
-        return id;
+    /**
+     * New Constructor
+     * @param EVENT
+     * @param startTIME
+     * @param DATE
+     * @param MONTH
+     * @param YEAR
+     * @param PRIORITY
+     */
+    public Events(String EVENT, String startTIME, String endTIME, String DATE, String MONTH, String YEAR, String PRIORITY, String NOTES) {
+        this.EVENT = EVENT;
+        this.startTIME = startTIME;
+        this.endTIME = endTIME;
+        this.DATE = DATE;
+        this.MONTH = MONTH;
+        this.YEAR = YEAR;
+        this.PRIORITY = PRIORITY;
+        this.NOTES = NOTES;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Events(String EVENT, String startTIME, String endTIME, String DATE, String MONTH, String YEAR) {
+        this.EVENT = EVENT;
+        this.startTIME = startTIME;
+        this.endTIME = endTIME;
+        this.DATE = DATE;
+        this.MONTH = MONTH;
+        this.YEAR = YEAR;
+        this.PRIORITY = "N/A";
+        this.NOTES = "";
     }
+
 
     public String getEVENT() {
         return EVENT;
@@ -52,12 +74,20 @@ public class Events {
         this.EVENT = EVENT;
     }
 
-    public String getTIME() {
-        return TIME;
+    public String getStartTIME() {
+        return startTIME;
     }
 
-    public void setTIME(String TIME) {
-        this.TIME = TIME;
+    public void setStartTIME(String startTIME) {
+        this.startTIME = startTIME;
+    }
+
+    public String getEndTIME() {
+        return endTIME;
+    }
+
+    public void setEndTIME(String endTIME) {
+        this.endTIME = endTIME;
     }
 
     public String getDATE() {
@@ -82,5 +112,21 @@ public class Events {
 
     public void setYEAR(String YEAR) {
         this.YEAR = YEAR;
+    }
+
+    public String getPRIORITY() {
+        return PRIORITY;
+    }
+
+    public void setPRIORITY(String PRIORITY) {
+        this.PRIORITY = PRIORITY;
+    }
+
+    public String getNOTES() {
+        return NOTES;
+    }
+
+    public void setNOTES(String NOTES) {
+        this.NOTES = NOTES;
     }
 }
