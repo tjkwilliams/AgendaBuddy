@@ -13,13 +13,16 @@ package com.example.myapplication.customcalendar;
  */
 public class DBStructure {
     public static final String DB_NAME = "EVENTS_DB";
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 4;
     public static final String EVENT_TABLE_NAME = "eventsTable";
     public static final String EVENT = "event";
-    public static final String TIME = "time";
+    public static final String START_TIME = "startTime";
+    public static final String END_TIME = "endTime";
     public static final String DATE = "date";
     public static final String MONTH = "month";
     public static final String YEAR = "year";
+    public static final String PRIORITY = "priority";
+    public static final String NOTES = "notes";
     public static final String ID = "ID";
     public static final String Notify = "notify";
 }
