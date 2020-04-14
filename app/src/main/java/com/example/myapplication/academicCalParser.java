@@ -1,5 +1,8 @@
 package com.example.myapplication;
 
+import android.os.AsyncTask;
+
+import com.example.myapplication.connect.StoreCommunityEvent;
 import com.example.myapplication.customcalendar.Events;
 
 import java.io.IOException;
@@ -30,6 +33,8 @@ public class academicCalParser {
             //a new event representing this data
             Events n = new Events(t.text(), "", "", day, month, year, "", "");
             //eventList.add(n);
+
+
         }
     }
 }
