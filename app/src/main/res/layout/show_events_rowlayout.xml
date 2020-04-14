@@ -50,12 +50,12 @@
                     android:textStyle="bold"
                     android:text="Start: "
                     android:textSize="20dp"
-                    android:layout_marginLeft="20dp"/>
+                    android:layout_marginLeft="15dp"/>
 
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:textColor="@android:color/holo_green_dark"
                     android:id="@+id/event_start_time"
                     android:textStyle="bold"
@@ -70,12 +70,12 @@
                     android:textStyle="bold"
                     android:text="End: "
                     android:textSize="20dp"
-                    android:layout_marginLeft="12dp"/>
+                    android:layout_marginLeft="10dp"/>
 
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:textColor="@android:color/holo_green_dark"
                     android:id="@+id/event_end_time"
                     android:textStyle="bold"
@@ -86,6 +86,16 @@
             </LinearLayout>
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Notes:"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@android:color/black"/>
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
@@ -93,8 +103,10 @@
                 android:id="@+id/event_notes"
                 android:text="No notes added"
                 android:textSize="15dp"
-                android:background="@android:color/darker_gray"
-                android:layout_margin="20dp"/>
+                android:background="@drawable/text_border"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="5dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -110,7 +122,7 @@
                     android:text="Priority Level: "
                     android:textSize="20dp"
                     android:layout_marginTop="15dp"
-                    android:layout_marginLeft="20dp"/>
+                    android:layout_marginLeft="15dp"/>
 
                 <TextView
                     android:layout_width="100dp"

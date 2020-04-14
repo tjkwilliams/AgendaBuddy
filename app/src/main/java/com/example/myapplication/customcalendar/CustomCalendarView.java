@@ -320,9 +320,9 @@ public class CustomCalendarView extends LinearLayout {
             String Date = cursor.getString(cursor.getColumnIndex(DBStructure.DATE));
             String month = cursor.getString(cursor.getColumnIndex(DBStructure.MONTH));
             String year = cursor.getString(cursor.getColumnIndex(DBStructure.YEAR));
-            //String priority = cursor.getString(cursor.getColumnIndex(DBStructure.PRIORITY));
-            //String notes = cursor.getString(cursor.getColumnIndex(DBStructure.NOTES));
-            Events events = new Events(event, startTime, endTime, Date, month, year);
+            String priority = cursor.getString(cursor.getColumnIndex(DBStructure.PRIORITY));
+            String notes = cursor.getString(cursor.getColumnIndex(DBStructure.NOTES));
+            Events events = new Events(event, startTime, endTime, Date, month, year, priority, notes);
             arrayList.add(events);
         }
         cursor.close();
@@ -420,9 +420,9 @@ public class CustomCalendarView extends LinearLayout {
             String date = cursor.getString(cursor.getColumnIndex(DBStructure.DATE));
             String month = cursor.getString(cursor.getColumnIndex(DBStructure.MONTH));
             String year = cursor.getString(cursor.getColumnIndex(DBStructure.YEAR));
-            //String priority = cursor.getString(cursor.getColumnIndex(DBStructure.PRIORITY));
-            //String notes = cursor.getString(cursor.getColumnIndex(DBStructure.NOTES));
-            Events events = new Events(event, startTime, endTime, date, month, year);
+            String priority = cursor.getString(cursor.getColumnIndex(DBStructure.PRIORITY));
+            String notes = cursor.getString(cursor.getColumnIndex(DBStructure.NOTES));
+            Events events = new Events(event, startTime, endTime, date, month, year, priority, notes);
             eventsList.add(events);
         }
         cursor.close();
