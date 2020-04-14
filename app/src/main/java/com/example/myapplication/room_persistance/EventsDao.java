@@ -21,12 +21,13 @@ public interface EventsDao {
     @Insert
     void insertEvents(Events[] events); //to insert a list of events
 
+    /*
     @Query("SELECT * FROM academic_events")
     //a query to select all the events from the table academic_events
     //live data will allow you to update in real time, meaning the app will
     //be notified if there is a change, and it will update user's calendar accordingly
     LiveData<List<Events>> getEvents();
-
+*/
     @Delete
     int delete(Events[] events);
 
