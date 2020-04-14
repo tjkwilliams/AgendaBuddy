@@ -27,7 +27,7 @@
             android:layout_width="30dp"
             android:layout_height="40dp"
             android:background="@mipmap/timeicon"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:id="@+id/setEventStartTime"
             android:contentDescription="TODO"
             android:layout_weight="1"/>
@@ -41,7 +41,7 @@
             android:textColor="@android:color/white"
             android:textStyle="bold"
             android:id="@+id/eventStartTime"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:layout_weight="2"/>
 
         <CheckBox
@@ -51,8 +51,7 @@
             android:text="Notify Me"
             android:textColor="@android:color/white"
             android:buttonTint="@android:color/white"
-            android:layout_weight="1"
-            android:paddingBottom="10dp"/>
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -65,7 +64,7 @@
             android:layout_width="30dp"
             android:layout_height="40dp"
             android:background="@mipmap/timeicon"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:id="@+id/setEventEndTime"
             android:contentDescription="TODO"
             android:layout_weight="1"/>
@@ -79,16 +78,16 @@
             android:textColor="@android:color/white"
             android:textStyle="bold"
             android:id="@+id/eventEndTime"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:layout_weight="2"/>
 
         <EditText
-            android:layout_width="110dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
             android:background="@android:color/white"
-            android:layout_marginRight="13dp"
-            android:paddingBottom="11dp"
-            android:hint="set priority"
+            android:layout_marginRight="11dp"
+            android:hint="low/med/high"
+            android:textSize="15sp"
             android:autofillHints=""
             android:gravity="center"
             android:id="@+id/eventPriority" />
@@ -102,7 +101,7 @@
         android:hint="Notes"
         android:autofillHints=""
         android:id="@+id/eventNotes"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:gravity="start" />
     
     <Button
