@@ -1,8 +1,10 @@
 package com.example.myapplication.ui.events;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -61,6 +63,8 @@ public class CreateEventFragment extends Fragment implements AdapterView.OnItemS
     TimePicker endTime;
 
     String date;
+    String startTimeStr;
+    String endTimeStr;
 
 
     // TODO: Rename and change types of parameters
@@ -119,6 +123,7 @@ public class CreateEventFragment extends Fragment implements AdapterView.OnItemS
         return inflater.inflate(R.layout.fragment_create_event, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.createButton){
@@ -131,7 +136,7 @@ public class CreateEventFragment extends Fragment implements AdapterView.OnItemS
             String name = nameText.getText().toString();
 
             date = "" + startDatePicker.getYear() + startDatePicker.getMonth() + startDatePicker.getDayOfMonth();
-
+            startTimeStr = "" + startTime.getHour() + startTime.getMinute();
 
             //events.add(new Event(name, , , priority));
 
@@ -174,7 +179,7 @@ public class CreateEventFragment extends Fragment implements AdapterView.OnItemS
     EditText inputDesc;
 
     // url to create new product
-    private static String url_create_product = "http://18.233.165.117/event-connect/db_connect.php";
+    private static String url_create_product = "http://18.233.165.117/event-connect/create_event.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -206,7 +211,8 @@ public class CreateEventFragment extends Fragment implements AdapterView.OnItemS
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("name", title));
             params.add(new BasicNameValuePair("date", date));
-            params.add(new BasicNameValuePair("description", description));
+            params.add(new BasicNameValuePair("startTime", startTimeStr));
+
 
             // getting JSON Object
             // Note that create product url accepts POST method
