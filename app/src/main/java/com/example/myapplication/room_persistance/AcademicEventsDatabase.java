@@ -37,4 +37,7 @@ public abstract class AcademicEventsDatabase extends RoomDatabase {
         return instance;
     }
 
+    public abstract EventsDao getEventsDao();
+
+
 }

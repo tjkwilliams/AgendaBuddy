@@ -1,5 +1,9 @@
 package com.example.myapplication.customcalendar;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 /**
  * Part of the open source code
  *
@@ -13,8 +17,15 @@ package com.example.myapplication.customcalendar;
  * ask me (Brian) for more info and I'll try to explain
  * If your wanna change or have change (i.e commit to gitHub) please tell me so I know (or I guess tell the group as well)
  */
+@Entity(tableName = "academic_events")
 public class Events {
     String EVENT, startTIME, endTIME, DATE, MONTH, YEAR, PRIORITY, NOTES;
+
+    @PrimaryKey(autoGenerate = true) //will automatically generate a new, unique key for each event
+    private int id; //will act as primary key in SQLite database
+
+    @ColumnInfo(name = "title")
+    private String title;
 
     /**
      * Old constructor
