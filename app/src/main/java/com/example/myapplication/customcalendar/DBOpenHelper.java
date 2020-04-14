@@ -81,7 +81,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      * @return a query --> the data fetched from the database (im guessing)
      */
     public Cursor readEvents(String date, SQLiteDatabase database) {
-        String[] projections = {DBStructure.EVENT, DBStructure.START_TIME, DBStructure.END_TIME, DBStructure.DATE, DBStructure.MONTH, DBStructure.YEAR};
+        String[] projections = {DBStructure.EVENT, DBStructure.START_TIME, DBStructure.END_TIME, DBStructure.DATE, DBStructure.MONTH, DBStructure.YEAR, DBStructure.PRIORITY, DBStructure.NOTES};
         String selection = DBStructure.DATE + "=?";
         String[] selectionArgs = {date};
 
@@ -112,7 +112,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      * @return
      */
     public Cursor readEventsPerMonth(String month, String year, SQLiteDatabase database) {
-        String[] projections = {DBStructure.EVENT, DBStructure.START_TIME, DBStructure.END_TIME, DBStructure.DATE, DBStructure.MONTH, DBStructure.YEAR};
+        String[] projections = {DBStructure.EVENT, DBStructure.START_TIME, DBStructure.END_TIME, DBStructure.DATE, DBStructure.MONTH, DBStructure.YEAR, DBStructure.PRIORITY, DBStructure.NOTES};
         String selection = DBStructure.MONTH + "=? and " + DBStructure.YEAR + "=?";
         String[] selectionArgs = {month, year};
 

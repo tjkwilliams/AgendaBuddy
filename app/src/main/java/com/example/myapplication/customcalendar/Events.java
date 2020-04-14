@@ -1,5 +1,8 @@
 package com.example.myapplication.customcalendar;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 /**
  * Part of the open source code
  *
@@ -13,26 +16,13 @@ package com.example.myapplication.customcalendar;
  * ask me (Brian) for more info and I'll try to explain
  * If your wanna change or have change (i.e commit to gitHub) please tell me so I know (or I guess tell the group as well)
  */
+@Entity
 public class Events {
-    String EVENT, startTIME, endTIME, DATE, MONTH, YEAR, PRIORITY, NOTES;
 
-    /**
-     * Old constructor
-     * @param EVENT
-     * @param startTIME
-     * @param DATE
-     * @param MONTH
-     * @param YEAR
-     */
-    public Events(String EVENT, String startTIME, String DATE, String MONTH, String YEAR) {
-        this.EVENT = EVENT;
-        this.startTIME = startTIME;
-        this.DATE = DATE;
-        this.MONTH = MONTH;
-        this.YEAR = YEAR;
-        PRIORITY = "N/A";
-        NOTES = "";
-    }
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    private String EVENT, startTIME, endTIME, DATE, MONTH, YEAR, PRIORITY, NOTES;
 
     /**
      * New Constructor
@@ -54,17 +44,13 @@ public class Events {
         this.NOTES = NOTES;
     }
 
-    public Events(String EVENT, String startTIME, String endTIME, String DATE, String MONTH, String YEAR) {
-        this.EVENT = EVENT;
-        this.startTIME = startTIME;
-        this.endTIME = endTIME;
-        this.DATE = DATE;
-        this.MONTH = MONTH;
-        this.YEAR = YEAR;
-        this.PRIORITY = "N/A";
-        this.NOTES = "";
+    public int getId() {
+        return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getEVENT() {
         return EVENT;
