@@ -4,7 +4,6 @@ import com.example.myapplication.customcalendar.Events;
 import com.example.myapplication.room_persistance.AcEventRepo;
 
 import java.io.IOException;
-import java.util.LinkedList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -34,6 +33,8 @@ public class academicCalParser {
             //a new event representing this data
             Events n = new Events(t.text(), "", "", day, month, year, "", "");
             //eventList.add(n);
+
+
         }
     }
 }
