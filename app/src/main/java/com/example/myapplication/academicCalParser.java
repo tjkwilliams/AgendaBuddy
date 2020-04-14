@@ -1,12 +1,8 @@
 package com.example.myapplication;
 
-import android.os.AsyncTask;
-
-import com.example.myapplication.connect.StoreCommunityEvent;
 import com.example.myapplication.customcalendar.Events;
 
 import java.io.IOException;
-import java.util.LinkedList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
