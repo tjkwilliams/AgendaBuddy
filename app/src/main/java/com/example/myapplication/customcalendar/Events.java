@@ -44,6 +44,13 @@ public class Events {
         this.NOTES = NOTES;
     }
 
+    /*
+    * Empty constructor to be used for parsing
+     */
+    public Events(){
+
+    }
+
     public int getId() {
         return id;
     }
