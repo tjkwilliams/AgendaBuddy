@@ -65,6 +65,7 @@ public class CreateEventFragment extends Fragment implements AdapterView.OnItemS
     String date;
     String startTimeStr;
     String endTimeStr;
+    String location;
 
 
     // TODO: Rename and change types of parameters
@@ -135,8 +136,10 @@ public class CreateEventFragment extends Fragment implements AdapterView.OnItemS
 
             String name = nameText.getText().toString();
 
-            date = "" + startDatePicker.getYear() + startDatePicker.getMonth() + startDatePicker.getDayOfMonth();
+            date = "" + startDatePicker.getYear() + "-" + startDatePicker.getMonth() + "-" +  startDatePicker.getDayOfMonth();
             startTimeStr = "" + startTime.getHour() + startTime.getMinute();
+            endTimeStr = "" + endTime.getHour() + endTime.getMinute();
+
 
             //events.add(new Event(name, , , priority));
 
@@ -209,10 +212,11 @@ public class CreateEventFragment extends Fragment implements AdapterView.OnItemS
 
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("name", title));
-            params.add(new BasicNameValuePair("date", date));
+            params.add(new BasicNameValuePair("title", title));
+            params.add(new BasicNameValuePair("location", location));
             params.add(new BasicNameValuePair("startTime", startTimeStr));
-
+            params.add(new BasicNameValuePair("endTime", endTimeStr));
+            params.add(new BasicNameValuePair("date", date));
 
             // getting JSON Object
             // Note that create product url accepts POST method
