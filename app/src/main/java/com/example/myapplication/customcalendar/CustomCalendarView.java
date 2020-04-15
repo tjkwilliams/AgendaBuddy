@@ -371,8 +371,13 @@ public class CustomCalendarView extends LinearLayout {
     }
 
     public void setAllAcademic() throws IOException {
+
+        Toast.makeText(context, "In setAll", Toast.LENGTH_SHORT).show();
+
         ArrayList<Events> e = addAllAcEvents();
+
         Toast.makeText(context, "success", Toast.LENGTH_SHORT).show();
+
         for(int i=0; i<e.size(); i++){
             Events n = e.get(i);
             saveEvent(n.getEVENT(), "", "", n.getDATE(), n.getMONTH(), n.getYEAR(), "low", "", "off" );
@@ -382,9 +387,15 @@ public class CustomCalendarView extends LinearLayout {
         A method to connect to wheaton website and put all academic events on the user's calendar in app
          */
     private ArrayList<Events> addAllAcEvents() throws IOException {
+
+        Toast.makeText(context, "In addAll", Toast.LENGTH_SHORT).show();
+
+
         Document doc;
         doc = Jsoup.connect("https://25livepub.collegenet.com/calendars/event-collections-general_calendar_wp.rss").get();
         System.out.println(doc.title());
+
+        Toast.makeText(context, "after url", Toast.LENGTH_SHORT).show();
 
         //will hold all the new events
         ArrayList<Events> academicEvents = new ArrayList<Events>();
@@ -392,6 +403,10 @@ public class CustomCalendarView extends LinearLayout {
         String day = "", month = "", year = "";
         Elements items = doc.getElementsByTag("item");
         Events n;
+
+        Toast.makeText(context, "before for loop", Toast.LENGTH_SHORT).show();
+
+
         for (Element item : items) {
             Elements t = item.getElementsByTag("title");
             System.out.println(t.text());
@@ -400,7 +415,9 @@ public class CustomCalendarView extends LinearLayout {
             month = d.text().substring(5, 7);
             day = d.text().substring(8, 10);
 
+            //academicEvents.add(new Events(t.text(), "00:00 AM", "00:00 AM", day, month, year, "low", ""));
             academicEvents.add(new Events(t.text(), "00:00 AM", "00:00 AM", day, month, year, "low", ""));
+
 
             //a new event representing this data
             //n = new Events(t.text(), "", day, month, year);
@@ -408,6 +425,9 @@ public class CustomCalendarView extends LinearLayout {
             //mRepo.insertEventTask(n);
             //customCalendarView.saveEvent(t.text(), "", "", day, month, year, "", "" ,"");
         }
+
+        Toast.makeText(context, "after for loop", Toast.LENGTH_SHORT).show();
+
 
         return academicEvents;
     }
