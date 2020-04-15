@@ -366,17 +366,16 @@ public class CustomCalendarView extends LinearLayout {
         dbOpenHelper = new DBOpenHelper(context);
         SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
         dbOpenHelper.SaveEvent(event, startTime, endTime, date, month, year, priority, notes, notify, database);
-        Toast.makeText(context, startTime + " " + notify, Toast.LENGTH_SHORT).show();
-
         dbOpenHelper.close();
         Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
     }
 
     public void setAllAcademic() throws IOException {
         ArrayList<Events> e = addAllAcEvents();
+        Toast.makeText(context, "success", Toast.LENGTH_SHORT).show();
         for(int i=0; i<e.size(); i++){
             Events n = e.get(i);
-            saveEvent(n.getEVENT(), "", "", n.getDATE(), n.getMONTH(), n.getYEAR(), "low", "none", "true" );
+            saveEvent(n.getEVENT(), "", "", n.getDATE(), n.getMONTH(), n.getYEAR(), "low", "", "off" );
         }
     }
     /*
@@ -390,7 +389,7 @@ public class CustomCalendarView extends LinearLayout {
         //will hold all the new events
         ArrayList<Events> academicEvents = new ArrayList<Events>();
 
-        String day, month, year;
+        String day = "", month = "", year = "";
         Elements items = doc.getElementsByTag("item");
         Events n;
         for (Element item : items) {
@@ -401,7 +400,7 @@ public class CustomCalendarView extends LinearLayout {
             month = d.text().substring(5, 7);
             day = d.text().substring(8, 10);
 
-            academicEvents.add(new Events(t.text(), "", "", day, month, year, "low", "none" ));
+            academicEvents.add(new Events(t.text(), "00:00 AM", "00:00 AM", day, month, year, "low", ""));
 
             //a new event representing this data
             //n = new Events(t.text(), "", day, month, year);
@@ -409,6 +408,7 @@ public class CustomCalendarView extends LinearLayout {
             //mRepo.insertEventTask(n);
             //customCalendarView.saveEvent(t.text(), "", "", day, month, year, "", "" ,"");
         }
+
         return academicEvents;
     }
     /**
@@ -429,6 +429,13 @@ public class CustomCalendarView extends LinearLayout {
     private void SetUpCalendar() {
         String dateCurrent = dateFormat.format(calendar.getTime());
         currentDate.setText(dateCurrent);
+
+        try{
+            setAllAcademic();
+        } catch (Exception e) {
+            Toast.makeText(context, "setAllAcademic() Error", Toast.LENGTH_SHORT).show();
+        }
+
 
         /* fills in the days of the month in the gridView */
         dates.clear();
