@@ -22,7 +22,8 @@ public class GetEventFromDB {
 
             rs = stmt.executeQuery("SELECT * FROM events");
             while (rs.next()) {
-                toReturn.add(new Events());
+                toReturn.add(new Events(rs.getString("title"),
+                        rs.getTime("startTime"), rs.getTime("endTime")));
             }
             conn.close();
         } catch (
