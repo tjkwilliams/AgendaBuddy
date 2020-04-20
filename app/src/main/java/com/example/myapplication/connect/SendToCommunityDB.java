@@ -19,6 +19,7 @@ public class SendToCommunityDB {
 
             String query = "INSERT INTO community(title, startTime, endTime, eventDate) " +
                     "VALUES (" + title + "," + startTime + "," + endTime + "," + startTime + ");";
+
             // insert the data
             statement.executeUpdate(query);
 
