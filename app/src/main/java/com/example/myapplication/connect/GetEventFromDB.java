@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 
@@ -16,7 +15,7 @@ public class GetEventFromDB {
     public static Set<Events> getEventData(int eventId)
 
     {
-        Connection conn = Connect.getConnection();
+        Connection conn = DBConnect.getConnection();
         Set<Events> toReturn = new HashSet<>();
         try {
             Statement stmt = conn.createStatement();
