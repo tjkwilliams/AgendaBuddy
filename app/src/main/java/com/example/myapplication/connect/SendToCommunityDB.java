@@ -11,7 +11,7 @@ public class SendToCommunityDB {
     public void send(String title, String startTime, String endTime, String date) {
 
         Connection conn;
-        conn = ConnectToDB.getConnection();
+        conn = DBConnect.getConnection();
 
         try {
             // create a Statement from the connection

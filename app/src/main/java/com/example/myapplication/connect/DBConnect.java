@@ -5,8 +5,9 @@ import java.sql.*;
 
 public class DBConnect {
 
-        public static Connection getConnection(){
-            Connection conn=null;
+    static Connection conn;
+
+    private DBConnect(){
 
             try{
                 // Step 1: "Load" the JDBC driver
@@ -21,7 +22,9 @@ public class DBConnect {
                 System.err.println(e.getMessage());
                 e.printStackTrace();
             }
+    }
 
-            return conn;
-        }
+    public static Connection getConnection(){
+        return conn;
+    }
 }
