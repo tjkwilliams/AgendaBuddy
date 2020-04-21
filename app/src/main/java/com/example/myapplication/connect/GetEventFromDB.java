@@ -16,7 +16,7 @@ public class GetEventFromDB {
     public static Set<Events> getEventData(int eventId)
 
     {
-        Connection conn = ConnectToDB.getConnection();
+        Connection conn = Connect.getConnection();
         Set<Events> toReturn = new HashSet<>();
         try {
             Statement stmt = conn.createStatement();
