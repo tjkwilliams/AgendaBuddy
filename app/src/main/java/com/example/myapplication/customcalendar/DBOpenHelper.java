@@ -140,7 +140,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      * @param notify
      * @param database
      */
-    public void updateEvent(String date, String event, String time, String notify,  SQLiteDatabase database) {
+    public void updateEventNotification(String date, String event, String time, String notify, SQLiteDatabase database) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBStructure.Notify, notify);
         String selection = DBStructure.DATE + "=? and " + DBStructure.EVENT + "=? and " + DBStructure.START_TIME + "=?";

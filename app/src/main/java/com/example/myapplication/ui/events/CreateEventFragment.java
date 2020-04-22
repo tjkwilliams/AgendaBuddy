@@ -19,7 +19,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 
 import com.example.myapplication.R;
-import com.example.myapplication.connect.JSONParser;
+//import com.example.myapplication.connect.JSONParser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -176,7 +176,7 @@ public class CreateEventFragment extends Fragment implements AdapterView.OnItemS
 	}
 
 
-    JSONParser jsonParser = new JSONParser();
+    //JSONParser jsonParser = new JSONParser();
     EditText o;
     EditText inputPrice;
     EditText inputDesc;
@@ -220,16 +220,16 @@ public class CreateEventFragment extends Fragment implements AdapterView.OnItemS
 
             // getting JSON Object
             // Note that create product url accepts POST method
-            JSONObject json = jsonParser.makeHttpRequest(url_create_product,
-                    "POST", params);
+            //JSONObject json = jsonParser.makeHttpRequest(url_create_product,
+                    //"POST", params);
 
             // check log cat fro response
-            Log.d("Create Response", json.toString());
+            //Log.d("Create Response", json.toString());
 
             // check for success tag
+            /*
             try {
-                int success = json.getInt(TAG_SUCCESS);
-
+               int success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
                     Toast.makeText(toast,"Success",Toast.LENGTH_SHORT).show();
                 } else {
@@ -238,6 +238,7 @@ public class CreateEventFragment extends Fragment implements AdapterView.OnItemS
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            */
 
             return null;
         }

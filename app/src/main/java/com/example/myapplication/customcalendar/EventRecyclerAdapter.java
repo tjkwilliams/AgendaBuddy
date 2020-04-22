@@ -98,14 +98,14 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
                 if(isAlarmed(events.getDATE(), events.getEVENT(), events.getStartTIME())) {
                     holder.setAlarm.setImageResource(R.drawable.ic_action_notification_off);
                     cancelAlarm(getRequestCode(events.getDATE(), events.getEVENT(), events.getStartTIME()));
-                    updateEvent(events.getDATE(), events.getEVENT(), events.getStartTIME(), "off");
+                    updateEventNotification(events.getDATE(), events.getEVENT(), events.getStartTIME(), "off");
                     notifyDataSetChanged();
                 } else {
                     holder.setAlarm.setImageResource(R.drawable.ic_action_notification_on);
                     Calendar alarmCalendar = Calendar.getInstance();
                     alarmCalendar.set(alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute);
                     setAlarm(alarmCalendar, events.getEVENT(), events.getStartTIME(), getRequestCode(events.getDATE(), events.getEVENT(), events.getStartTIME()));
-                    updateEvent(events.getDATE(), events.getEVENT(), events.getStartTIME(), "on");
+                    updateEventNotification(events.getDATE(), events.getEVENT(), events.getStartTIME(), "on");
                     notifyDataSetChanged();
 
                 }
@@ -271,10 +271,10 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
      * @param time
      * @param notify
      */
-    private void updateEvent(String date, String event, String time, String notify) {
+    private void updateEventNotification(String date, String event, String time, String notify) {
         dbOpenHelper = new DBOpenHelper(context);
         SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
-        dbOpenHelper.updateEvent(date, event, time, notify, database);
+        dbOpenHelper.updateEventNotification(date, event, time, notify, database);
         dbOpenHelper.close();
     }
 
