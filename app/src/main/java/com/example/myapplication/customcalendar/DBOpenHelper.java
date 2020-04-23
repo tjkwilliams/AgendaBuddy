@@ -149,7 +149,15 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     }
 
-    public void updateEvent(String event, String startTime, String endTime, String date, String month, String year, String priority, String notes, String notify) {
+    public void updateEvent(String oldDate, String oldEvent, ContentValues values, String oldStartTime) {
+        //ContentValues contentValues = getUpdate(_);
+        String where = DBStructure.DATE + "=? and " + DBStructure.EVENT + "=? and " + DBStructure.START_TIME + "=?";
+        String[] whereArgs = {oldDate, oldEvent, oldStartTime};
+
+        // work in progress here --> want to update all event fields here
+    }
+
+    public ContentValues getUpdate(String event, String startTime, String endTime, String date, String month, String year, String priority, String notes, String notify) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBStructure.EVENT, event);
         contentValues.put(DBStructure.START_TIME, startTime);
@@ -160,7 +168,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         contentValues.put(DBStructure.PRIORITY, priority);
         contentValues.put(DBStructure.NOTES, notes);
         contentValues.put(DBStructure.Notify, notify);
-        // work in progress here --> want to update all event fields here
+        return contentValues;
     }
 
 }

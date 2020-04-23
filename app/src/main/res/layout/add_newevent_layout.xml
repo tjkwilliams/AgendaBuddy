@@ -90,7 +90,8 @@
             android:autofillHints=""
             android:gravity="center"
             android:id="@+id/eventPriority"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:inputType="text"/>
 
     </LinearLayout>
 
@@ -102,7 +103,8 @@
         android:autofillHints=""
         android:id="@+id/eventNotes"
         android:layout_margin="10dp"
-        android:gravity="start" />
+        android:gravity="start"
+        android:inputType="text"/>
     
     <Button
         android:layout_width="wrap_content"
