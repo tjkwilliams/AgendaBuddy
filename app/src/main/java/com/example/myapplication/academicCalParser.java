@@ -1,9 +1,9 @@
 package com.example.myapplication;
 
 import com.example.myapplication.customcalendar.Events;
+import com.example.myapplication.room_persistance.AcEventRepo;
 
 import java.io.IOException;
-import java.util.LinkedList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,6 +11,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class academicCalParser {
+
+    public academicCalParser() {
+    }
 
     public static void main(String args[]) throws IOException {
         Document doc;
@@ -30,6 +33,8 @@ public class academicCalParser {
             //a new event representing this data
             Events n = new Events(t.text(), "", "", day, month, year, "", "");
             //eventList.add(n);
+
+
         }
     }
 }

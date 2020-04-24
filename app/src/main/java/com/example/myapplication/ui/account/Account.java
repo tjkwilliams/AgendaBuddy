@@ -4,8 +4,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import com.example.myapplication.events.Event;
-
 public class Account {
 
     /**
@@ -19,18 +17,11 @@ public class Account {
     private TextView accountName;
 
     /**
-     * The list of most important events. It is noteworthy to notice that in
-     * the constructor, I limited the size to 6.
-     */
-    private ArrayList<Event> prioritizedEvents;
-
-    /**
      * Constructor for initial account.
      */
     public Account(){
         username = "";
         password = "";
-        prioritizedEvents = new ArrayList<>(6);
     }
 
     /**
@@ -41,7 +32,6 @@ public class Account {
     public Account(String u){
         username = u;
         password = "";
-        prioritizedEvents = new ArrayList<>(6);
     }
 
     /**
@@ -52,7 +42,6 @@ public class Account {
     public Account(String u, String pass){
         username = u;
         password = pass;
-        prioritizedEvents = new ArrayList<>(6);
     }
 
     /**
@@ -114,70 +103,6 @@ public class Account {
     public void updateText(String t){
         username = t;
         accountName.setText(t);
-    }
-
-    /**
-     * Will display this account's events from their master calendar
-     */
-    public void displayMiniCalendarEvents(){
-        for(Event event: prioritizedEvents){
-
-            // This is where we display the events from instance "prioritizedEvents"
-            // onto MainPage
-        }
-    }
-
-
-    /**
-     * Will update events by their priority.
-     */
-    public void updatePrioritizedEvents(){
-
-    }
-
-
-    /**
-     * Will sort events based on priority.
-     */
-    public void sortPrioritizedEvents(){
-
-
-    }
-
-    /**
-     * Creates an event.
-     */
-    public void createEvent(){
-        Event newEvent;
-        // Get stuff from somewhere
-        newEvent = null;
-
-        // Put it in event.
-        prioritizedEvents.add(newEvent);
-
-        // Sort events by order
-        sortPrioritizedEvents();
-
-        //Then update new event.
-        updatePrioritizedEvents();
-    }
-
-    /**
-     * Deletes an event.
-     */
-    public void deleteEvent(){
-        Event newEvent;
-        // Get stuff from somewhere
-        newEvent = null;
-
-        // Remove event.
-        prioritizedEvents.remove(newEvent);
-
-        // Sort events by order
-        sortPrioritizedEvents();
-
-        //Then update new event.
-        updatePrioritizedEvents();
     }
 
 }

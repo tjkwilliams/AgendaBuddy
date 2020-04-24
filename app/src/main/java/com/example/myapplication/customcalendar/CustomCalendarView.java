@@ -29,6 +29,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -356,14 +363,72 @@ public class CustomCalendarView extends LinearLayout {
      * @param priority
      * @param notes
      */
-    private void saveEvent(String event, String startTime, String endTime, String date, String month, String year, String priority, String notes, String notify) {
+    public void saveEvent(String event, String startTime, String endTime, String date, String month, String year, String priority, String notes, String notify) {
         dbOpenHelper = new DBOpenHelper(context);
         SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
         dbOpenHelper.SaveEvent(event, startTime, endTime, date, month, year, priority, notes, notify, database);
+        Toast.makeText(context, startTime + " " + notify, Toast.LENGTH_SHORT).show();
+
         dbOpenHelper.close();
         Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
     }
 
+    /*takes a list of all academic events and sets them in the calendar*/
+    /*
+    public void setAllAcademic() throws IOException {
+       // ArrayList<Events> e = addAllAcEvents();
+        for(int i=0; i<e.size(); i++){
+            Events n = e.get(i);
+            saveEvent(n.getEVENT(), "00:00 AM", "00:00 PM", n.getDATE(), n.getMONTH(), n.getYEAR(), "low", "none", "off" );
+        }
+    }
+    */
+/*
+    public void getAcEvents(){
+        File f = cal_data.xml;
+
+    }
+
+ */
+
+    /*
+        A method to connect to wheaton website and put all academic events on the user's calendar in app
+         */
+    /*
+
+    private ArrayList<Events> addAllAcEvents() throws IOException {
+        Document doc;
+        doc = Jsoup.connection("https://25livepub.collegenet.com/calendars/event-collections-general_calendar_wp.rss").bufferUp();
+        System.out.println(doc.title());
+
+
+        //will hold all the new events
+        ArrayList<Events> academicEvents = new ArrayList<Events>();
+
+        String day, month, year, date;
+        Elements items = doc.getElementsByTag("item");
+        Events n;
+        for (Element item : items) {
+            Elements t = item.getElementsByTag("title");
+            System.out.println(t.text());
+            Elements d = item.getElementsByTag("category");
+            year = d.text().substring(0, 4);
+            month = d.text().substring(5, 7);
+            day = d.text().substring(8, 10);
+            date = year + "-" + month +"-" +day;
+
+            academicEvents.add(new Events(t.text(), "", "", date, "April", year, "low", "none"));
+
+            //a new event representing this data
+            //n = new Events(t.text(), "", day, month, year);
+            //insert each event using background thread
+            //mRepo.insertEventTask(n);
+            //customCalendarView.saveEvent(t.text(), "", "", day, month, year, "", "" ,"");
+        }
+        return academicEvents;
+    }
+
+    */
     /**
      * Initialize all the position and references of the different things in the Calendar Page (i think)
      */
