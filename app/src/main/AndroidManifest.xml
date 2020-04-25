@@ -11,7 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".customcalendar.PriorityPage"></activity>
         <activity
             android:name=".page.LoginPage"
             android:label="@string/app_name"
@@ -45,7 +44,10 @@
         <receiver
             android:name=".customcalendar.AlarmReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true">
+
+        </receiver>
+
     </application>
 
 </manifest>

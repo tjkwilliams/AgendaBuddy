@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -54,6 +55,7 @@ import java.util.TimeZone;
  */
 public class CustomCalendarView extends LinearLayout {
 
+    Button priorityLow, priorityHigh;
     ImageButton nextButton, previousButton;
     TextView currentDate;
     GridView gridView;
@@ -100,6 +102,69 @@ public class CustomCalendarView extends LinearLayout {
         this.context = context;
         InitializeLayout();
         SetUpCalendar();
+
+        priorityHigh.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                AlertDialog.Builder copyBuilder = builder; // new
+                builder.setCancelable(true);
+                View showView = LayoutInflater.from(context).inflate(R.layout.show_events_layout, null);
+                RecyclerView recyclerView = showView.findViewById(R.id.eventsRV);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(showView.getContext());
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setHasFixedSize(true);
+                Collections.sort(eventsList);
+                Collections.reverse(eventsList);
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList, alertDialog, copyBuilder); // edited
+                recyclerView.setAdapter(eventRecyclerAdapter);
+                eventRecyclerAdapter.notifyDataSetChanged();
+
+                builder.setView(showView);
+                alertDialog = builder.create();
+                alertDialog.show();
+
+                alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        SetUpCalendar();
+                    }
+                });
+
+            }
+        });
+
+        priorityLow.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                AlertDialog.Builder copyBuilder = builder; // new
+                builder.setCancelable(true);
+                View showView = LayoutInflater.from(context).inflate(R.layout.show_events_layout, null);
+                RecyclerView recyclerView = showView.findViewById(R.id.eventsRV);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(showView.getContext());
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setHasFixedSize(true);
+                Collections.sort(eventsList);
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList, alertDialog, copyBuilder); // edited
+                recyclerView.setAdapter(eventRecyclerAdapter);
+                eventRecyclerAdapter.notifyDataSetChanged();
+
+                builder.setView(showView);
+                alertDialog = builder.create();
+                alertDialog.show();
+
+                alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        SetUpCalendar();
+                    }
+                });
+
+            }
+        });
+
+
 
         /* change the month display backwards (ex: from March to February */
         previousButton.setOnClickListener(new OnClickListener() {
@@ -212,6 +277,7 @@ public class CustomCalendarView extends LinearLayout {
                         /* check if the 'notify me' checkbox is checked or not --> basically check if user wants to be notified or not */
                         if(alarmMe.isChecked()) {
                             saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on");
+                            Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
                             SetUpCalendar();
                             Calendar calendar = Calendar.getInstance();
                             calendar.set(alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute);
@@ -220,6 +286,7 @@ public class CustomCalendarView extends LinearLayout {
                             alertDialog.dismiss();
                         } else {
                             saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off");
+                            Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
                             SetUpCalendar();
                             alertDialog.dismiss();
                         }
@@ -368,10 +435,8 @@ public class CustomCalendarView extends LinearLayout {
         dbOpenHelper = new DBOpenHelper(context);
         SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
         dbOpenHelper.SaveEvent(event, startTime, endTime, date, month, year, priority, notes, notify, database);
-        Toast.makeText(context, startTime + " " + notify, Toast.LENGTH_SHORT).show();
 
         dbOpenHelper.close();
-        Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
     }
 
     /*takes a list of all academic events and sets them in the calendar*/
@@ -440,6 +505,8 @@ public class CustomCalendarView extends LinearLayout {
         previousButton = view.findViewById(R.id.previousBtn);
         currentDate = view.findViewById(R.id.currentDate);
         gridView = view.findViewById(R.id.gridView);
+        priorityHigh = view.findViewById(R.id.priorityHigh);
+        priorityLow = view.findViewById(R.id.priorityLow);
     }
 
     /**

@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         customCalendarView = (CustomCalendarView)findViewById(R.id.customCalendarView); // just instantiate customCalendarView
 
+        /*
         goPriorityButton = findViewById(R.id.goPriorityPage);
 
         goPriorityButton.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(priorityPage);
             }
         });
-
+        */
         //parseXML();
 
         //connects the calendar activity to the academic event database
