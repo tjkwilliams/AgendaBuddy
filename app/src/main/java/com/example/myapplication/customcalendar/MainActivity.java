@@ -44,11 +44,13 @@ public class MainActivity extends AppCompatActivity {
 
         customCalendarView = (CustomCalendarView)findViewById(R.id.customCalendarView); // just instantiate customCalendarView
 
+        goPriorityButton = findViewById(R.id.goPriorityPage);
+
         goPriorityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent priorityPage = new Intent(getApplicationContext(), PriorityPage.class);
-                //startActivity(priorityPage);
+                Intent priorityPage = new Intent(getApplicationContext(), PriorityPage.class);
+                startActivity(priorityPage);
             }
         });
 
