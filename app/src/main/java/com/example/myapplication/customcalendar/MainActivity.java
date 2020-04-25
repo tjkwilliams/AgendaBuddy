@@ -1,7 +1,10 @@
 package com.example.myapplication.customcalendar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -28,6 +31,7 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity {
 
+    Button goPriorityButton;
     CustomCalendarView customCalendarView;
     //private AcEventRepo mRepo;
     //private ArrayList<Events> mAcademicEvents;
@@ -39,6 +43,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         customCalendarView = (CustomCalendarView)findViewById(R.id.customCalendarView); // just instantiate customCalendarView
+
+        goPriorityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent priorityPage = new Intent(getApplicationContext(), PriorityPage.class);
+                //startActivity(priorityPage);
+            }
+        });
 
         //parseXML();
 
