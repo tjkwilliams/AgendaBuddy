@@ -19,7 +19,7 @@
             android:orientation="vertical"
             tools:ignore="TextFields">
 
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -27,12 +27,9 @@
                 android:id="@+id/eventDate"
                 android:textStyle="bold"
                 android:text="Date"
-                android:textSize="15sp"
-                android:autofillHints=""
-                android:inputType="textShortMessage"
-                tools:ignore="LabelFor" />
+                android:textSize="15sp" />
 
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -40,10 +37,7 @@
                 android:id="@+id/eventname"
                 android:textStyle="bold"
                 android:text="Event"
-                android:textSize="30sp"
-                android:autofillHints=""
-                android:inputType="textShortMessage"
-                tools:ignore="LabelFor" />
+                android:textSize="30sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -72,13 +66,6 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"/>
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"
-                    android:background="@mipmap/timeicon"
-                    android:id="@+id/updateStartTime"
-                    android:contentDescription="TODO" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -100,14 +87,6 @@
                     android:text="00:00 AM"
                     android:textSize="15dp" />
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"
-                    android:background="@mipmap/timeicon"
-                    android:id="@+id/updateEndTime"
-                    android:layout_marginLeft="5dp"
-                    android:contentDescription="TODO" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -125,7 +104,7 @@
                     android:textSize="20dp"
                     android:layout_marginLeft="5dp"/>
 
-                <EditText
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start"
@@ -134,10 +113,7 @@
                     android:text="N/A"
                     android:textSize="20sp"
                     android:layout_marginLeft="5dp"
-                    android:id="@+id/event_priority"
-                    android:autofillHints=""
-                    android:inputType="textShortMessage"
-                    tools:ignore="LabelFor" />
+                    android:id="@+id/event_priority" />
 
             </LinearLayout>
 
@@ -155,7 +131,7 @@
                     android:layout_marginLeft="5dp"
                     android:textColor="@android:color/holo_orange_dark"/>
 
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
@@ -163,10 +139,7 @@
                     android:id="@+id/event_notes"
                     android:text="No notes added"
                     android:textSize="20sp"
-                    android:layout_marginLeft="24dp"
-                    android:autofillHints=""
-                    android:inputType="text"
-                    tools:ignore="LabelFor" />
+                    android:layout_marginLeft="24dp" />
 
             </LinearLayout>
 

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,21 +42,23 @@ import java.util.Locale;
  */
 public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdapter.MyViewHolder> {
 
-    Context context;
-    ArrayList<Events> arrayList;
-    DBOpenHelper dbOpenHelper;
+    private Context context;
+    private ArrayList<Events> arrayList;
+    private DBOpenHelper dbOpenHelper;
+    AlertDialog alertDialog;
+    AlertDialog.Builder builder;
 
-    public EventRecyclerAdapter(Context context, ArrayList<Events> arrayList) {
+    public EventRecyclerAdapter(Context context, ArrayList<Events> arrayList, AlertDialog alertDialog, AlertDialog.Builder builder) {
         this.context = context;
         this.arrayList = arrayList;
+        this.alertDialog = alertDialog;
+        this.builder = builder;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.show_events_rowlayout, parent, false);
-
-
         return new MyViewHolder(view);
     }
 
@@ -78,10 +81,16 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
                 notifyDataSetChanged();
             }
         });
-        holder.update.setOnClickListener(new View.OnClickListener() {
+        holder.update.setOnClickListener(new View.OnClickListener() { // edited
             @Override
             public void onClick(View v) {
 
+                /*
+                View view = LayoutInflater.from(context).inflate(R.layout.add_newevent_layout, null);
+                builder.setView(view);
+                alertDialog = builder.create();
+                alertDialog.show();
+                */
             }
         });
 
@@ -137,25 +146,22 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         //TextView DateTxt, Event, start_TIME, end_TIME, Notes, Priority;
-        TextView start_TIME, end_TIME;
-        EditText DateTxt, Event, Notes, Priority;
+        TextView start_TIME, end_TIME, DateTxt, Event, Notes, Priority;
         Button delete, update;
         ImageButton setAlarm;
-        ImageView updateStart, updateEnd;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            DateTxt = (EditText) itemView.findViewById(R.id.eventDate);
-            Event = (EditText) itemView.findViewById(R.id.eventname);
+            DateTxt = itemView.findViewById(R.id.eventDate);
+            Event = itemView.findViewById(R.id.eventname);
             start_TIME = itemView.findViewById(R.id.event_start_time);
             end_TIME = itemView.findViewById(R.id.event_end_time);
-            Notes = (EditText) itemView.findViewById(R.id.event_notes);
-            Priority = (EditText) itemView.findViewById(R.id.event_priority);
+            Notes = itemView.findViewById(R.id.event_notes);
+            Priority = itemView.findViewById(R.id.event_priority);
             delete = itemView.findViewById(R.id.delete);
             update = itemView.findViewById(R.id.update);
             setAlarm = itemView.findViewById(R.id.alarmMeBtn);
-            updateStart = itemView.findViewById(R.id.updateStartTime);
-            updateEnd = itemView.findViewById(R.id.updateEndTime);
+
         }
     }
 

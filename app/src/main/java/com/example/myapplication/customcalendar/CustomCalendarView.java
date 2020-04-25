@@ -241,13 +241,14 @@ public class CustomCalendarView extends LinearLayout {
                 String date = eventDateFormat.format(dates.get(position));
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                AlertDialog.Builder copyBuilder = builder; // new
                 builder.setCancelable(true);
                 View showView = LayoutInflater.from(parent.getContext()).inflate(R.layout.show_events_layout, null);
                 RecyclerView recyclerView = showView.findViewById(R.id.eventsRV);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(showView.getContext());
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setHasFixedSize(true);
-                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), CollectEventByDate(date));
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), CollectEventByDate(date), alertDialog, copyBuilder); // edited
                 recyclerView.setAdapter(eventRecyclerAdapter);
                 eventRecyclerAdapter.notifyDataSetChanged();
 
