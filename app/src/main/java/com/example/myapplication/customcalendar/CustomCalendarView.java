@@ -3,6 +3,7 @@ package com.example.myapplication.customcalendar;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -55,7 +56,7 @@ import java.util.TimeZone;
  */
 public class CustomCalendarView extends LinearLayout {
 
-    Button priorityLow, priorityHigh;
+    Button priorityLow, priorityHigh, updateEvent;
     ImageButton nextButton, previousButton;
     TextView currentDate;
     GridView gridView;
@@ -73,6 +74,7 @@ public class CustomCalendarView extends LinearLayout {
     AlertDialog alertDialog;
     List<Date> dates = new ArrayList<>();
     List<Events> eventsList = new ArrayList<>();
+    Events eventToUpdate;
     int alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute;
 
     /* How this works (i think or at least how I understand it so far):
@@ -107,7 +109,6 @@ public class CustomCalendarView extends LinearLayout {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                AlertDialog.Builder copyBuilder = builder; // new
                 builder.setCancelable(true);
                 View showView = LayoutInflater.from(context).inflate(R.layout.show_events_layout, null);
                 RecyclerView recyclerView = showView.findViewById(R.id.eventsRV);
@@ -116,7 +117,7 @@ public class CustomCalendarView extends LinearLayout {
                 recyclerView.setHasFixedSize(true);
                 Collections.sort(eventsList);
                 Collections.reverse(eventsList);
-                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList, alertDialog, copyBuilder); // edited
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList, eventToUpdate);
                 recyclerView.setAdapter(eventRecyclerAdapter);
                 eventRecyclerAdapter.notifyDataSetChanged();
 
@@ -138,7 +139,6 @@ public class CustomCalendarView extends LinearLayout {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                AlertDialog.Builder copyBuilder = builder; // new
                 builder.setCancelable(true);
                 View showView = LayoutInflater.from(context).inflate(R.layout.show_events_layout, null);
                 RecyclerView recyclerView = showView.findViewById(R.id.eventsRV);
@@ -146,7 +146,7 @@ public class CustomCalendarView extends LinearLayout {
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setHasFixedSize(true);
                 Collections.sort(eventsList);
-                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList, alertDialog, copyBuilder); // edited
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList, eventToUpdate);
                 recyclerView.setAdapter(eventRecyclerAdapter);
                 eventRecyclerAdapter.notifyDataSetChanged();
 
@@ -163,8 +163,6 @@ public class CustomCalendarView extends LinearLayout {
 
             }
         });
-
-
 
         /* change the month display backwards (ex: from March to February */
         previousButton.setOnClickListener(new OnClickListener() {
@@ -202,7 +200,6 @@ public class CustomCalendarView extends LinearLayout {
                 final EditText eventPriority = addView.findViewById(R.id.eventPriority);
 
                 final EditText eventNotes = addView.findViewById(R.id.eventNotes);
-
 
                 Calendar dateCalendar = Calendar.getInstance();
                 dateCalendar.setTime(dates.get(position));
@@ -264,7 +261,6 @@ public class CustomCalendarView extends LinearLayout {
                     }
                 });
 
-
                 final String date = eventDateFormat.format(dates.get(position));
                 final String month = monthFormat.format(dates.get(position));
                 final String year = yearFormat.format(dates.get(position));
@@ -297,7 +293,6 @@ public class CustomCalendarView extends LinearLayout {
                 builder.setView(addView);
                 alertDialog = builder.create();
                 alertDialog.show();
-
             }
         });
 
@@ -308,14 +303,13 @@ public class CustomCalendarView extends LinearLayout {
                 String date = eventDateFormat.format(dates.get(position));
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                AlertDialog.Builder copyBuilder = builder; // new
                 builder.setCancelable(true);
                 View showView = LayoutInflater.from(parent.getContext()).inflate(R.layout.show_events_layout, null);
                 RecyclerView recyclerView = showView.findViewById(R.id.eventsRV);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(showView.getContext());
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setHasFixedSize(true);
-                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), CollectEventByDate(date), alertDialog, copyBuilder); // edited
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), CollectEventByDate(date), eventToUpdate);
                 recyclerView.setAdapter(eventRecyclerAdapter);
                 eventRecyclerAdapter.notifyDataSetChanged();
 
@@ -332,6 +326,144 @@ public class CustomCalendarView extends LinearLayout {
                 });
 
                 return true;
+            }
+        });
+
+        updateEvent.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eventToUpdate = eventsList.get(eventsList.size()-1);
+                if(eventToUpdate == null)
+                    Toast.makeText(context, "Please Select an Event to Update", Toast.LENGTH_SHORT).show();
+                else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setCancelable(true);
+                    final View addView = LayoutInflater.from(context).inflate(R.layout.add_newevent_layout, null);
+                    final EditText eventName = addView.findViewById(R.id.eventName);
+
+                    final TextView eventStartTime = addView.findViewById(R.id.eventStartTime);
+                    ImageButton setStartTime = addView.findViewById(R.id.setEventStartTime);
+                    final CheckBox alarmMe = addView.findViewById(R.id.alarmMe);
+
+                    final TextView eventEndTime = addView.findViewById(R.id.eventEndTime);
+                    ImageButton setEndTime = addView.findViewById(R.id.setEventEndTime);
+                    final EditText eventPriority = addView.findViewById(R.id.eventPriority);
+
+                    final EditText eventNotes = addView.findViewById(R.id.eventNotes);
+
+                    eventName.setText(eventToUpdate.getEVENT());
+                    eventStartTime.setText(eventToUpdate.getStartTIME());
+
+                    if(eventToUpdate.getAlarm())
+                        alarmMe.setChecked(true);
+
+                    eventEndTime.setText(eventToUpdate.getEndTIME());
+                    eventPriority.setText(eventToUpdate.getPRIORITY());
+                    eventNotes.setText(eventToUpdate.getNOTES());
+
+                    /* need to add stuff here yet */
+
+                    Calendar dateCalendar = Calendar.getInstance();
+                    String temp = eventToUpdate.getDATE();
+                    temp = temp.substring(temp.length()-2);
+                    dateCalendar.setTime(dates.get(Integer.parseInt(temp)));
+                    alarmYear = dateCalendar.get(Calendar.YEAR);
+                    alarmMonth = dateCalendar.get(Calendar.MONTH);
+                    alarmDay = dateCalendar.get(Calendar.DAY_OF_MONTH);
+
+                    Button addEvent = addView.findViewById(R.id.addEvent);
+
+                    /* things related to setting the start time of the event */
+                    setStartTime.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Calendar calendar = Calendar.getInstance();
+                            int hours = calendar.get(Calendar.HOUR_OF_DAY);
+                            int minutes = calendar.get(Calendar.MINUTE);
+
+                            TimePickerDialog timePickerDialog = new TimePickerDialog(addView.getContext(), R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
+                                @Override
+                                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                    Calendar c = Calendar.getInstance();
+                                    c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                    c.set(Calendar.MINUTE, minute);
+                                    c.setTimeZone(TimeZone.getDefault());
+                                    SimpleDateFormat hFormat = new SimpleDateFormat("K:mm a", Locale.ENGLISH);
+                                    String event_Time = hFormat.format(c.getTime());
+                                    eventStartTime.setText(event_Time);
+                                    alarmHour = c.get(Calendar.HOUR_OF_DAY);
+                                    alarmMinute = c.get(Calendar.MINUTE);
+
+                                }
+                            }, hours, minutes, false);
+                            timePickerDialog.show();
+                        }
+                    });
+
+                    /* things to do with setting up the end time of the event */
+                    setEndTime.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Calendar calendar = Calendar.getInstance();
+                            int hours = calendar.get(Calendar.HOUR_OF_DAY);
+                            int minutes = calendar.get(Calendar.MINUTE);
+
+                            TimePickerDialog timePickerDialog = new TimePickerDialog(addView.getContext(), R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
+                                @Override
+                                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                    Calendar c = Calendar.getInstance();
+                                    c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                    c.set(Calendar.MINUTE, minute);
+                                    c.setTimeZone(TimeZone.getDefault());
+                                    SimpleDateFormat hFormat = new SimpleDateFormat("K:mm a", Locale.ENGLISH);
+                                    String event_Time = hFormat.format(c.getTime());
+                                    eventEndTime.setText(event_Time);
+
+                                }
+                            }, hours, minutes, false);
+                            timePickerDialog.show();
+                        }
+                    });
+
+
+
+                    final String date = eventToUpdate.getDATE();
+                    final String month = eventToUpdate.getMONTH();
+                    final String year = eventToUpdate.getYEAR();
+
+                    /* things related to when you press the addEvent button */
+                    addEvent.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            /* check if the 'notify me' checkbox is checked or not --> basically check if user wants to be notified or not */
+                            if(alarmMe.isChecked()) {
+                                ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on");
+                                updateEvent(eventToUpdate, values);
+                                Toast.makeText(context, "Event Updated", Toast.LENGTH_SHORT).show();
+                                eventsList.remove(eventToUpdate);
+                                SetUpCalendar();
+                                Calendar calendar = Calendar.getInstance();
+                                calendar.set(alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute);
+                                setAlarm(calendar, eventName.getText().toString(), eventStartTime.getText().toString(), getRequestCode(date
+                                        , eventName.getText().toString(), eventStartTime.getText().toString()));
+                                alertDialog.dismiss();
+                            } else {
+                                ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on");
+                                updateEvent(eventToUpdate, values);
+                                Toast.makeText(context, "Event Updated", Toast.LENGTH_SHORT).show();
+                                eventsList.remove(eventToUpdate);
+                                SetUpCalendar();
+                                alertDialog.dismiss();
+                            }
+
+                        }
+                    });
+
+                    builder.setView(addView);
+                    alertDialog = builder.create();
+                    alertDialog.show();
+                }
             }
         });
 
@@ -435,8 +567,31 @@ public class CustomCalendarView extends LinearLayout {
         dbOpenHelper = new DBOpenHelper(context);
         SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
         dbOpenHelper.SaveEvent(event, startTime, endTime, date, month, year, priority, notes, notify, database);
-
         dbOpenHelper.close();
+    }
+
+    public void updateEvent(Events eventUpdateRef, ContentValues values) {
+        dbOpenHelper = new DBOpenHelper(context);
+        SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
+        String oldDate = eventUpdateRef.getDATE();
+        String oldEvent = eventUpdateRef.getEVENT();
+        String oldStartTime = eventUpdateRef.getStartTIME();
+        dbOpenHelper.updateEvent(oldDate, oldEvent, oldStartTime, values, database);
+        dbOpenHelper.close();
+    }
+
+    public ContentValues getUpdateValues(String event, String startTime, String endTime, String date, String month, String year, String priority, String notes, String notify) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBStructure.EVENT, event);
+        contentValues.put(DBStructure.START_TIME, startTime);
+        contentValues.put(DBStructure.END_TIME, endTime);
+        contentValues.put(DBStructure.DATE, date);
+        contentValues.put(DBStructure.MONTH, month);
+        contentValues.put(DBStructure.YEAR, year);
+        contentValues.put(DBStructure.PRIORITY, priority);
+        contentValues.put(DBStructure.NOTES, notes);
+        contentValues.put(DBStructure.Notify, notify);
+        return contentValues;
     }
 
     /*takes a list of all academic events and sets them in the calendar*/
@@ -507,6 +662,8 @@ public class CustomCalendarView extends LinearLayout {
         gridView = view.findViewById(R.id.gridView);
         priorityHigh = view.findViewById(R.id.priorityHigh);
         priorityLow = view.findViewById(R.id.priorityLow);
+        updateEvent = view.findViewById(R.id.updateButton);
+        eventToUpdate = null;
     }
 
     /**
@@ -527,7 +684,6 @@ public class CustomCalendarView extends LinearLayout {
         while(dates.size() < MAX_CALENDAR_DAYS) {
             dates.add(monthCalendar.getTime());
             monthCalendar.add(Calendar.DAY_OF_MONTH, 1);
-
         }
 
         myGridAdapter = new MyGridAdapter(context, dates, calendar, eventsList);

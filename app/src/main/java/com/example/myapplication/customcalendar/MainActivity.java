@@ -31,7 +31,6 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity {
 
-    Button goPriorityButton;
     CustomCalendarView customCalendarView;
     //private AcEventRepo mRepo;
     //private ArrayList<Events> mAcademicEvents;
@@ -44,17 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
         customCalendarView = (CustomCalendarView)findViewById(R.id.customCalendarView); // just instantiate customCalendarView
 
-        /*
-        goPriorityButton = findViewById(R.id.goPriorityPage);
-
-        goPriorityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent priorityPage = new Intent(getApplicationContext(), PriorityPage.class);
-                startActivity(priorityPage);
-            }
-        });
-        */
         //parseXML();
 
         //connects the calendar activity to the academic event database
