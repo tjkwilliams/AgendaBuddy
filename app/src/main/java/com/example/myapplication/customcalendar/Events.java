@@ -26,6 +26,8 @@ public class Events implements Comparable<Events> {
 
     private String EVENT, startTIME, endTIME, DATE, MONTH, YEAR, PRIORITY, NOTES;
     private int priorityInt; // used for sorting
+    private boolean alarm;
+
 
     /**
      * New Constructor
@@ -55,6 +57,7 @@ public class Events implements Comparable<Events> {
 
         this.PRIORITY = PRIORITY;
         this.NOTES = NOTES;
+        alarm = false;
     }
 
     /*
@@ -139,6 +142,10 @@ public class Events implements Comparable<Events> {
     public int getPriorityInt() { return priorityInt; }
 
     public void setPriorityInt(int priorityInt) { this.priorityInt = priorityInt; }
+
+    public boolean getAlarm() { return alarm; }
+
+    public void setAlarm(boolean alarm) { this.alarm = alarm; }
 
     @Override
     public int compareTo(Events event) {

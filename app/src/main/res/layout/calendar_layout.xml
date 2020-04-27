@@ -133,7 +133,7 @@
         android:id="@+id/priorityHigh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="List Events from highest priority first"
+        android:text="List events from highest priority first"
         android:textSize="20sp"
         android:textAllCaps="false"
         android:layout_gravity="center"
@@ -143,10 +143,20 @@
         android:id="@+id/priorityLow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="List Events from lowest priority first"
+        android:text="List events from lowest priority first"
         android:textSize="20sp"
         android:textAllCaps="false"
         android:layout_gravity="center"
         android:layout_marginTop="15dp"/>
+
+    <Button
+        android:id="@+id/updateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update selected event"
+        android:textSize="20sp"
+        android:textAllCaps="false"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"/>
 
 </LinearLayout>

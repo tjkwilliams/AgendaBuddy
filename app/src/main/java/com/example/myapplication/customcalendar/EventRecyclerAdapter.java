@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -45,14 +46,12 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
     private Context context;
     private ArrayList<Events> arrayList;
     private DBOpenHelper dbOpenHelper;
-    AlertDialog alertDialog;
-    AlertDialog.Builder builder;
+    private Events eventToUpdate;
 
-    public EventRecyclerAdapter(Context context, ArrayList<Events> arrayList, AlertDialog alertDialog, AlertDialog.Builder builder) {
+    public EventRecyclerAdapter(Context context, ArrayList<Events> arrayList, Events eventToUpdate) {
         this.context = context;
         this.arrayList = arrayList;
-        this.alertDialog = alertDialog;
-        this.builder = builder;
+        this.eventToUpdate = eventToUpdate;
     }
 
     @NonNull
@@ -81,15 +80,17 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
                 notifyDataSetChanged();
             }
         });
-        holder.update.setOnClickListener(new View.OnClickListener() { // edited
+        holder.select.setOnClickListener(new View.OnClickListener() { // edited
             @Override
             public void onClick(View v) {
-
+                if(!arrayList.get(arrayList.size()-1).equals(events)) {
+                    arrayList.add(events);
+                    notifyDataSetChanged();
+                    Toast.makeText(context, "Event Selected", Toast.LENGTH_SHORT).show();
+                }
                 /*
-                View view = LayoutInflater.from(context).inflate(R.layout.add_newevent_layout, null);
-                builder.setView(view);
-                alertDialog = builder.create();
-                alertDialog.show();
+                eventToUpdate = events;
+                notifyDataSetChanged();
                 */
             }
         });
@@ -147,7 +148,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
 
         //TextView DateTxt, Event, start_TIME, end_TIME, Notes, Priority;
         TextView start_TIME, end_TIME, DateTxt, Event, Notes, Priority;
-        Button delete, update;
+        Button delete, select;
         ImageButton setAlarm;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -159,9 +160,8 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
             Notes = itemView.findViewById(R.id.event_notes);
             Priority = itemView.findViewById(R.id.event_priority);
             delete = itemView.findViewById(R.id.delete);
-            update = itemView.findViewById(R.id.update);
+            select = itemView.findViewById(R.id.selectEvent);
             setAlarm = itemView.findViewById(R.id.alarmMeBtn);
-
         }
     }
 

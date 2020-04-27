@@ -149,26 +149,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     }
 
-    public void updateEvent(String oldDate, String oldEvent, ContentValues values, String oldStartTime) {
-        //ContentValues contentValues = getUpdate(_);
+    public void updateEvent(String oldDate, String oldEvent, String oldStartTime, ContentValues values, SQLiteDatabase database) {
         String where = DBStructure.DATE + "=? and " + DBStructure.EVENT + "=? and " + DBStructure.START_TIME + "=?";
         String[] whereArgs = {oldDate, oldEvent, oldStartTime};
 
-        // work in progress here --> want to update all event fields here
-    }
-
-    public ContentValues getUpdate(String event, String startTime, String endTime, String date, String month, String year, String priority, String notes, String notify) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(DBStructure.EVENT, event);
-        contentValues.put(DBStructure.START_TIME, startTime);
-        contentValues.put(DBStructure.END_TIME, endTime);
-        contentValues.put(DBStructure.DATE, date);
-        contentValues.put(DBStructure.MONTH, month);
-        contentValues.put(DBStructure.YEAR, year);
-        contentValues.put(DBStructure.PRIORITY, priority);
-        contentValues.put(DBStructure.NOTES, notes);
-        contentValues.put(DBStructure.Notify, notify);
-        return contentValues;
+        database.update(DBStructure.EVENT_TABLE_NAME, values, where, whereArgs);
     }
 
 }
