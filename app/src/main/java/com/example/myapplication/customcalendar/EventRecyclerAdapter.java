@@ -9,11 +9,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
@@ -36,21 +43,21 @@ import java.util.Locale;
  */
 public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdapter.MyViewHolder> {
 
-    Context context;
-    ArrayList<Events> arrayList;
-    DBOpenHelper dbOpenHelper;
+    private Context context;
+    private ArrayList<Events> arrayList;
+    private DBOpenHelper dbOpenHelper;
+    private Events eventToUpdate;
 
-    public EventRecyclerAdapter(Context context, ArrayList<Events> arrayList) {
+    public EventRecyclerAdapter(Context context, ArrayList<Events> arrayList, Events eventToUpdate) {
         this.context = context;
         this.arrayList = arrayList;
+        this.eventToUpdate = eventToUpdate;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.show_events_rowlayout, parent, false);
-
-
         return new MyViewHolder(view);
     }
 
@@ -71,6 +78,20 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
                 deleteCalendarEvent(events.getEVENT(), events.getDATE(), events.getStartTIME());
                 arrayList.remove(position);
                 notifyDataSetChanged();
+            }
+        });
+        holder.select.setOnClickListener(new View.OnClickListener() { // edited
+            @Override
+            public void onClick(View v) {
+                if(!arrayList.get(arrayList.size()-1).equals(events)) {
+                    arrayList.add(events);
+                    notifyDataSetChanged();
+                    Toast.makeText(context, "Event Selected", Toast.LENGTH_SHORT).show();
+                }
+                /*
+                eventToUpdate = events;
+                notifyDataSetChanged();
+                */
             }
         });
 
@@ -98,14 +119,14 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
                 if(isAlarmed(events.getDATE(), events.getEVENT(), events.getStartTIME())) {
                     holder.setAlarm.setImageResource(R.drawable.ic_action_notification_off);
                     cancelAlarm(getRequestCode(events.getDATE(), events.getEVENT(), events.getStartTIME()));
-                    updateEvent(events.getDATE(), events.getEVENT(), events.getStartTIME(), "off");
+                    updateEventNotification(events.getDATE(), events.getEVENT(), events.getStartTIME(), "off");
                     notifyDataSetChanged();
                 } else {
                     holder.setAlarm.setImageResource(R.drawable.ic_action_notification_on);
                     Calendar alarmCalendar = Calendar.getInstance();
                     alarmCalendar.set(alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute);
                     setAlarm(alarmCalendar, events.getEVENT(), events.getStartTIME(), getRequestCode(events.getDATE(), events.getEVENT(), events.getStartTIME()));
-                    updateEvent(events.getDATE(), events.getEVENT(), events.getStartTIME(), "on");
+                    updateEventNotification(events.getDATE(), events.getEVENT(), events.getStartTIME(), "on");
                     notifyDataSetChanged();
 
                 }
@@ -125,8 +146,9 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
      */
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView DateTxt, Event, start_TIME, end_TIME, Notes, Priority;
-        Button delete;
+        //TextView DateTxt, Event, start_TIME, end_TIME, Notes, Priority;
+        TextView start_TIME, end_TIME, DateTxt, Event, Notes, Priority;
+        Button delete, select;
         ImageButton setAlarm;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -138,6 +160,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
             Notes = itemView.findViewById(R.id.event_notes);
             Priority = itemView.findViewById(R.id.event_priority);
             delete = itemView.findViewById(R.id.delete);
+            select = itemView.findViewById(R.id.selectEvent);
             setAlarm = itemView.findViewById(R.id.alarmMeBtn);
         }
     }
@@ -271,11 +294,13 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
      * @param time
      * @param notify
      */
-    private void updateEvent(String date, String event, String time, String notify) {
+    private void updateEventNotification(String date, String event, String time, String notify) {
         dbOpenHelper = new DBOpenHelper(context);
         SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
-        dbOpenHelper.updateEvent(date, event, time, notify, database);
+        dbOpenHelper.updateEventNotification(date, event, time, notify, database);
         dbOpenHelper.close();
     }
+
+
 
 }

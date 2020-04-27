@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".page.LoginPage"
             android:label="@string/app_name"
@@ -22,7 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".page.MainPage"
             android:label="@string/title_activity_side_menu"
@@ -33,7 +31,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".customcalendar.MainActivity"
             android:label="@string/title_activity_master_calendar">
@@ -44,11 +41,13 @@
             </intent-filter>
         </activity>
 
+        <receiver
+            android:name=".customcalendar.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true">
 
-        <receiver android:name=".customcalendar.AlarmReceiver"
-            android:exported="true"
-            android:enabled="true">
         </receiver>
 
     </application>
+
 </manifest>
