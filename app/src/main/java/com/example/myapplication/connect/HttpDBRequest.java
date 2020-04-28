@@ -1,4 +1,4 @@
-//package com.example.myapplication.connect;
+package com.example.myapplication.connect;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -8,10 +8,11 @@ import java.net.URL;
 
 public class HttpDBRequest {
 
-    public static void main(String args[]) {
-        getEvent(5);
-    }
-
+    /**
+     * Get an event from the database
+     * (not sure how well this will work)
+     * @param eid
+     */
     public static void getEvent(int eid){
         try {
             URL url = new URL("http://18.233.165.117/agenda-buddy/get_event_details.php");
@@ -40,10 +41,21 @@ public class HttpDBRequest {
         }
     }
 
-    public static void addEvent(){
+    /**
+     * Add event to database
+     * I am not sure how we are storing seperate user events
+     * @param title
+     * @param location
+     * @param startTime
+     * @param endTime
+     * @param year
+     * @param month
+     * @param day
+     */
+    public static void addEvent(String title, String location, String startTime, String endTime, String year, String month, String day){
         try {
             URL url = new URL("http://18.233.165.117/agenda-buddy/create_event.php");
-            String postData = "title=test&location=test2&start_time=13:45&end_time=14:45&&year=2020&month=05&day=23";
+            String postData = String.format("title=%s&location=%s&start_time=%s&end_time=%s&year=%s&month=%s&day=%s", title, location, endTime, startTime, year, month, day);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
@@ -66,6 +78,10 @@ public class HttpDBRequest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void addEvent(String title, String location, String startTime, String endTime, String date){
+        addEvent(title, location, startTime, endTime, date.substring(0, 4), date.substring(5,7), date.substring(8,10));
     }
 }
 
