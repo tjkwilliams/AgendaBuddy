@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.connect.HttpDBRequest;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -568,6 +569,8 @@ public class CustomCalendarView extends LinearLayout {
         SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
         dbOpenHelper.SaveEvent(event, startTime, endTime, date, month, year, priority, notes, notify, database);
         dbOpenHelper.close();
+
+        HttpDBRequest.addEvent(event, "", startTime, endTime, year, month, date);
     }
 
     public void updateEvent(Events eventUpdateRef, ContentValues values) {
