@@ -22,13 +22,8 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Part of the open source code
- *
- * Something to do with displaying the number of events in a single day in the calendar
- * basically the 'getView' method
- *
- * ask me (Brian) for more info and I'll try to explain. I do not fully understand either
- * If your wanna change or have change (i.e commit to gitHub) please tell me so I know (or I guess tell the group as well)
+ * Set color of the calendar and handles
+ * displaying added events to a date
  */
 public class MyGridAdapter extends ArrayAdapter {
 

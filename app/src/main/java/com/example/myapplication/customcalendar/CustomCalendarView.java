@@ -48,12 +48,9 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 /**
- * Part of the open source code
+ * The Master Calendar
  *
- * The Custom Calendar
- *
- * ask me (Brian) for more info and I'll try to explain. I do not fully understand either
- * If your wanna change or have change (i.e commit to gitHub) please tell me so I know (or I guess tell the group as well)
+ * This class handles all user interaction/inputs in the main activity page where the calendar is located at
  */
 public class CustomCalendarView extends LinearLayout {
 
@@ -79,11 +76,10 @@ public class CustomCalendarView extends LinearLayout {
     int alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute;
 
     /* How this works (i think or at least how I understand it so far):
-     * Basically SQLite has a local database (as joshua said)
-     * This instance variable acts sort of like a 'pointer'
-     * I say this because every time we want to access the database in a method, this variable gets a reference to the local files of the database
+     * Basically SQLite has a local database and this instance variable acts sort of like a 'pointer'
+     * To access the SQLite database, this variable is instantiated with a reference to the local files of the database
      * Then we do whatever we need to do while we have that reference (read/write to the database)
-     * Then once we are done accessing it or we are done in a method, we have to 'close' it --> i.e. get rid of the reference (for safety reasons?)
+     * Then once we are done accessing it or we are done in a method, we close the connection to the database
      */
     DBOpenHelper dbOpenHelper;
 
@@ -96,7 +92,18 @@ public class CustomCalendarView extends LinearLayout {
     }
 
     /**
-     * Main Constructor --> used in MainActivity.java
+     * Constructor
+     *
+     * @param context
+     * @param attrs
+     * @param defStyleAttr
+     */
+    public CustomCalendarView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    /**
+     * Main Constructor
      * @param context
      * @param attrs
      */
@@ -106,6 +113,7 @@ public class CustomCalendarView extends LinearLayout {
         InitializeLayout();
         SetUpCalendar();
 
+        /* Shows a display of a a list of events for current month sorted by highest priority */
         priorityHigh.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,7 +126,7 @@ public class CustomCalendarView extends LinearLayout {
                 recyclerView.setHasFixedSize(true);
                 Collections.sort(eventsList);
                 Collections.reverse(eventsList);
-                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList, eventToUpdate);
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList);
                 recyclerView.setAdapter(eventRecyclerAdapter);
                 eventRecyclerAdapter.notifyDataSetChanged();
 
@@ -136,6 +144,7 @@ public class CustomCalendarView extends LinearLayout {
             }
         });
 
+        /* Shows a display of a a list of events for current month sorted by lowest priority */
         priorityLow.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,7 +156,7 @@ public class CustomCalendarView extends LinearLayout {
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setHasFixedSize(true);
                 Collections.sort(eventsList);
-                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList, eventToUpdate);
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList);
                 recyclerView.setAdapter(eventRecyclerAdapter);
                 eventRecyclerAdapter.notifyDataSetChanged();
 
@@ -210,7 +219,7 @@ public class CustomCalendarView extends LinearLayout {
 
                 Button addEvent = addView.findViewById(R.id.addEvent);
 
-                /* things related to setting the start time of the event */
+                /* When user taps the time icon to set the start time of the event, a time picker widget will be shown */
                 setStartTime.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -237,7 +246,7 @@ public class CustomCalendarView extends LinearLayout {
                     }
                 });
 
-                /* things to do with setting up the end time of the event */
+                /* When user taps the time icon to set the end time of the event, a time picker widget will be shown */
                 setEndTime.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -310,7 +319,7 @@ public class CustomCalendarView extends LinearLayout {
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(showView.getContext());
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setHasFixedSize(true);
-                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), CollectEventByDate(date), eventToUpdate);
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), CollectEventByDate(date));
                 recyclerView.setAdapter(eventRecyclerAdapter);
                 eventRecyclerAdapter.notifyDataSetChanged();
 
@@ -330,6 +339,7 @@ public class CustomCalendarView extends LinearLayout {
             }
         });
 
+        /* when user press the update event button, it replicates the process of adding an event but instead of making a new event it updates the old one */
         updateEvent.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -362,8 +372,6 @@ public class CustomCalendarView extends LinearLayout {
                     eventPriority.setText(eventToUpdate.getPRIORITY());
                     eventNotes.setText(eventToUpdate.getNOTES());
 
-                    /* need to add stuff here yet */
-
                     Calendar dateCalendar = Calendar.getInstance();
                     String temp = eventToUpdate.getDATE();
                     temp = temp.substring(temp.length()-2);
@@ -374,7 +382,7 @@ public class CustomCalendarView extends LinearLayout {
 
                     Button addEvent = addView.findViewById(R.id.addEvent);
 
-                    /* things related to setting the start time of the event */
+                    /* When user taps the time icon to set the start time of the event, a time picker widget will be shown */
                     setStartTime.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -401,7 +409,7 @@ public class CustomCalendarView extends LinearLayout {
                         }
                     });
 
-                    /* things to do with setting up the end time of the event */
+                    /* When user taps the time icon to set the end time of the event, a time picker widget will be shown */
                     setEndTime.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -425,8 +433,6 @@ public class CustomCalendarView extends LinearLayout {
                             timePickerDialog.show();
                         }
                     });
-
-
 
                     final String date = eventToUpdate.getDATE();
                     final String month = eventToUpdate.getMONTH();
@@ -471,7 +477,7 @@ public class CustomCalendarView extends LinearLayout {
     }
 
     /**
-     * Something to do with notifications as well (i think)
+     * Something to do with setting up notifications
      *
      * @param date
      * @param event
@@ -511,7 +517,7 @@ public class CustomCalendarView extends LinearLayout {
     }
 
     /**
-     * Fetch events from database and save that to an ArrayList data structure
+     * Fetch events by a certain date from database and save that to an ArrayList data structure
      *
      * @param date
      * @return
@@ -540,19 +546,8 @@ public class CustomCalendarView extends LinearLayout {
     }
 
     /**
-     * Constructor
-     *
-     * @param context
-     * @param attrs
-     * @param defStyleAttr
-     */
-    public CustomCalendarView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
-    /**
-     * Save event to database specifically 'dbOpenHelper'
-     * notice that it calls ___.SaveEvent(...) --> the method found in DBOpenHelper.java
+    * Helper method to Save event to SQLite database
+     * It calls SaveEvent(...) method in DBOpenHelper.java
      *
      * @param event
      * @param startTime
@@ -573,6 +568,12 @@ public class CustomCalendarView extends LinearLayout {
         HttpDBRequest.addEvent(event, "", startTime, endTime, year, month, date);
     }
 
+    /**
+     * Helper method to update event in SQLite database
+     * it calls updateEvent(...) method in DBOpenHelper.java
+     * @param eventUpdateRef
+     * @param values
+     */
     public void updateEvent(Events eventUpdateRef, ContentValues values) {
         dbOpenHelper = new DBOpenHelper(context);
         SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
@@ -583,7 +584,21 @@ public class CustomCalendarView extends LinearLayout {
         dbOpenHelper.close();
     }
 
-    public ContentValues getUpdateValues(String event, String startTime, String endTime, String date, String month, String year, String priority, String notes, String notify) {
+    /**
+     * Helper method for updateEvent method above
+     * It packages all the new info of the event in a ContentValues object
+     * @param event
+     * @param startTime
+     * @param endTime
+     * @param date
+     * @param month
+     * @param year
+     * @param priority
+     * @param notes
+     * @param notify
+     * @return
+     */
+    private ContentValues getUpdateValues(String event, String startTime, String endTime, String date, String month, String year, String priority, String notes, String notify) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBStructure.EVENT, event);
         contentValues.put(DBStructure.START_TIME, startTime);
@@ -654,7 +669,8 @@ public class CustomCalendarView extends LinearLayout {
 
     */
     /**
-     * Initialize all the position and references of the different things in the Calendar Page (i think)
+     * Initialize all the position and references of the different things
+     * associated with the calendar in the Main Activity page
      */
     private void InitializeLayout() {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -670,7 +686,9 @@ public class CustomCalendarView extends LinearLayout {
     }
 
     /**
-     * Sets and display the gridView of the calendar
+     * Sets, updates, and display the gridView of the calendar
+     * Every time this method is called, it updates the events in the current month
+     * by fetching data from SQLite database.
      */
     private void SetUpCalendar() {
         String dateCurrent = dateFormat.format(calendar.getTime());
@@ -696,6 +714,7 @@ public class CustomCalendarView extends LinearLayout {
 
     /**
      * Get all the events on the month we are in
+     * and save that in the ArrayList instance variable 'eventsList'
      *
      * @param Month the month displayed on the calendar
      * @param Year the year displayed on the calendar
@@ -720,7 +739,5 @@ public class CustomCalendarView extends LinearLayout {
         cursor.close();
         dbOpenHelper.close();
     }
-
-
 
 }

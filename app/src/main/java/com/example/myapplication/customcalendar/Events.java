@@ -6,17 +6,10 @@ import androidx.room.PrimaryKey;
 import java.util.Comparator;
 
 /**
- * Part of the open source code
- *
  * Event object
  *
  * The data/info regarding to an instance of an event
  * And getter and setter methods
- *
- * (will add 'priority' feature later, or use the Events class made by Joshua or combine)
- *
- * ask me (Brian) for more info and I'll try to explain
- * If your wanna change or have change (i.e commit to gitHub) please tell me so I know (or I guess tell the group as well)
  */
 @Entity
 public class Events implements Comparable<Events> {
@@ -28,9 +21,8 @@ public class Events implements Comparable<Events> {
     private int priorityInt; // used for sorting
     private boolean alarm;
 
-
     /**
-     * New Constructor
+     * Main Constructor
      * @param EVENT
      * @param startTIME
      * @param DATE
@@ -60,12 +52,10 @@ public class Events implements Comparable<Events> {
         alarm = false;
     }
 
-    /*
-    * Empty constructor to be used for parsing
+    /**
+     * Empty constructor to be used for parsing
      */
-    public Events(){
-
-    }
+    public Events(){ }
 
     public int getId() {
         return id;

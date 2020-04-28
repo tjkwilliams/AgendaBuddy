@@ -16,12 +16,7 @@ import androidx.core.app.NotificationManagerCompat;
 import com.example.myapplication.R;
 
 /**
- * Part of the open source code
- *
- * Something to do with Alarm/Notification of an event
- *
- * ask me (Brian) for more info and I'll try to explain. I do not fully understand either
- * If your wanna change or have change (i.e commit to gitHub) please tell me so I know (or I guess tell the group as well)
+ * Handles the Alarm/Notification of an event
  */
 public class AlarmReceiver extends BroadcastReceiver {
     @Override

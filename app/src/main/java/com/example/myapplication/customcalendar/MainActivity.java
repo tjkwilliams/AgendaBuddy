@@ -1,10 +1,7 @@
 package com.example.myapplication.customcalendar;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -23,11 +20,11 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
- * The Page where the calendar is at
- * If your wanna change or have change (i.e commit to gitHub) please tell me so I know (or I guess tell the group as well)
+ * The Main Activity page of the app.
+ *
+ * This page comes after the user logged in
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        customCalendarView = (CustomCalendarView)findViewById(R.id.customCalendarView); // just instantiate customCalendarView
+        customCalendarView = (CustomCalendarView)findViewById(R.id.customCalendarView); // instantiate the calendar
 
         //parseXML();
 

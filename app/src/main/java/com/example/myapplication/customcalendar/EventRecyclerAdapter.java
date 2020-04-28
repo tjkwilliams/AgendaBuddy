@@ -46,12 +46,10 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
     private Context context;
     private ArrayList<Events> arrayList;
     private DBOpenHelper dbOpenHelper;
-    private Events eventToUpdate;
 
-    public EventRecyclerAdapter(Context context, ArrayList<Events> arrayList, Events eventToUpdate) {
+    public EventRecyclerAdapter(Context context, ArrayList<Events> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
-        this.eventToUpdate = eventToUpdate;
     }
 
     @NonNull

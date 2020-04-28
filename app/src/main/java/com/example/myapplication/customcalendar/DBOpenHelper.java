@@ -9,35 +9,45 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 /**
- * Part of the open source code
  *
- * The Database itself
+ * The SQLite Database
  *
  * This is basically where the data all relevant to events is saved to
- * The database is written and readable as you can see from the method names
- *
- * ask me (Brian) for more info and I'll try to explain. I do not fully understand either
- * If your wanna change or have change (i.e commit to gitHub) please tell me so I know (or I guess tell the group as well)
+ * The database is written and readable
  */
 public class DBOpenHelper extends SQLiteOpenHelper {
 
+    /**
+     * The SQL command to create the events table in String form
+     */
     private static final String CREATE_EVENTS_TABLE = "create table " + DBStructure.EVENT_TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,"
             + DBStructure.EVENT + " TEXT, " + DBStructure.START_TIME + " TEXT, " + DBStructure.END_TIME + " TEXT, " + DBStructure.DATE + " TEXT, " + DBStructure.MONTH + " TEXT, "
             + DBStructure.YEAR + " TEXT, "+DBStructure.PRIORITY + " TEXT, " + DBStructure.NOTES + " TEXT, " + DBStructure.Notify + " TEXT)";
 
+    /**
+     * The SQL command to drop the table
+     */
     private static final String DROP_EVENTS_TABLE = "DROP TABLE IF EXISTS " + DBStructure.EVENT_TABLE_NAME;
-
-
 
     public DBOpenHelper(@Nullable Context context) {
         super(context, DBStructure.DB_NAME, null, DBStructure.DB_VERSION);
     }
 
+    /**
+     * Execute the create events table SQL command
+     * @param db
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_EVENTS_TABLE);
     }
 
+    /**
+     * Update the SQLite database version
+     * @param db
+     * @param oldVersion
+     * @param newVersion
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(DROP_EVENTS_TABLE);
@@ -46,7 +56,6 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     /**
      * Save an event into the database
-     * all attributes must be filled, hence why there is a lot of parameters
      *
      * @param event the event object
      * @param startTime the time of event
@@ -74,11 +83,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Read events info (i think)
+     * Fetch info on event
      *
      * @param date the date of the event
      * @param database the database
-     * @return a query --> the data fetched from the database (im guessing)
+     * @return a query --> the data fetched from the database
      */
     public Cursor readEvents(String date, SQLiteDatabase database) {
         String[] projections = {DBStructure.EVENT, DBStructure.START_TIME, DBStructure.END_TIME, DBStructure.DATE, DBStructure.MONTH, DBStructure.YEAR, DBStructure.PRIORITY, DBStructure.NOTES};
@@ -89,7 +98,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Similar to readEvents (im not quite sure of the difference --> was used for enabling notifications)
+     * Similar to readEvents but by ID
+     * method used for the notifications feature
      *
      * @param date the date of the event
      * @param event the event
@@ -105,6 +115,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Fetch events from database by a given month
      *
      * @param month
      * @param year
@@ -120,6 +131,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Delete an event from the database
      *
      * @param event
      * @param date
@@ -133,6 +145,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Update the state of notifications of the event
      *
      * @param date
      * @param event
@@ -149,11 +162,18 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Update the event with new info for the event
+     * @param oldDate
+     * @param oldEvent
+     * @param oldStartTime
+     * @param values
+     * @param database
+     */
     public void updateEvent(String oldDate, String oldEvent, String oldStartTime, ContentValues values, SQLiteDatabase database) {
         String where = DBStructure.DATE + "=? and " + DBStructure.EVENT + "=? and " + DBStructure.START_TIME + "=?";
         String[] whereArgs = {oldDate, oldEvent, oldStartTime};
 
         database.update(DBStructure.EVENT_TABLE_NAME, values, where, whereArgs);
     }
-
 }
