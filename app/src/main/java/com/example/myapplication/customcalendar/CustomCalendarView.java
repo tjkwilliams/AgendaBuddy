@@ -65,6 +65,7 @@ public class CustomCalendarView extends LinearLayout {
     AlertDialog alertDialog;
     List<Date> dates = new ArrayList<>();
     List<Events> eventsList = new ArrayList<>();
+    List<Events> selectedEvent = new ArrayList<>();
     Events eventToUpdate;
     int alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute;
 
@@ -119,7 +120,7 @@ public class CustomCalendarView extends LinearLayout {
                 recyclerView.setHasFixedSize(true);
                 Collections.sort(eventsList);
                 Collections.reverse(eventsList);
-                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList);
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList, (ArrayList<Events>) selectedEvent);
                 recyclerView.setAdapter(eventRecyclerAdapter);
                 eventRecyclerAdapter.notifyDataSetChanged();
 
@@ -149,7 +150,7 @@ public class CustomCalendarView extends LinearLayout {
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setHasFixedSize(true);
                 Collections.sort(eventsList);
-                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList);
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList, (ArrayList<Events>) selectedEvent);
                 recyclerView.setAdapter(eventRecyclerAdapter);
                 eventRecyclerAdapter.notifyDataSetChanged();
 
@@ -312,7 +313,7 @@ public class CustomCalendarView extends LinearLayout {
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(showView.getContext());
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setHasFixedSize(true);
-                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), CollectEventByDate(date));
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), CollectEventByDate(date), (ArrayList<Events>) selectedEvent);
                 recyclerView.setAdapter(eventRecyclerAdapter);
                 eventRecyclerAdapter.notifyDataSetChanged();
 
@@ -339,10 +340,11 @@ public class CustomCalendarView extends LinearLayout {
                 if(eventsList.size() == 0)
                     Toast.makeText(context, "There is no event to update", Toast.LENGTH_SHORT).show();
                 else {
-                    eventToUpdate = eventsList.get(eventsList.size() - 1);
-                    if (eventToUpdate == null)
+                    if(selectedEvent.size() == 0) {
                         Toast.makeText(context, "Please Select an Event to Update", Toast.LENGTH_SHORT).show();
-                    else {
+                    } else {
+                        eventToUpdate = selectedEvent.get(0);
+                        assert eventToUpdate != null;
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
                         builder.setCancelable(true);
                         final View addView = LayoutInflater.from(context).inflate(R.layout.add_newevent_layout, null);
@@ -444,19 +446,21 @@ public class CustomCalendarView extends LinearLayout {
                                     ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on");
                                     updateEvent(eventToUpdate, values);
                                     Toast.makeText(context, "Event Updated", Toast.LENGTH_SHORT).show();
-                                    eventsList.remove(eventToUpdate);
                                     SetUpCalendar();
                                     Calendar calendar = Calendar.getInstance();
                                     calendar.set(alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute);
                                     setAlarm(calendar, eventName.getText().toString(), eventStartTime.getText().toString(), getRequestCode(date
                                             , eventName.getText().toString(), eventStartTime.getText().toString()));
+                                    selectedEvent.clear();
+                                    eventToUpdate = null;
                                     alertDialog.dismiss();
                                 } else {
                                     ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on");
                                     updateEvent(eventToUpdate, values);
                                     Toast.makeText(context, "Event Updated", Toast.LENGTH_SHORT).show();
-                                    eventsList.remove(eventToUpdate);
                                     SetUpCalendar();
+                                    selectedEvent.clear();
+                                    eventToUpdate = null;
                                     alertDialog.dismiss();
                                 }
 
