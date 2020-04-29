@@ -83,13 +83,9 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
             public void onClick(View v) {
                 if(!arrayList.get(arrayList.size()-1).equals(events)) {
                     arrayList.add(events);
-                    notifyDataSetChanged();
                     Toast.makeText(context, "Event Selected", Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
                 }
-                /*
-                eventToUpdate = events;
-                notifyDataSetChanged();
-                */
             }
         });
 
