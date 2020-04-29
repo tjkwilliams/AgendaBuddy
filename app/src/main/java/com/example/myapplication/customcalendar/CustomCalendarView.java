@@ -121,6 +121,7 @@ public class CustomCalendarView extends LinearLayout {
                 //something that connects to the server
                 if(checkbox_email.isChecked()){
                     Toast.makeText(context.getApplicationContext(),"email checked",Toast. LENGTH_SHORT);
+
                 }
                 if(checkbox_email.isChecked()){
 
