@@ -41,6 +41,34 @@ public class HttpDBRequest {
         }
     }
 
+    public static void getEventByUID(int uid){
+        try {
+            URL url = new URL("http://18.233.165.117/agenda-buddy/get_event_details.php");
+            String postData = "uid=" + uid;
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            conn.setRequestProperty("Content-Length", Integer.toString(postData.length()));
+            conn.setUseCaches(false);
+
+            try (DataOutputStream dos = new DataOutputStream(conn.getOutputStream())) {
+                dos.writeBytes(postData);
+            }
+
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    System.out.println(line);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Add event to database
      * I am not sure how we are storing seperate user events

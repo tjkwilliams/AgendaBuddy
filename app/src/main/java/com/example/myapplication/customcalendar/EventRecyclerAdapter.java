@@ -44,14 +44,13 @@ import java.util.Locale;
 public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdapter.MyViewHolder> {
 
     private Context context;
-    private ArrayList<Events> arrayList;
+    private ArrayList<Events> arrayList, selectedEvent;
     private DBOpenHelper dbOpenHelper;
-    private Events eventToUpdate;
 
-    public EventRecyclerAdapter(Context context, ArrayList<Events> arrayList, Events eventToUpdate) {
+    public EventRecyclerAdapter(Context context, ArrayList<Events> arrayList, ArrayList<Events> selectedEvent) {
         this.context = context;
         this.arrayList = arrayList;
-        this.eventToUpdate = eventToUpdate;
+        this.selectedEvent = selectedEvent;
     }
 
     @NonNull
@@ -83,15 +82,9 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
         holder.select.setOnClickListener(new View.OnClickListener() { // edited
             @Override
             public void onClick(View v) {
-                if(!arrayList.get(arrayList.size()-1).equals(events)) {
-                    arrayList.add(events);
-                    notifyDataSetChanged();
-                    Toast.makeText(context, "Event Selected", Toast.LENGTH_SHORT).show();
-                }
-                /*
-                eventToUpdate = events;
+                selectedEvent.add(events);
+                Toast.makeText(context, "Event Selected", Toast.LENGTH_SHORT).show();
                 notifyDataSetChanged();
-                */
             }
         });
 

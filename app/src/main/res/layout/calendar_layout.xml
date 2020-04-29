@@ -158,5 +158,32 @@
         android:textAllCaps="false"
         android:layout_marginTop="15dp"
         android:layout_gravity="center"/>
+    <Button
+        android:id="@+id/syncButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sync With Wheaton Events"
+        android:textSize="20sp"
+        android:textAllCaps="false"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"/>
+
+    <CheckBox
+        android:id="@+id/checkbox_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onCheckboxClicked"
+        android:text="sync campus email events" />
+
+    <CheckBox android:id="@+id/checkbox_ath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sync athletic events"
+        android:onClick="onCheckboxClicked"/>
+    <CheckBox android:id="@+id/checkbox_ac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sync academic calendar events"
+        android:onClick="onCheckboxClicked"/>
 
 </LinearLayout>
