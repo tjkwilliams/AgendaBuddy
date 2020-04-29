@@ -31,13 +31,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.connect.HttpDBRequest;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -73,6 +66,7 @@ public class CustomCalendarView extends LinearLayout {
     AlertDialog alertDialog;
     List<Date> dates = new ArrayList<>();
     List<Events> eventsList = new ArrayList<>();
+    List<Events> selectedEvent = new ArrayList<>();
     Events eventToUpdate;
     int alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute;
 
@@ -153,7 +147,7 @@ public class CustomCalendarView extends LinearLayout {
                 recyclerView.setHasFixedSize(true);
                 Collections.sort(eventsList);
                 Collections.reverse(eventsList);
-                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList);
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList, (ArrayList<Events>) selectedEvent);
                 recyclerView.setAdapter(eventRecyclerAdapter);
                 eventRecyclerAdapter.notifyDataSetChanged();
 
@@ -183,7 +177,7 @@ public class CustomCalendarView extends LinearLayout {
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setHasFixedSize(true);
                 Collections.sort(eventsList);
-                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList);
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList, (ArrayList<Events>) selectedEvent);
                 recyclerView.setAdapter(eventRecyclerAdapter);
                 eventRecyclerAdapter.notifyDataSetChanged();
 
@@ -346,7 +340,7 @@ public class CustomCalendarView extends LinearLayout {
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(showView.getContext());
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setHasFixedSize(true);
-                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), CollectEventByDate(date));
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), CollectEventByDate(date), (ArrayList<Events>) selectedEvent);
                 recyclerView.setAdapter(eventRecyclerAdapter);
                 eventRecyclerAdapter.notifyDataSetChanged();
 
@@ -370,133 +364,140 @@ public class CustomCalendarView extends LinearLayout {
         updateEvent.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                eventToUpdate = eventsList.get(eventsList.size()-1);
-                if(eventToUpdate == null)
-                    Toast.makeText(context, "Please Select an Event to Update", Toast.LENGTH_SHORT).show();
+                if(eventsList.size() == 0)
+                    Toast.makeText(context, "There is no event to update", Toast.LENGTH_SHORT).show();
                 else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setCancelable(true);
-                    final View addView = LayoutInflater.from(context).inflate(R.layout.add_newevent_layout, null);
-                    final EditText eventName = addView.findViewById(R.id.eventName);
+                    if(selectedEvent.size() == 0) {
+                        Toast.makeText(context, "Please Select an Event to Update", Toast.LENGTH_SHORT).show();
+                    } else {
+                        eventToUpdate = selectedEvent.get(0);
+                        assert eventToUpdate != null;
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setCancelable(true);
+                        final View addView = LayoutInflater.from(context).inflate(R.layout.add_newevent_layout, null);
+                        final EditText eventName = addView.findViewById(R.id.eventName);
 
-                    final TextView eventStartTime = addView.findViewById(R.id.eventStartTime);
-                    ImageButton setStartTime = addView.findViewById(R.id.setEventStartTime);
-                    final CheckBox alarmMe = addView.findViewById(R.id.alarmMe);
+                        final TextView eventStartTime = addView.findViewById(R.id.eventStartTime);
+                        ImageButton setStartTime = addView.findViewById(R.id.setEventStartTime);
+                        final CheckBox alarmMe = addView.findViewById(R.id.alarmMe);
 
-                    final TextView eventEndTime = addView.findViewById(R.id.eventEndTime);
-                    ImageButton setEndTime = addView.findViewById(R.id.setEventEndTime);
-                    final EditText eventPriority = addView.findViewById(R.id.eventPriority);
+                        final TextView eventEndTime = addView.findViewById(R.id.eventEndTime);
+                        ImageButton setEndTime = addView.findViewById(R.id.setEventEndTime);
+                        final EditText eventPriority = addView.findViewById(R.id.eventPriority);
 
-                    final EditText eventNotes = addView.findViewById(R.id.eventNotes);
+                        final EditText eventNotes = addView.findViewById(R.id.eventNotes);
 
-                    eventName.setText(eventToUpdate.getEVENT());
-                    eventStartTime.setText(eventToUpdate.getStartTIME());
+                        eventName.setText(eventToUpdate.getEVENT());
+                        eventStartTime.setText(eventToUpdate.getStartTIME());
 
-                    if(eventToUpdate.getAlarm())
-                        alarmMe.setChecked(true);
+                        if (eventToUpdate.getAlarm())
+                            alarmMe.setChecked(true);
 
-                    eventEndTime.setText(eventToUpdate.getEndTIME());
-                    eventPriority.setText(eventToUpdate.getPRIORITY());
-                    eventNotes.setText(eventToUpdate.getNOTES());
+                        eventEndTime.setText(eventToUpdate.getEndTIME());
+                        eventPriority.setText(eventToUpdate.getPRIORITY());
+                        eventNotes.setText(eventToUpdate.getNOTES());
 
-                    Calendar dateCalendar = Calendar.getInstance();
-                    String temp = eventToUpdate.getDATE();
-                    temp = temp.substring(temp.length()-2);
-                    dateCalendar.setTime(dates.get(Integer.parseInt(temp)));
-                    alarmYear = dateCalendar.get(Calendar.YEAR);
-                    alarmMonth = dateCalendar.get(Calendar.MONTH);
-                    alarmDay = dateCalendar.get(Calendar.DAY_OF_MONTH);
+                        Calendar dateCalendar = Calendar.getInstance();
+                        String temp = eventToUpdate.getDATE();
+                        temp = temp.substring(temp.length() - 2);
+                        dateCalendar.setTime(dates.get(Integer.parseInt(temp)));
+                        alarmYear = dateCalendar.get(Calendar.YEAR);
+                        alarmMonth = dateCalendar.get(Calendar.MONTH);
+                        alarmDay = dateCalendar.get(Calendar.DAY_OF_MONTH);
 
-                    Button addEvent = addView.findViewById(R.id.addEvent);
+                        Button addEvent = addView.findViewById(R.id.addEvent);
 
-                    /* When user taps the time icon to set the start time of the event, a time picker widget will be shown */
-                    setStartTime.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Calendar calendar = Calendar.getInstance();
-                            int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                            int minutes = calendar.get(Calendar.MINUTE);
-
-                            TimePickerDialog timePickerDialog = new TimePickerDialog(addView.getContext(), R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
-                                @Override
-                                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                    Calendar c = Calendar.getInstance();
-                                    c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                                    c.set(Calendar.MINUTE, minute);
-                                    c.setTimeZone(TimeZone.getDefault());
-                                    SimpleDateFormat hFormat = new SimpleDateFormat("K:mm a", Locale.ENGLISH);
-                                    String event_Time = hFormat.format(c.getTime());
-                                    eventStartTime.setText(event_Time);
-                                    alarmHour = c.get(Calendar.HOUR_OF_DAY);
-                                    alarmMinute = c.get(Calendar.MINUTE);
-
-                                }
-                            }, hours, minutes, false);
-                            timePickerDialog.show();
-                        }
-                    });
-
-                    /* When user taps the time icon to set the end time of the event, a time picker widget will be shown */
-                    setEndTime.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Calendar calendar = Calendar.getInstance();
-                            int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                            int minutes = calendar.get(Calendar.MINUTE);
-
-                            TimePickerDialog timePickerDialog = new TimePickerDialog(addView.getContext(), R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
-                                @Override
-                                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                    Calendar c = Calendar.getInstance();
-                                    c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                                    c.set(Calendar.MINUTE, minute);
-                                    c.setTimeZone(TimeZone.getDefault());
-                                    SimpleDateFormat hFormat = new SimpleDateFormat("K:mm a", Locale.ENGLISH);
-                                    String event_Time = hFormat.format(c.getTime());
-                                    eventEndTime.setText(event_Time);
-
-                                }
-                            }, hours, minutes, false);
-                            timePickerDialog.show();
-                        }
-                    });
-
-                    final String date = eventToUpdate.getDATE();
-                    final String month = eventToUpdate.getMONTH();
-                    final String year = eventToUpdate.getYEAR();
-
-                    /* things related to when you press the addEvent button */
-                    addEvent.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            /* check if the 'notify me' checkbox is checked or not --> basically check if user wants to be notified or not */
-                            if(alarmMe.isChecked()) {
-                                ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on");
-                                updateEvent(eventToUpdate, values);
-                                Toast.makeText(context, "Event Updated", Toast.LENGTH_SHORT).show();
-                                eventsList.remove(eventToUpdate);
-                                SetUpCalendar();
+                        /* When user taps the time icon to set the start time of the event, a time picker widget will be shown */
+                        setStartTime.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
                                 Calendar calendar = Calendar.getInstance();
-                                calendar.set(alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute);
-                                setAlarm(calendar, eventName.getText().toString(), eventStartTime.getText().toString(), getRequestCode(date
-                                        , eventName.getText().toString(), eventStartTime.getText().toString()));
-                                alertDialog.dismiss();
-                            } else {
-                                ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on");
-                                updateEvent(eventToUpdate, values);
-                                Toast.makeText(context, "Event Updated", Toast.LENGTH_SHORT).show();
-                                eventsList.remove(eventToUpdate);
-                                SetUpCalendar();
-                                alertDialog.dismiss();
+                                int hours = calendar.get(Calendar.HOUR_OF_DAY);
+                                int minutes = calendar.get(Calendar.MINUTE);
+
+                                TimePickerDialog timePickerDialog = new TimePickerDialog(addView.getContext(), R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
+                                    @Override
+                                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                        Calendar c = Calendar.getInstance();
+                                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                        c.set(Calendar.MINUTE, minute);
+                                        c.setTimeZone(TimeZone.getDefault());
+                                        SimpleDateFormat hFormat = new SimpleDateFormat("K:mm a", Locale.ENGLISH);
+                                        String event_Time = hFormat.format(c.getTime());
+                                        eventStartTime.setText(event_Time);
+                                        alarmHour = c.get(Calendar.HOUR_OF_DAY);
+                                        alarmMinute = c.get(Calendar.MINUTE);
+
+                                    }
+                                }, hours, minutes, false);
+                                timePickerDialog.show();
                             }
+                        });
 
-                        }
-                    });
+                        /* When user taps the time icon to set the end time of the event, a time picker widget will be shown */
+                        setEndTime.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Calendar calendar = Calendar.getInstance();
+                                int hours = calendar.get(Calendar.HOUR_OF_DAY);
+                                int minutes = calendar.get(Calendar.MINUTE);
 
-                    builder.setView(addView);
-                    alertDialog = builder.create();
-                    alertDialog.show();
+                                TimePickerDialog timePickerDialog = new TimePickerDialog(addView.getContext(), R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
+                                    @Override
+                                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                        Calendar c = Calendar.getInstance();
+                                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                        c.set(Calendar.MINUTE, minute);
+                                        c.setTimeZone(TimeZone.getDefault());
+                                        SimpleDateFormat hFormat = new SimpleDateFormat("K:mm a", Locale.ENGLISH);
+                                        String event_Time = hFormat.format(c.getTime());
+                                        eventEndTime.setText(event_Time);
+
+                                    }
+                                }, hours, minutes, false);
+                                timePickerDialog.show();
+                            }
+                        });
+
+                        final String date = eventToUpdate.getDATE();
+                        final String month = eventToUpdate.getMONTH();
+                        final String year = eventToUpdate.getYEAR();
+
+                        /* things related to when you press the addEvent button */
+                        addEvent.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                /* check if the 'notify me' checkbox is checked or not --> basically check if user wants to be notified or not */
+                                if (alarmMe.isChecked()) {
+                                    ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on");
+                                    updateEvent(eventToUpdate, values);
+                                    Toast.makeText(context, "Event Updated", Toast.LENGTH_SHORT).show();
+                                    SetUpCalendar();
+                                    Calendar calendar = Calendar.getInstance();
+                                    calendar.set(alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute);
+                                    setAlarm(calendar, eventName.getText().toString(), eventStartTime.getText().toString(), getRequestCode(date
+                                            , eventName.getText().toString(), eventStartTime.getText().toString()));
+                                    selectedEvent.clear();
+                                    eventToUpdate = null;
+                                    alertDialog.dismiss();
+                                } else {
+                                    ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on");
+                                    updateEvent(eventToUpdate, values);
+                                    Toast.makeText(context, "Event Updated", Toast.LENGTH_SHORT).show();
+                                    SetUpCalendar();
+                                    selectedEvent.clear();
+                                    eventToUpdate = null;
+                                    alertDialog.dismiss();
+                                }
+
+                            }
+                        });
+
+                        builder.setView(addView);
+                        alertDialog = builder.create();
+                        alertDialog.show();
+                    }
                 }
             }
         });
@@ -639,62 +640,6 @@ public class CustomCalendarView extends LinearLayout {
         return contentValues;
     }
 
-    /*takes a list of all academic events and sets them in the calendar*/
-    /*
-    public void setAllAcademic() throws IOException {
-       // ArrayList<Events> e = addAllAcEvents();
-        for(int i=0; i<e.size(); i++){
-            Events n = e.get(i);
-            saveEvent(n.getEVENT(), "00:00 AM", "00:00 PM", n.getDATE(), n.getMONTH(), n.getYEAR(), "low", "none", "off" );
-        }
-    }
-    */
-/*
-    public void getAcEvents(){
-        File f = cal_data.xml;
-
-    }
-
- */
-
-    /*
-        A method to connect to wheaton website and put all academic events on the user's calendar in app
-         */
-    /*
-
-    private ArrayList<Events> addAllAcEvents() throws IOException {
-        Document doc;
-        doc = Jsoup.connection("https://25livepub.collegenet.com/calendars/event-collections-general_calendar_wp.rss").bufferUp();
-        System.out.println(doc.title());
-
-
-        //will hold all the new events
-        ArrayList<Events> academicEvents = new ArrayList<Events>();
-
-        String day, month, year, date;
-        Elements items = doc.getElementsByTag("item");
-        Events n;
-        for (Element item : items) {
-            Elements t = item.getElementsByTag("title");
-            System.out.println(t.text());
-            Elements d = item.getElementsByTag("category");
-            year = d.text().substring(0, 4);
-            month = d.text().substring(5, 7);
-            day = d.text().substring(8, 10);
-            date = year + "-" + month +"-" +day;
-
-            academicEvents.add(new Events(t.text(), "", "", date, "April", year, "low", "none"));
-
-            //a new event representing this data
-            //n = new Events(t.text(), "", day, month, year);
-            //insert each event using background thread
-            //mRepo.insertEventTask(n);
-            //customCalendarView.saveEvent(t.text(), "", "", day, month, year, "", "" ,"");
-        }
-        return academicEvents;
-    }
-
-    */
     /**
      * Initialize all the position and references of the different things
      * associated with the calendar in the Main Activity page

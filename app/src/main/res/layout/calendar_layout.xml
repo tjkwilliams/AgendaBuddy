@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -129,61 +130,103 @@
 
     </GridView>
 
-    <Button
-        android:id="@+id/priorityHigh"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="List events from highest priority first"
-        android:textSize="20sp"
-        android:textAllCaps="false"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"/>
+        android:orientation="horizontal" >
 
-    <Button
-        android:id="@+id/priorityLow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="List events from lowest priority first"
-        android:textSize="20sp"
-        android:textAllCaps="false"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="List events:"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="5dp"/>
 
-    <Button
-        android:id="@+id/updateButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Update selected event"
-        android:textSize="20sp"
-        android:textAllCaps="false"
-        android:layout_marginTop="15dp"
-        android:layout_gravity="center"/>
-    <Button
-        android:id="@+id/syncButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sync With Wheaton Events"
-        android:textSize="20sp"
-        android:textAllCaps="false"
-        android:layout_marginTop="15dp"
-        android:layout_gravity="center"/>
+        <Button
+            android:id="@+id/priorityHigh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Highest priority"
+            android:textAllCaps="false"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"/>
 
-    <CheckBox
-        android:id="@+id/checkbox_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onCheckboxClicked"
-        android:text="sync campus email events" />
+        <Button
+            android:id="@+id/priorityLow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lowest priority"
+            android:textAllCaps="false"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"/>
 
-    <CheckBox android:id="@+id/checkbox_ath"
-        android:layout_width="wrap_content"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="sync athletic events"
-        android:onClick="onCheckboxClicked"/>
-    <CheckBox android:id="@+id/checkbox_ac"
-        android:layout_width="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/syncButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sync Wheaton Events"
+            android:textAllCaps="false"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/updateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update selected event"
+            android:textAllCaps="false"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="sync academic calendar events"
-        android:onClick="onCheckboxClicked"/>
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sync options:"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:layout_marginLeft="5dp"/>
+
+        <CheckBox
+            android:id="@+id/checkbox_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onCheckboxClicked"
+            android:text="campus email"
+            android:textSize="12sp"/>
+
+        <CheckBox android:id="@+id/checkbox_ath"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="athletics"
+            android:onClick="onCheckboxClicked"
+            android:textSize="12sp"/>
+
+        <CheckBox android:id="@+id/checkbox_ac"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="academics"
+            android:onClick="onCheckboxClicked"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
 
 </LinearLayout>
