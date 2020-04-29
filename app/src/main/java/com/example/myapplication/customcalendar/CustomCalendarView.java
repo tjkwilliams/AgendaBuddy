@@ -54,7 +54,8 @@ import java.util.TimeZone;
  */
 public class CustomCalendarView extends LinearLayout {
 
-    Button priorityLow, priorityHigh, updateEvent;
+    Button priorityLow, priorityHigh, updateEvent, syncButton;
+    CheckBox checkbox_email, checkbox_ath, checkbox_ac;
     ImageButton nextButton, previousButton;
     TextView currentDate;
     GridView gridView;
@@ -112,6 +113,31 @@ public class CustomCalendarView extends LinearLayout {
         this.context = context;
         InitializeLayout();
         SetUpCalendar();
+
+        /* sync data upon user request*/
+        syncButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //something that connects to the server
+                if(checkbox_email.isChecked()){
+                    Toast.makeText(context.getApplicationContext(),"email checked",Toast. LENGTH_SHORT);
+                }
+                if(checkbox_email.isChecked()){
+
+                }
+                if(checkbox_email.isChecked()){
+
+                }
+
+                alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        SetUpCalendar();
+                    }
+                });
+
+            }
+        });
 
         /* Shows a display of a a list of events for current month sorted by highest priority */
         priorityHigh.setOnClickListener(new OnClickListener() {
@@ -682,6 +708,10 @@ public class CustomCalendarView extends LinearLayout {
         priorityHigh = view.findViewById(R.id.priorityHigh);
         priorityLow = view.findViewById(R.id.priorityLow);
         updateEvent = view.findViewById(R.id.updateButton);
+        syncButton = view.findViewById(R.id.syncButton);
+        checkbox_email = view.findViewById(R.id.checkbox_email);
+        checkbox_ath = view.findViewById(R.id.checkbox_ath);
+        checkbox_ac  = view.findViewById(R.id.checkbox_ac);
         eventToUpdate = null;
     }
 
