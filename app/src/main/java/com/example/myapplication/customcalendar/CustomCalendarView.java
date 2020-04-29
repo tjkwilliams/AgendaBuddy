@@ -566,7 +566,7 @@ public class CustomCalendarView extends LinearLayout {
         dbOpenHelper.SaveEvent(event, startTime, endTime, date, month, year, priority, notes, notify, database);
         dbOpenHelper.close();
 
-        HttpDBRequest.addEvent(event, "", startTime, endTime, year, month, date);
+        //HttpDBRequest.addEvent(event, "", startTime, endTime, year, month, date, user);
     }
 
     /**
