@@ -81,9 +81,38 @@
             android:layout_margin="5dp"
             android:layout_weight="2"/>
 
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/outside"
+            android:text="Is outside"
+            android:textColor="@android:color/white"
+            android:buttonTint="@android:color/white"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:hint="campus/academic/athletic/other"
+            android:textSize="15sp"
+            android:autofillHints=""
+            android:gravity="center"
+            android:id="@+id/eventType"
+            android:layout_weight="1"
+            android:inputType="text"
+            android:layout_marginLeft="10dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:hint="low/med/high"
             android:textSize="15sp"
@@ -91,7 +120,10 @@
             android:gravity="center"
             android:id="@+id/eventPriority"
             android:layout_weight="1"
-            android:inputType="text"/>
+            android:inputType="text"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
 
     </LinearLayout>
 
@@ -101,6 +133,7 @@
         android:background="@android:color/white"
         android:hint="Notes"
         android:autofillHints=""
+        android:textSize="15sp"
         android:id="@+id/eventNotes"
         android:layout_margin="10dp"
         android:gravity="start"
