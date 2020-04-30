@@ -22,7 +22,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      */
     private static final String CREATE_EVENTS_TABLE = "create table " + DBStructure.EVENT_TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,"
             + DBStructure.EVENT + " TEXT, " + DBStructure.START_TIME + " TEXT, " + DBStructure.END_TIME + " TEXT, " + DBStructure.DATE + " TEXT, " + DBStructure.MONTH + " TEXT, "
-            + DBStructure.YEAR + " TEXT, "+DBStructure.PRIORITY + " TEXT, " + DBStructure.NOTES + " TEXT, " + DBStructure.Notify + " TEXT)";
+            + DBStructure.YEAR + " TEXT, "+DBStructure.PRIORITY + " TEXT, " + DBStructure.NOTES + " TEXT, " + DBStructure.Notify + " TEXT, " + DBStructure.EVENT_TYPE + " TEXT, "
+            + DBStructure.OUTSIDE + " TEXT, " + DBStructure.WEATHER + " TEXT, " + DBStructure.TEMPERATURE + " TEXT)";
 
     /**
      * The SQL command to drop the table
@@ -68,7 +69,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      * @param notes
      * @param database the SQLite database
      */
-    public void SaveEvent(String event, String startTime, String endTime, String date, String month, String year, String priority, String notes, String notify, SQLiteDatabase database) {
+    public void SaveEvent(String event, String startTime, String endTime, String date, String month, String year, String priority, String notes, String notify, String eventType, String outside, String weather, String temperature, SQLiteDatabase database) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBStructure.EVENT, event);
         contentValues.put(DBStructure.START_TIME, startTime);
@@ -79,6 +80,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         contentValues.put(DBStructure.PRIORITY, priority);
         contentValues.put(DBStructure.NOTES, notes);
         contentValues.put(DBStructure.Notify, notify);
+        contentValues.put(DBStructure.EVENT_TYPE, eventType);
+        contentValues.put(DBStructure.OUTSIDE, outside);
+        contentValues.put(DBStructure.WEATHER, weather);
+        contentValues.put(DBStructure.TEMPERATURE, temperature);
         database.insert(DBStructure.EVENT_TABLE_NAME, null, contentValues);
     }
 
@@ -90,7 +95,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      * @return a query --> the data fetched from the database
      */
     public Cursor readEvents(String date, SQLiteDatabase database) {
-        String[] projections = {DBStructure.EVENT, DBStructure.START_TIME, DBStructure.END_TIME, DBStructure.DATE, DBStructure.MONTH, DBStructure.YEAR, DBStructure.PRIORITY, DBStructure.NOTES};
+        String[] projections = {DBStructure.EVENT, DBStructure.START_TIME, DBStructure.END_TIME, DBStructure.DATE, DBStructure.MONTH, DBStructure.YEAR, DBStructure.PRIORITY, DBStructure.NOTES, DBStructure.Notify, DBStructure.EVENT_TYPE, DBStructure.OUTSIDE, DBStructure.WEATHER, DBStructure.TEMPERATURE};
         String selection = DBStructure.DATE + "=?";
         String[] selectionArgs = {date};
 
@@ -123,7 +128,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      * @return
      */
     public Cursor readEventsPerMonth(String month, String year, SQLiteDatabase database) {
-        String[] projections = {DBStructure.EVENT, DBStructure.START_TIME, DBStructure.END_TIME, DBStructure.DATE, DBStructure.MONTH, DBStructure.YEAR, DBStructure.PRIORITY, DBStructure.NOTES};
+        String[] projections = {DBStructure.EVENT, DBStructure.START_TIME, DBStructure.END_TIME, DBStructure.DATE, DBStructure.MONTH, DBStructure.YEAR, DBStructure.PRIORITY, DBStructure.NOTES, DBStructure.Notify, DBStructure.EVENT_TYPE, DBStructure.OUTSIDE, DBStructure.WEATHER, DBStructure.TEMPERATURE};
         String selection = DBStructure.MONTH + "=? and " + DBStructure.YEAR + "=?";
         String[] selectionArgs = {month, year};
 

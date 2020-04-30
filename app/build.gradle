@@ -58,8 +58,10 @@ dependencies {
     def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation 'com.google.code.gson:gson:2.8.6'
 
-    /*MySQL database connection*/
 
+    /* For google login */
+    implementation 'com.google.android.gms:play-services-auth:18.0.0'
 
 }

@@ -17,9 +17,32 @@ public class Events implements Comparable<Events> {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private String EVENT, startTIME, endTIME, DATE, MONTH, YEAR, PRIORITY, NOTES;
+    private String EVENT, startTIME, endTIME, DATE, MONTH, YEAR, PRIORITY, NOTES, ALARM, eventType, OUTSIDE, WEATHER, TEMPERATURE;
     private int priorityInt; // used for sorting
-    private boolean alarm;
+
+    public String getALARM() {
+        return ALARM;
+    }
+
+    public void setALARM(String ALARM) {
+        this.ALARM = ALARM;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+
+    public String getOUTSIDE() {
+        return OUTSIDE;
+    }
+
+    public void setOUTSIDE(String OUTSIDE) {
+        this.OUTSIDE = OUTSIDE;
+    }
 
     /**
      * Main Constructor
@@ -30,7 +53,7 @@ public class Events implements Comparable<Events> {
      * @param YEAR
      * @param PRIORITY
      */
-    public Events(String EVENT, String startTIME, String endTIME, String DATE, String MONTH, String YEAR, String PRIORITY, String NOTES) {
+    public Events(String EVENT, String startTIME, String endTIME, String DATE, String MONTH, String YEAR, String PRIORITY, String NOTES, String ALARM, String eventType, String OUTSIDE, String WEATHER, String TEMPERATURE) {
         this.EVENT = EVENT;
         this.startTIME = startTIME;
         this.endTIME = endTIME;
@@ -49,7 +72,28 @@ public class Events implements Comparable<Events> {
 
         this.PRIORITY = PRIORITY;
         this.NOTES = NOTES;
-        alarm = false;
+
+        this.ALARM = ALARM;
+        this.OUTSIDE = OUTSIDE;
+
+        this.eventType = eventType;
+        this.WEATHER = WEATHER;
+        this.TEMPERATURE = TEMPERATURE;
+    }
+
+    public Events(String EVENT, String startTIME, String endTIME, String DATE, String MONTH, String YEAR){
+        this.EVENT = EVENT;
+        this.startTIME = startTIME;
+        this.endTIME = endTIME;
+        this.DATE = DATE;
+        this.MONTH = MONTH;
+        this.YEAR = YEAR;
+
+        this.ALARM = "";
+        this.OUTSIDE = "";
+        this.PRIORITY = "med";
+        this.TEMPERATURE = "";
+        this.WEATHER = "";
     }
 
     /**
@@ -133,9 +177,22 @@ public class Events implements Comparable<Events> {
 
     public void setPriorityInt(int priorityInt) { this.priorityInt = priorityInt; }
 
-    public boolean getAlarm() { return alarm; }
+    public String getWEATHER() {
+        return WEATHER;
+    }
 
-    public void setAlarm(boolean alarm) { this.alarm = alarm; }
+    public void setWEATHER(String WEATHER) {
+        this.WEATHER = WEATHER;
+    }
+
+    public String getTEMPERATURE() {
+        return TEMPERATURE;
+    }
+
+    public void setTEMPERATURE(String TEMPERATURE) {
+        this.TEMPERATURE = TEMPERATURE;
+    }
+
 
     @Override
     public int compareTo(Events event) {
