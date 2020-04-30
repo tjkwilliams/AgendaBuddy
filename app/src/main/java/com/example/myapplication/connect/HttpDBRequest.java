@@ -1,13 +1,19 @@
 package com.example.myapplication.connect;
 
 import com.example.myapplication.customcalendar.Events;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class HttpDBRequest {
 
@@ -15,7 +21,7 @@ public class HttpDBRequest {
         getAllCommunity();
     }
 
-    public static void postRequest(String php, String post){
+    public static JsonObject postRequest(String php, String post){
         try {
             URL url = new URL("http://18.233.165.117/agenda-buddy/" + php);
             String postData = post;
@@ -31,12 +37,13 @@ public class HttpDBRequest {
                 dos.writeBytes(postData);
             }
 
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-                String line;
-                while ((line = br.readLine()) != null) {
-                    System.out.println(line);
-                }
-            }
+            InputStream inputStream = conn.getInputStream(); //Read from a file, or a HttpRequest, or whatever
+            JsonParser jsonParser = new JsonParser();
+            JsonObject jsonObject = (JsonObject)jsonParser.parse(new InputStreamReader(inputStream, "UTF-8"));
+
+            JsonArray eventsArray = (JsonArray) jsonObject.get("events");
+
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,8 +69,9 @@ public class HttpDBRequest {
         addEvent(title, location, startTime, endTime, date.substring(0, 4), date.substring(5,7), date.substring(8,10), user);
     }
 
-    public static void getAllCommunity(){
+    public static List<Events> getAllCommunity(){
         postRequest("get_community_events.php","");
+
     }
 }
 
