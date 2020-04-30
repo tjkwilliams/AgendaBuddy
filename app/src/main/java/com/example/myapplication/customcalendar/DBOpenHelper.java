@@ -20,10 +20,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     /**
      * The SQL command to create the events table in String form
      */
-    private static final String CREATE_EVENTS_TABLE = "create table " + DBStructure.EVENT_TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+    private static final String CREATE_EVENTS_TABLE = "create table " + DBStructure.EVENT_TABLE_NAME + " (ID INTEGER UNIQUE, "
             + DBStructure.EVENT + " TEXT, " + DBStructure.START_TIME + " TEXT, " + DBStructure.END_TIME + " TEXT, " + DBStructure.DATE + " TEXT, " + DBStructure.MONTH + " TEXT, "
             + DBStructure.YEAR + " TEXT, "+DBStructure.PRIORITY + " TEXT, " + DBStructure.NOTES + " TEXT, " + DBStructure.Notify + " TEXT, " + DBStructure.EVENT_TYPE + " TEXT, "
-            + DBStructure.OUTSIDE + " TEXT, " + DBStructure.WEATHER + " TEXT, " + DBStructure.TEMPERATURE + " TEXT)";
+            + DBStructure.OUTSIDE + " TEXT, " + DBStructure.WEATHER + " TEXT, " + DBStructure.TEMPERATURE + " TEXT, " + "PRIMARY KEY(" + DBStructure.START_TIME + ", " + DBStructure.DATE + "))";
 
     /**
      * The SQL command to drop the table
@@ -84,7 +84,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         contentValues.put(DBStructure.OUTSIDE, outside);
         contentValues.put(DBStructure.WEATHER, weather);
         contentValues.put(DBStructure.TEMPERATURE, temperature);
-        database.insert(DBStructure.EVENT_TABLE_NAME, null, contentValues);
+        database.insertWithOnConflict(DBStructure.EVENT_TABLE_NAME, null, contentValues, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
     /**

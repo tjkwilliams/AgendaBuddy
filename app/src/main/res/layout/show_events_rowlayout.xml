@@ -74,7 +74,7 @@
                 android:id="@+id/eventname"
                 android:textStyle="bold"
                 android:text="Event"
-                android:textSize="35sp" />
+                android:textSize="25sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,7 +88,7 @@
                     android:gravity="center"
                     android:text="Start:"
                     android:textColor="@android:color/holo_blue_dark"
-                    android:textSize="20dp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -99,7 +99,7 @@
                     android:id="@+id/event_start_time"
                     android:textStyle="bold"
                     android:text="00:00 AM"
-                    android:textSize="20dp"
+                    android:textSize="15sp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"/>
 
@@ -110,7 +110,7 @@
                     android:textColor="@android:color/holo_blue_dark"
                     android:textStyle="bold"
                     android:text="End:"
-                    android:textSize="20dp"
+                    android:textSize="15sp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"/>
 
@@ -122,7 +122,7 @@
                     android:id="@+id/event_end_time"
                     android:textStyle="bold"
                     android:text="00:00 AM"
-                    android:textSize="20dp" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
 

@@ -31,7 +31,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.connect.AsyncResponse;
 import com.example.myapplication.connect.GetCommunityEventsAsync;
-import com.example.myapplication.connect.HttpDBRequest;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,6 +72,9 @@ public class CustomCalendarView extends LinearLayout implements AsyncResponse {
     Events eventToUpdate;
     int alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute;
 
+    // used to reference the calendar because the keyword "this" when used in "onClick Listener methods" references something else
+    CustomCalendarView reference;
+
     /* How this works (i think or at least how I understand it so far):
      * Basically SQLite has a local database and this instance variable acts sort of like a 'pointer'
      * To access the SQLite database, this variable is instantiated with a reference to the local files of the database
@@ -109,30 +111,29 @@ public class CustomCalendarView extends LinearLayout implements AsyncResponse {
         super(context, attrs);
         this.context = context;
         InitializeLayout();
+        //new GetCommunityEventsAsync(this).execute("athletic");
         SetUpCalendar();
 
         /* sync data upon user request*/
         syncButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //something that connects to the server
-                if(checkbox_email.isChecked()){
-                    Toast.makeText(context.getApplicationContext(),"email checked",Toast. LENGTH_SHORT);
-
+                if(checkbox_email.isChecked()) {
+                    // need to do something the same as below here
                 }
-                if(checkbox_email.isChecked()){
-
+                if(checkbox_ath.isChecked()) {
+                    new GetCommunityEventsAsync(reference).execute("athletic");
+                    SetUpCalendar();
+                    Toast.makeText(context.getApplicationContext(),"Sync Success!",Toast. LENGTH_SHORT).show();
                 }
-                if(checkbox_email.isChecked()){
-
+                if(checkbox_ac.isChecked()){
+                    // need to do something the same as above here
                 }
 
-                alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        SetUpCalendar();
-                    }
-                });
+                if(!checkbox_email.isChecked() && !checkbox_ac.isChecked() && !checkbox_ath.isChecked())
+                    Toast.makeText(context.getApplicationContext(),"Please check at least one checkbox",Toast. LENGTH_SHORT).show();
 
             }
         });
@@ -656,7 +657,7 @@ public class CustomCalendarView extends LinearLayout implements AsyncResponse {
         dbOpenHelper.SaveEvent(event, startTime, endTime, date, month, year, priority, notes, notify, eventType, outside, weather, temperature, database);
         dbOpenHelper.close();
 
-        new GetCommunityEventsAsync(this).execute("athletic");
+        //new GetCommunityEventsAsync(this).execute("athletic");
 
     }
 
@@ -727,6 +728,7 @@ public class CustomCalendarView extends LinearLayout implements AsyncResponse {
         checkbox_ath = view.findViewById(R.id.checkbox_ath);
         checkbox_ac  = view.findViewById(R.id.checkbox_ac);
         eventToUpdate = null;
+        reference = this;
     }
 
     /**
@@ -785,15 +787,18 @@ public class CustomCalendarView extends LinearLayout implements AsyncResponse {
             Events events = new Events(event, startTime, endTime, date, month, year, priority, notes, notify, eventType, outside, weather, temperature);
             eventsList.add(events);
         }
+
         cursor.close();
         dbOpenHelper.close();
+
     }
 
     @Override
     public void processFinish(Object output){
         this.dbEvents = (List<Events>) output;
+
         for (Events e:dbEvents) {
-            System.out.println(e.toString());
+            saveEvent(e.getEVENT(), e.getStartTIME(), e.getEndTIME(), e.getDATE(), e.getMONTH(), e.getYEAR(), e.getPRIORITY(), e.getNOTES(), e.getALARM(), e.getEventType(), e.getOUTSIDE(), e.getWEATHER(), e.getTEMPERATURE());
         }
     }
 }

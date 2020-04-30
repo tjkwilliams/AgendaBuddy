@@ -90,9 +90,9 @@ public class Events implements Comparable<Events> {
         this.YEAR = YEAR;
         this.eventType = eventType;
 
-        this.ALARM = "";
-        this.OUTSIDE = "";
-        this.PRIORITY = "med";
+        this.ALARM = "off";
+        this.OUTSIDE = "no";
+        this.PRIORITY = "low";
         this.TEMPERATURE = "";
         this.WEATHER = "";
     }
@@ -202,7 +202,7 @@ public class Events implements Comparable<Events> {
 
     @Override
     public String toString(){
-        return EVENT + getDATE() + getMONTH() + getYEAR();
+        return EVENT + " Date: " + getDATE() + " Month: " + getMONTH() + " Year: " + getYEAR();
     }
 
 }

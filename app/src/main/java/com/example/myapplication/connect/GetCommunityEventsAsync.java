@@ -65,9 +65,63 @@ public class GetCommunityEventsAsync extends AsyncTask<String,Void,List<Events>>
             JsonObject jObj;
             while (it.hasNext()){
                 jObj = (JsonObject) it.next();
+
+                String monthNum = jObj.get("month").getAsString();
+                if(Integer.parseInt(monthNum) < 10) {
+                    monthNum = "0" + monthNum;
+                }
+
+                String dayNum = jObj.get("day").getAsString();
+                if(Integer.parseInt(dayNum) < 10) {
+                    dayNum = "0" + dayNum;
+                }
+
+                String date = jObj.get("year").getAsString() + "-" + monthNum + "-" + dayNum;
+                String month;
+                switch (monthNum) {
+                    case("01"):
+                        month = "January";
+                        break;
+                    case("02"):
+                        month = "February";
+                        break;
+                    case("03"):
+                        month = "March";
+                        break;
+                    case("04"):
+                        month = "April";
+                        break;
+                    case("05"):
+                        month = "May";
+                        break;
+                    case("06"):
+                        month = "June";
+                        break;
+                    case("07"):
+                        month = "July";
+                        break;
+                    case("08"):
+                        month = "August";
+                        break;
+                    case("09"):
+                        month = "September";
+                        break;
+                    case("10"):
+                        month = "October";
+                        break;
+                    case("11"):
+                        month = "November";
+                        break;
+                    case("12"):
+                        month = "December";
+                        break;
+                    default:
+                        month = "";
+                        break;
+                }
                 events.add(new Events(jObj.get("title").getAsString(), jObj.get("start_time").getAsString(),
-                        jObj.get("end_time").getAsString(), jObj.get("day").getAsString(),
-                        jObj.get("month").getAsString(), jObj.get("year").getAsString(), type[0]));
+                        jObj.get("end_time").getAsString(), date,
+                        month, jObj.get("year").getAsString(), type[0]));
             }
 
             return events;
