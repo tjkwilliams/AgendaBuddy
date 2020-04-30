@@ -1,10 +1,7 @@
 package com.example.myapplication.connect;
 
 import com.example.myapplication.customcalendar.Events;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
+import com.google.gson.*;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -13,6 +10,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class HttpDBRequest {
@@ -42,11 +40,11 @@ public class HttpDBRequest {
             JsonObject jsonObject = (JsonObject)jsonParser.parse(new InputStreamReader(inputStream, "UTF-8"));
 
             JsonArray eventsArray = (JsonArray) jsonObject.get("events");
-
-
+            return jsonObject;
 
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -70,8 +68,18 @@ public class HttpDBRequest {
     }
 
     public static List<Events> getAllCommunity(){
-        postRequest("get_community_events.php","");
-
+        List<Events> events= new ArrayList<>();
+        JsonObject json = postRequest("get_community_events.php","");
+        JsonArray eventsArray = json.getAsJsonArray();
+        Iterator it = eventsArray.iterator();
+        JsonObject jObj;
+        while (it.hasNext()){
+            jObj = (JsonObject) it.next();
+            events.add(new Events(jObj.get("title").getAsString(), jObj.get("start_time").getAsString(),
+                    jObj.get("end_time").getAsString(), jObj.get("day").getAsString(),
+                    jObj.get("month").getAsString(), jObj.get("year").getAsString()));
+        }
+        return events;
     }
 }
 
