@@ -1,6 +1,7 @@
 package com.example.myapplication.page;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +20,9 @@ import com.example.myapplication.ui.account.Account;
 import com.example.myapplication.ui.account.AccountMaster;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
@@ -89,6 +92,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
     private GoogleApiClient gapi;
     private static final int SIGN_IN=1;
+    private SignInButton googleSignInButton;
 
     /**
      * Basically a constructor for an activity.
@@ -130,7 +134,8 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
         gapi = new GoogleApiClient.Builder(this).enableAutoManage(this,this).addApi(Auth.GOOGLE_SIGN_IN_API,signInOptions).build();
 
-
+        googleSignInButton = findViewById(R.id.googleSignInButton);
+        googleSignInButton.setOnClickListener(this);
 
     }
 
@@ -204,6 +209,15 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
         switch(v.getId()) {
 
+            case R.id.googleSignInButton:
+
+
+
+                Intent googleIntent = Auth.GoogleSignInApi.getSignInIntent(gapi);
+                startActivityForResult(googleIntent,SIGN_IN);
+
+                break;
+
             case R.id.loginButton:
 
                 if(consecutiveFailedAttempts > 8) {
@@ -237,10 +251,8 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
                         if(u.isEmpty() || u.equals("")) {
                             Toast.makeText(this, "Must enter username.", Toast.LENGTH_SHORT).show();
                             username.startAnimation(shake);
-                        } else {
-                            Toast.makeText(this, "There isn't an account associated with that username.", Toast.LENGTH_SHORT).show();
-                            username.startAnimation(shake);
                         }
+
                     } else if(p.equals("") || p.isEmpty()){
                         Toast.makeText(this, "Must enter password.", Toast.LENGTH_SHORT).show();
                         password.startAnimation(shake);
@@ -394,6 +406,27 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        //super.onActivityReenter();
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == SIGN_IN){
+            GoogleSignInResult results = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+
+            if(results.isSuccess()){
+                Toast.makeText(this,results.toString(), Toast.LENGTH_SHORT).show();
+
+
+                startActivity(new Intent(LoginPage.this, MainActivity.class));
+
+
+
+            } else {
+                //Toast.makeText(this,"Google Login Failed.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
