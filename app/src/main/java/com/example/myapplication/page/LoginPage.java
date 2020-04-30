@@ -3,8 +3,11 @@ package com.example.myapplication.page;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -19,11 +22,14 @@ import com.example.myapplication.customcalendar.MainActivity;
 import com.example.myapplication.ui.account.Account;
 import com.example.myapplication.ui.account.AccountMaster;
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -417,16 +423,13 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
             GoogleSignInResult results = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
 
             if(results.isSuccess()){
-                Toast.makeText(this,results.toString(), Toast.LENGTH_SHORT).show();
-
 
                 startActivity(new Intent(LoginPage.this, MainActivity.class));
-
-
 
             } else {
                 //Toast.makeText(this,"Google Login Failed.", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
 }
