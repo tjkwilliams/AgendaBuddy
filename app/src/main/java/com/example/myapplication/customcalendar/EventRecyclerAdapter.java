@@ -71,6 +71,9 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
         holder.end_TIME.setText(events.getEndTIME());
         holder.Priority.setText(events.getPRIORITY());
         holder.Notes.setText(events.getNOTES());
+        holder.eventType.setText(events.getEventType());
+        holder.Weather.setText(events.getWEATHER());
+        holder.Temperature.setText(events.getTEMPERATURE());
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +143,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         //TextView DateTxt, Event, start_TIME, end_TIME, Notes, Priority;
-        TextView start_TIME, end_TIME, DateTxt, Event, Notes, Priority;
+        TextView start_TIME, end_TIME, DateTxt, Event, Notes, Priority, eventType, Weather, Temperature;
         Button delete, select;
         ImageButton setAlarm;
 
@@ -155,6 +158,9 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
             delete = itemView.findViewById(R.id.delete);
             select = itemView.findViewById(R.id.selectEvent);
             setAlarm = itemView.findViewById(R.id.alarmMeBtn);
+            eventType = itemView.findViewById(R.id.event_type);
+            Weather = itemView.findViewById(R.id.weather);
+            Temperature = itemView.findViewById(R.id.temperature);
         }
     }
 

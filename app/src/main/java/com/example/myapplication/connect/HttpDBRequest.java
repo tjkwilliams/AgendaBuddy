@@ -1,50 +1,28 @@
 package com.example.myapplication.connect;
 
+import com.example.myapplication.customcalendar.Events;
+import com.google.gson.*;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class HttpDBRequest {
 
-    /**
-     * Get an event from the database
-     * (not sure how well this will work)
-     * @param eid
-     */
-    public static void getEvent(int eid){
-        try {
-            URL url = new URL("http://18.233.165.117/agenda-buddy/get_event_details.php");
-            String postData = "eid=" + eid;
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            conn.setRequestProperty("Content-Length", Integer.toString(postData.length()));
-            conn.setUseCaches(false);
-
-            try (DataOutputStream dos = new DataOutputStream(conn.getOutputStream())) {
-                dos.writeBytes(postData);
-            }
-
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-                String line;
-                while ((line = br.readLine()) != null) {
-                    System.out.println(line);
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args){
+        getAllCommunity();
     }
 
-    public static void getEventByUID(int uid){
+    public static JsonObject postRequest(String php, String post){
         try {
-            URL url = new URL("http://18.233.165.117/agenda-buddy/get_event_details.php");
-            String postData = "uid=" + uid;
+            URL url = new URL("http://18.233.165.117/agenda-buddy/" + php);
+            String postData = post;
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
@@ -57,15 +35,16 @@ public class HttpDBRequest {
                 dos.writeBytes(postData);
             }
 
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-                String line;
-                while ((line = br.readLine()) != null) {
-                    System.out.println(line);
-                }
-            }
+            InputStream inputStream = conn.getInputStream(); //Read from a file, or a HttpRequest, or whatever
+            JsonParser jsonParser = new JsonParser();
+            JsonObject jsonObject = (JsonObject)jsonParser.parse(new InputStreamReader(inputStream, "UTF-8"));
+
+            JsonArray eventsArray = (JsonArray) jsonObject.get("events");
+            return jsonObject;
 
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -80,64 +59,27 @@ public class HttpDBRequest {
      * @param month
      * @param day
      */
-    public static void addEvent(String title, String location, String startTime, String endTime, String year, String month, String day, String user){
-        try {
-            URL url = new URL("http://18.233.165.117/agenda-buddy/create_event.php");
-            String postData = String.format("title=%s&location=%s&start_time=%s&end_time=%s&year=%s&month=%s&day=%s$user=%s", title, location, endTime, startTime, year, month, day, user);
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            conn.setRequestProperty("Content-Length", Integer.toString(postData.length()));
-            conn.setUseCaches(false);
-
-            try (DataOutputStream dos = new DataOutputStream(conn.getOutputStream())) {
-                dos.writeBytes(postData);
-            }
-
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-                String line;
-                while ((line = br.readLine()) != null) {
-                    System.out.println(line);
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void addEvent(String title, String location, String startTime, String endTime, String year, String month, String day, String user) {
+        postRequest("create_event.php", String.format("title=%s&location=%s&start_time=%s&end_time=%s&year=%s&month=%s&day=%s$user=%s", title, location, endTime, startTime, year, month, day, user));
     }
 
     public static void addEvent(String title, String location, String startTime, String endTime, String date, String user){
         addEvent(title, location, startTime, endTime, date.substring(0, 4), date.substring(5,7), date.substring(8,10), user);
     }
 
-    public static void getAllCommunity(){
-        try {
-            URL url = new URL("http://18.233.165.117/agenda-buddy/create_event.php");
-            String postData = String.format("null");
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            conn.setRequestProperty("Content-Length", Integer.toString(postData.length()));
-            conn.setUseCaches(false);
-
-            try (DataOutputStream dos = new DataOutputStream(conn.getOutputStream())) {
-                dos.writeBytes(postData);
-            }
-
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-                String line;
-                while ((line = br.readLine()) != null) {
-                    System.out.println(line);
-                }
-            }
+    public static List<Events> getAllCommunity(){
+        List<Events> events= new ArrayList<>();
+        JsonObject json = postRequest("get_community_events.php","");
+        JsonArray eventsArray = json.getAsJsonArray();
+        Iterator it = eventsArray.iterator();
+        JsonObject jObj;
+        while (it.hasNext()){
+            jObj = (JsonObject) it.next();
+            events.add(new Events(jObj.get("title").getAsString(), jObj.get("start_time").getAsString(),
+                    jObj.get("end_time").getAsString(), jObj.get("day").getAsString(),
+                    jObj.get("month").getAsString(), jObj.get("year").getAsString()));
         }
-        catch(Exception e){
-            e.printStackTrace();
-        }
+        return events;
     }
 }
 
