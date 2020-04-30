@@ -74,7 +74,7 @@
                 android:id="@+id/eventname"
                 android:textStyle="bold"
                 android:text="Event"
-                android:textSize="30sp" />
+                android:textSize="35sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -138,7 +138,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:textStyle="bold"
                     android:text="Priority: "
-                    android:textSize="20dp"
+                    android:textSize="15sp"
                     android:layout_marginLeft="5dp"/>
 
                 <TextView
@@ -148,9 +148,30 @@
                     android:textColor="@android:color/black"
                     android:textStyle="bold"
                     android:text="N/A"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:layout_marginLeft="5dp"
                     android:id="@+id/event_priority" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textStyle="bold"
+                    android:text="Event Type:"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:text="other"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/event_type" />
 
             </LinearLayout>
 
@@ -164,7 +185,7 @@
                     android:layout_height="wrap_content"
                     android:text="Notes:"
                     android:textStyle="bold"
-                    android:textSize="20dp"
+                    android:textSize="15sp"
                     android:layout_marginLeft="5dp"
                     android:textColor="@android:color/holo_orange_dark"/>
 
@@ -175,8 +196,8 @@
                     android:textColor="@android:color/black"
                     android:id="@+id/event_notes"
                     android:text="No notes added"
-                    android:textSize="20sp"
-                    android:layout_marginLeft="24dp" />
+                    android:textSize="15sp"
+                    android:layout_marginLeft="19dp" />
 
             </LinearLayout>
 

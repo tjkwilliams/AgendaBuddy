@@ -197,10 +197,14 @@ public class CustomCalendarView extends LinearLayout {
 
                 final TextView eventStartTime = addView.findViewById(R.id.eventStartTime);
                 ImageButton setStartTime = addView.findViewById(R.id.setEventStartTime);
+
                 final CheckBox alarmMe = addView.findViewById(R.id.alarmMe);
+                final CheckBox isOutside = addView.findViewById(R.id.outside);
 
                 final TextView eventEndTime = addView.findViewById(R.id.eventEndTime);
                 ImageButton setEndTime = addView.findViewById(R.id.setEventEndTime);
+
+                final EditText eventType = addView.findViewById(R.id.eventType);
                 final EditText eventPriority = addView.findViewById(R.id.eventPriority);
 
                 final EditText eventNotes = addView.findViewById(R.id.eventNotes);
@@ -274,9 +278,14 @@ public class CustomCalendarView extends LinearLayout {
                     @Override
                     public void onClick(View v) {
 
+                        String Weather = "", Temperature = "";
+                        // UPDATE WEATHER AND TEMPERATURE HERE
+                        // format for Weather --> Rain/Snow/Sunny/Clear/etc but add a '-' at the end just to make it display nicer when listing events
+                        // format for Temperature --> "XX F"
+
                         /* check if the 'notify me' checkbox is checked or not --> basically check if user wants to be notified or not */
-                        if(alarmMe.isChecked()) {
-                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on");
+                        if(alarmMe.isChecked() && isOutside.isChecked()) {
+                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on", eventType.getText().toString(), "yes", Weather, Temperature);
                             Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
                             SetUpCalendar();
                             Calendar calendar = Calendar.getInstance();
@@ -284,8 +293,22 @@ public class CustomCalendarView extends LinearLayout {
                             setAlarm(calendar, eventName.getText().toString(), eventStartTime.getText().toString(), getRequestCode(date
                                 , eventName.getText().toString(), eventStartTime.getText().toString()));
                             alertDialog.dismiss();
+                        } else if(alarmMe.isChecked() && !isOutside.isChecked()) {
+                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on", eventType.getText().toString(), "no", Weather, Temperature);
+                            Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
+                            SetUpCalendar();
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.set(alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute);
+                            setAlarm(calendar, eventName.getText().toString(), eventStartTime.getText().toString(), getRequestCode(date
+                                    , eventName.getText().toString(), eventStartTime.getText().toString()));
+                            alertDialog.dismiss();
+                        } else if(!alarmMe.isChecked() && isOutside.isChecked()) {
+                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off", eventType.getText().toString(), "yes", Weather, Temperature);
+                            Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
+                            SetUpCalendar();
+                            alertDialog.dismiss();
                         } else {
-                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off");
+                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off", eventType.getText().toString(), "no", Weather, Temperature);
                             Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
                             SetUpCalendar();
                             alertDialog.dismiss();
@@ -352,10 +375,14 @@ public class CustomCalendarView extends LinearLayout {
 
                         final TextView eventStartTime = addView.findViewById(R.id.eventStartTime);
                         ImageButton setStartTime = addView.findViewById(R.id.setEventStartTime);
+
+                        final CheckBox isOutside = addView.findViewById(R.id.outside);
                         final CheckBox alarmMe = addView.findViewById(R.id.alarmMe);
 
                         final TextView eventEndTime = addView.findViewById(R.id.eventEndTime);
                         ImageButton setEndTime = addView.findViewById(R.id.setEventEndTime);
+
+                        final EditText eventType = addView.findViewById(R.id.eventType);
                         final EditText eventPriority = addView.findViewById(R.id.eventPriority);
 
                         final EditText eventNotes = addView.findViewById(R.id.eventNotes);
@@ -363,8 +390,11 @@ public class CustomCalendarView extends LinearLayout {
                         eventName.setText(eventToUpdate.getEVENT());
                         eventStartTime.setText(eventToUpdate.getStartTIME());
 
-                        if (eventToUpdate.getAlarm())
+                        if (eventToUpdate.getALARM().equalsIgnoreCase("on"))
                             alarmMe.setChecked(true);
+
+                        if(eventToUpdate.getOUTSIDE().equalsIgnoreCase("yes"))
+                            isOutside.setChecked(true);
 
                         eventEndTime.setText(eventToUpdate.getEndTIME());
                         eventPriority.setText(eventToUpdate.getPRIORITY());
@@ -441,9 +471,14 @@ public class CustomCalendarView extends LinearLayout {
                             @Override
                             public void onClick(View v) {
 
+                                String Weather = "", Temperature = "";
+                                // UPDATE WEATHER AND TEMPERATURE HERE
+                                // format for Weather --> Rain/Snow/Sunny/Clear/etc but add a '-' at the end just to make it display nicer when listing events
+                                // format for Temperature --> "XX F"
+
                                 /* check if the 'notify me' checkbox is checked or not --> basically check if user wants to be notified or not */
-                                if (alarmMe.isChecked()) {
-                                    ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on");
+                                if (alarmMe.isChecked() && isOutside.isChecked()) {
+                                    ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on", eventType.getText().toString(), "yes", Weather, Temperature);
                                     updateEvent(eventToUpdate, values);
                                     Toast.makeText(context, "Event Updated", Toast.LENGTH_SHORT).show();
                                     SetUpCalendar();
@@ -454,8 +489,28 @@ public class CustomCalendarView extends LinearLayout {
                                     selectedEvent.clear();
                                     eventToUpdate = null;
                                     alertDialog.dismiss();
+                                } else if(alarmMe.isChecked() && !isOutside.isChecked()) {
+                                    ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on", eventType.getText().toString(), "no", Weather, Temperature);
+                                    updateEvent(eventToUpdate, values);
+                                    Toast.makeText(context, "Event Updated", Toast.LENGTH_SHORT).show();
+                                    SetUpCalendar();
+                                    Calendar calendar = Calendar.getInstance();
+                                    calendar.set(alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute);
+                                    setAlarm(calendar, eventName.getText().toString(), eventStartTime.getText().toString(), getRequestCode(date
+                                            , eventName.getText().toString(), eventStartTime.getText().toString()));
+                                    selectedEvent.clear();
+                                    eventToUpdate = null;
+                                    alertDialog.dismiss();
+                                } else if(!alarmMe.isChecked() && isOutside.isChecked()) {
+                                    ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off", eventType.getText().toString(), "yes", Weather, Temperature);
+                                    updateEvent(eventToUpdate, values);
+                                    Toast.makeText(context, "Event Updated", Toast.LENGTH_SHORT).show();
+                                    SetUpCalendar();
+                                    selectedEvent.clear();
+                                    eventToUpdate = null;
+                                    alertDialog.dismiss();
                                 } else {
-                                    ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on");
+                                    ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off", eventType.getText().toString(), "no", Weather, Temperature);
                                     updateEvent(eventToUpdate, values);
                                     Toast.makeText(context, "Event Updated", Toast.LENGTH_SHORT).show();
                                     SetUpCalendar();
@@ -537,7 +592,12 @@ public class CustomCalendarView extends LinearLayout {
             String year = cursor.getString(cursor.getColumnIndex(DBStructure.YEAR));
             String priority = cursor.getString(cursor.getColumnIndex(DBStructure.PRIORITY));
             String notes = cursor.getString(cursor.getColumnIndex(DBStructure.NOTES));
-            Events events = new Events(event, startTime, endTime, Date, month, year, priority, notes);
+            String notify = cursor.getString(cursor.getColumnIndex(DBStructure.Notify));
+            String eventType = cursor.getString(cursor.getColumnIndex(DBStructure.EVENT_TYPE));
+            String outside = cursor.getString(cursor.getColumnIndex(DBStructure.OUTSIDE));
+            String weather = cursor.getString(cursor.getColumnIndex(DBStructure.WEATHER));
+            String temperature = cursor.getString(cursor.getColumnIndex(DBStructure.TEMPERATURE));
+            Events events = new Events(event, startTime, endTime, Date, month, year, priority, notes, notify, eventType, outside, weather, temperature);
             arrayList.add(events);
         }
         cursor.close();
@@ -560,10 +620,10 @@ public class CustomCalendarView extends LinearLayout {
      * @param priority
      * @param notes
      */
-    public void saveEvent(String event, String startTime, String endTime, String date, String month, String year, String priority, String notes, String notify) {
+    public void saveEvent(String event, String startTime, String endTime, String date, String month, String year, String priority, String notes, String notify, String eventType, String outside, String weather, String temperature) {
         dbOpenHelper = new DBOpenHelper(context);
         SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
-        dbOpenHelper.SaveEvent(event, startTime, endTime, date, month, year, priority, notes, notify, database);
+        dbOpenHelper.SaveEvent(event, startTime, endTime, date, month, year, priority, notes, notify, eventType, outside, weather, temperature, database);
         dbOpenHelper.close();
 
         HttpDBRequest.addEvent(event, "", startTime, endTime, year, month, date);
@@ -599,7 +659,7 @@ public class CustomCalendarView extends LinearLayout {
      * @param notify
      * @return
      */
-    private ContentValues getUpdateValues(String event, String startTime, String endTime, String date, String month, String year, String priority, String notes, String notify) {
+    private ContentValues getUpdateValues(String event, String startTime, String endTime, String date, String month, String year, String priority, String notes, String notify, String eventType, String outside, String weather, String temperature) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBStructure.EVENT, event);
         contentValues.put(DBStructure.START_TIME, startTime);
@@ -610,6 +670,10 @@ public class CustomCalendarView extends LinearLayout {
         contentValues.put(DBStructure.PRIORITY, priority);
         contentValues.put(DBStructure.NOTES, notes);
         contentValues.put(DBStructure.Notify, notify);
+        contentValues.put(DBStructure.EVENT_TYPE, eventType);
+        contentValues.put(DBStructure.OUTSIDE, outside);
+        contentValues.put(DBStructure.WEATHER, weather);
+        contentValues.put(DBStructure.TEMPERATURE, temperature);
         return contentValues;
     }
 
@@ -678,7 +742,12 @@ public class CustomCalendarView extends LinearLayout {
             String year = cursor.getString(cursor.getColumnIndex(DBStructure.YEAR));
             String priority = cursor.getString(cursor.getColumnIndex(DBStructure.PRIORITY));
             String notes = cursor.getString(cursor.getColumnIndex(DBStructure.NOTES));
-            Events events = new Events(event, startTime, endTime, date, month, year, priority, notes);
+            String notify = cursor.getString(cursor.getColumnIndex(DBStructure.Notify));
+            String eventType = cursor.getString(cursor.getColumnIndex(DBStructure.EVENT_TYPE));
+            String outside = cursor.getString(cursor.getColumnIndex(DBStructure.OUTSIDE));
+            String weather = cursor.getString(cursor.getColumnIndex(DBStructure.WEATHER));
+            String temperature = cursor.getString(cursor.getColumnIndex(DBStructure.TEMPERATURE));
+            Events events = new Events(event, startTime, endTime, date, month, year, priority, notes, notify, eventType, outside, weather, temperature);
             eventsList.add(events);
         }
         cursor.close();
