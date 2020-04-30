@@ -99,10 +99,10 @@
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:background="@android:color/white"
             android:hint="campus/academic/athletic/other"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:autofillHints=""
             android:gravity="center"
             android:id="@+id/eventType"
@@ -112,10 +112,10 @@
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:background="@android:color/white"
             android:hint="low/med/high"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:autofillHints=""
             android:gravity="center"
             android:id="@+id/eventPriority"
