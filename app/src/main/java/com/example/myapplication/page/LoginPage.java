@@ -1,5 +1,6 @@
 package com.example.myapplication.page;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,10 @@ import com.example.myapplication.R;
 import com.example.myapplication.customcalendar.MainActivity;
 import com.example.myapplication.ui.account.Account;
 import com.example.myapplication.ui.account.AccountMaster;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +31,7 @@ import java.util.HashMap;
  *
  * @author Timothy Williams
  */
-public class LoginPage extends AppCompatActivity implements View.OnClickListener{
+public class LoginPage extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
     /**
      * Username - The textfield that contains the username of the account that the user wants
@@ -78,6 +83,14 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
     private ArrayList<String> locked;
 
     /**
+     * Google sign in object.
+     */
+    private GoogleSignInOptions signInOptions;
+
+    private GoogleApiClient gapi;
+    private static final int SIGN_IN=1;
+
+    /**
      * Basically a constructor for an activity.
      *
      * @param savedInstanceState The apps instance of this activity.
@@ -112,6 +125,13 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
         succeeded = new HashMap<>();
         failed = new HashMap<>();
         locked = new ArrayList<>();
+
+        signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+
+        gapi = new GoogleApiClient.Builder(this).enableAutoManage(this,this).addApi(Auth.GOOGLE_SIGN_IN_API,signInOptions).build();
+
+
+
     }
 
     /**
@@ -370,5 +390,10 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
                 Toast.makeText(this, "Listener not set up yet for this button.", Toast.LENGTH_SHORT).show();
 
         }
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

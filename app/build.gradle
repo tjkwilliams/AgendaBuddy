@@ -61,4 +61,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
 
 
+    /* For google login */
+    implementation 'com.google.android.gms:play-services-auth:18.0.0'
+
 }
