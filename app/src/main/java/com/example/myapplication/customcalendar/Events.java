@@ -81,13 +81,14 @@ public class Events implements Comparable<Events> {
         this.TEMPERATURE = TEMPERATURE;
     }
 
-    public Events(String EVENT, String startTIME, String endTIME, String DATE, String MONTH, String YEAR){
+    public Events(String EVENT, String startTIME, String endTIME, String DATE, String MONTH, String YEAR, String eventType){
         this.EVENT = EVENT;
         this.startTIME = startTIME;
         this.endTIME = endTIME;
         this.DATE = DATE;
         this.MONTH = MONTH;
         this.YEAR = YEAR;
+        this.eventType = eventType;
 
         this.ALARM = "";
         this.OUTSIDE = "";
@@ -197,6 +198,11 @@ public class Events implements Comparable<Events> {
     @Override
     public int compareTo(Events event) {
         return priorityInt - event.priorityInt;
+    }
+
+    @Override
+    public String toString(){
+        return EVENT + getDATE() + getMONTH() + getYEAR();
     }
 
 }

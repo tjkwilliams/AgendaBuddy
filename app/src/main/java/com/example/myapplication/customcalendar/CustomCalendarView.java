@@ -29,6 +29,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.connect.AsyncResponse;
+import com.example.myapplication.connect.GetCommunityEventsAsync;
 import com.example.myapplication.connect.HttpDBRequest;
 
 import java.text.SimpleDateFormat;
@@ -45,7 +47,7 @@ import java.util.TimeZone;
  *
  * This class handles all user interaction/inputs in the main activity page where the calendar is located at
  */
-public class CustomCalendarView extends LinearLayout {
+public class CustomCalendarView extends LinearLayout implements AsyncResponse {
 
     Button priorityLow, priorityHigh, updateEvent, syncButton;
     CheckBox checkbox_email, checkbox_ath, checkbox_ac;
@@ -67,6 +69,7 @@ public class CustomCalendarView extends LinearLayout {
     List<Date> dates = new ArrayList<>();
     List<Events> eventsList = new ArrayList<>();
     List<Events> selectedEvent = new ArrayList<>();
+    List<Events> dbEvents = new ArrayList<>();
     Events eventToUpdate;
     int alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute;
 
@@ -653,7 +656,8 @@ public class CustomCalendarView extends LinearLayout {
         dbOpenHelper.SaveEvent(event, startTime, endTime, date, month, year, priority, notes, notify, eventType, outside, weather, temperature, database);
         dbOpenHelper.close();
 
-        //HttpDBRequest.addEvent(event, "", startTime, endTime, year, month, date, user);
+        new GetCommunityEventsAsync(this).execute("athletic");
+
     }
 
     /**
@@ -785,4 +789,11 @@ public class CustomCalendarView extends LinearLayout {
         dbOpenHelper.close();
     }
 
+    @Override
+    public void processFinish(Object output){
+        this.dbEvents = (List<Events>) output;
+        for (Events e:dbEvents) {
+            System.out.println(e.toString());
+        }
+    }
 }
