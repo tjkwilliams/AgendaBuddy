@@ -29,7 +29,7 @@ public class Weather extends CustomCalendarView {
     String temp = "70 F";
     String weatherDesc = "sunny -";
 
-    public Weather(Context context, String date) {
+    public Weather(Context context) {
         super(context);
         new weatherTask().execute();
     }
