@@ -81,6 +81,21 @@ public class Events implements Comparable<Events> {
         this.TEMPERATURE = TEMPERATURE;
     }
 
+    public Events(String EVENT, String startTIME, String endTIME, String DATE, String MONTH, String YEAR){
+        this.EVENT = EVENT;
+        this.startTIME = startTIME;
+        this.endTIME = endTIME;
+        this.DATE = DATE;
+        this.MONTH = MONTH;
+        this.YEAR = YEAR;
+
+        this.ALARM = "";
+        this.OUTSIDE = "";
+        this.PRIORITY = "med";
+        this.TEMPERATURE = "";
+        this.WEATHER = "";
+    }
+
     /**
      * Empty constructor to be used for parsing
      */
