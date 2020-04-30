@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.connect.HttpDBRequest;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -79,7 +80,7 @@ public class CustomCalendarView extends LinearLayout {
     DBOpenHelper dbOpenHelper;
 
     /**
-     * Constructor
+     * Constructor - necesary to link this activity to the Weather async task
      * @param context
      */
     public CustomCalendarView(Context context) {
@@ -498,11 +499,34 @@ public class CustomCalendarView extends LinearLayout {
                             @Override
                             public void onClick(View v) {
 
-                                String Weather = "", Temperature = "";
                                 // UPDATE WEATHER AND TEMPERATURE HERE
                                 // format for Weather --> Rain/Snow/Sunny/Clear/etc but add a '-' at the end just to make it display nicer when listing events
                                 // format for Temperature --> "XX F"
+                                String Weather = "test";
+                                String Temperature = "Test";
+                                Date curDate = Calendar.getInstance().getTime();
 
+                                //determine length until date
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+                                String strToDate = date.substring(8, 10) + "-" + date.substring(5,7) + "-" + year + " " + "00:00:00";
+                                Date eventDate = curDate;
+                                try {
+                                    eventDate = sdf.parse(strToDate);
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                                long diff = curDate.getTime() - eventDate.getTime();
+                                int diffDays = (int) (diff / (24 * 60 * 60 * 1000));
+                                if(diffDays > 5){
+                                    //can't get weather that far out
+                                    Weather = "Check back 5 days before event to see weather";
+                                    Temperature = "";
+                                }else{
+                                    //calculate weather and update
+                                    //Weather w = new Weather(context, date);
+                                    //String Weather = w.getDesc();
+                                    // String Temperature = w.getTemp();
+                                }
                                 /* check if the 'notify me' checkbox is checked or not --> basically check if user wants to be notified or not */
                                 if (alarmMe.isChecked() && isOutside.isChecked()) {
                                     ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on", eventType.getText().toString(), "yes", Weather, Temperature);
