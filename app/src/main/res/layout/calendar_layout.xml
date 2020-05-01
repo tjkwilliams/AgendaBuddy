@@ -125,7 +125,7 @@
     <GridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"
-        android:layout_height="379dp"
+        android:layout_height="363dp"
         android:numColumns="7">
 
     </GridView>
