@@ -1093,8 +1093,10 @@ public class CustomCalendarView extends LinearLayout implements AsyncResponse {
         dbOpenHelper.SaveEvent(event, startTime, endTime, date, month, year, priority, notes, notify, eventType, outside, weather, temperature, database);
         dbOpenHelper.close();
 
-        String[] eventData = {event, startTime, endTime, year, month, date, Account.email(), priority, notes, outside, notify, weather};
-        new AddEventAsync().execute();
+        if(Account.isActive()) {
+            String[] eventData = {event, startTime, endTime, year, month, date, Account.email(), priority, notes, outside, notify, weather};
+            new AddEventAsync().execute(eventData);
+        }
 
     }
 
