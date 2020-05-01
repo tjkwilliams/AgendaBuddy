@@ -108,10 +108,10 @@
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="25dp"
             android:background="@android:color/white"
             android:hint="low/med/high"
-            android:textSize="12sp"
+            android:textSize="15sp"
             android:autofillHints=""
             android:gravity="center"
             android:id="@+id/eventPriority"

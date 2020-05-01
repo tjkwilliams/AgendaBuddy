@@ -92,7 +92,7 @@ public class Events implements Comparable<Events> {
 
         this.ALARM = "off";
         this.OUTSIDE = "no";
-        this.PRIORITY = "low";
+        this.PRIORITY = "";
         this.TEMPERATURE = "";
         this.WEATHER = "";
     }

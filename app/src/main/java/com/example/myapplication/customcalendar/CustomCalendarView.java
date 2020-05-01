@@ -53,19 +53,19 @@ import java.util.TimeZone;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-    /**
-     * The Master Calendar
-     *
-     * This class handles all user interaction/inputs in the main activity page where the calendar is located at
-     */
-    public class CustomCalendarView extends LinearLayout implements AsyncResponse {
+/**
+ * The Master Calendar
+ *
+ * This class handles all user interaction/inputs in the main activity page where the calendar is located at
+ */
+public class CustomCalendarView extends LinearLayout implements AsyncResponse {
 
-        Button priorityLow, priorityHigh, updateEvent, syncButton;
-        Button campusBtn, athleticsBtn, academicsBtn, googleCalBtn;
-        CheckBox checkbox_email, checkbox_ath, checkbox_ac, checkbox_google;
-        ImageButton nextButton, previousButton;
-        TextView currentDate;
-        GridView gridView;
+    Button priorityLow, priorityHigh, updateEvent, syncButton;
+    Button campusBtn, athleticsBtn, academicsBtn, googleCalBtn;
+    CheckBox checkbox_email, checkbox_ath, checkbox_ac, checkbox_google;
+    ImageButton nextButton, previousButton;
+    TextView currentDate;
+    GridView gridView;
 
     /*For Weather*/
     String temp_forWeatherTask = "";
@@ -132,7 +132,6 @@ import java.util.concurrent.TimeUnit;
         super(context, attrs);
         this.context = context;
         InitializeLayout();
-        //new GetCommunityEventsAsync(this).execute("athletic");
         SetUpCalendar();
 
         /* sync data upon user request*/
@@ -144,9 +143,9 @@ import java.util.concurrent.TimeUnit;
                     try {
                         new GetCommunityEventsAsync(reference).execute("email");
                         SetUpCalendar();
-                        Toast.makeText(context.getApplicationContext(), "Sync Success!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context.getApplicationContext(), "Sync campus events success!", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
-                        Toast.makeText(context.getApplicationContext(), "Failed to Snyc!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context.getApplicationContext(), "Failed to Synchronize! " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -154,22 +153,31 @@ import java.util.concurrent.TimeUnit;
                     try {
                         new GetCommunityEventsAsync(reference).execute("athletic");
                         SetUpCalendar();
-                        Toast.makeText(context.getApplicationContext(), "Sync Success!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context.getApplicationContext(), "Sync athletic events success!", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
-                        Toast.makeText(context.getApplicationContext(), "Failed to Snyc!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context.getApplicationContext(), "Failed to Synchronize! " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
                 if(checkbox_ac.isChecked()){
                     try {
                         new GetCommunityEventsAsync(reference).execute("academic");
                         SetUpCalendar();
-                        Toast.makeText(context.getApplicationContext(), "Sync Success!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context.getApplicationContext(), "Sync academic events success!", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
-                        Toast.makeText(context.getApplicationContext(), "Failed to Snyc!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context.getApplicationContext(), "Failed to Synchronize! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                if(checkbox_google.isChecked()){
+                    try {
+                        new GetCommunityEventsAsync(reference).execute("google");
+                        SetUpCalendar();
+                        Toast.makeText(context.getApplicationContext(), "Sync google events success!", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(context.getApplicationContext(), "Failed to Synchronize! " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
-                if(!checkbox_email.isChecked() && !checkbox_ac.isChecked() && !checkbox_ath.isChecked())
+                if(!checkbox_email.isChecked() && !checkbox_ac.isChecked() && !checkbox_ath.isChecked() && !checkbox_google.isChecked())
                     Toast.makeText(context.getApplicationContext(),"Please check at least one checkbox",Toast. LENGTH_SHORT).show();
 
             }
@@ -219,6 +227,154 @@ import java.util.concurrent.TimeUnit;
                 recyclerView.setHasFixedSize(true);
                 Collections.sort(eventsList);
                 EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), (ArrayList<Events>) eventsList, (ArrayList<Events>) selectedEvent);
+                recyclerView.setAdapter(eventRecyclerAdapter);
+                eventRecyclerAdapter.notifyDataSetChanged();
+
+                builder.setView(showView);
+                alertDialog = builder.create();
+                alertDialog.show();
+
+                alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        SetUpCalendar();
+                    }
+                });
+
+            }
+        });
+
+        /* Displays a List of campus events */
+        campusBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setCancelable(true);
+                View showView = LayoutInflater.from(context).inflate(R.layout.show_events_layout, null);
+                RecyclerView recyclerView = showView.findViewById(R.id.eventsRV);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(showView.getContext());
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setHasFixedSize(true);
+
+                ArrayList<Events> emailEvents = new ArrayList<>();
+                for(Events e : eventsList) {
+                    if(e.getEventType().equalsIgnoreCase("email")) {
+                        emailEvents.add(e);
+                    }
+                }
+
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), emailEvents, (ArrayList<Events>) selectedEvent);
+                recyclerView.setAdapter(eventRecyclerAdapter);
+                eventRecyclerAdapter.notifyDataSetChanged();
+
+                builder.setView(showView);
+                alertDialog = builder.create();
+                alertDialog.show();
+
+                alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        SetUpCalendar();
+                    }
+                });
+
+            }
+        });
+
+        /* Displays a List of athletic events */
+        athleticsBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setCancelable(true);
+                View showView = LayoutInflater.from(context).inflate(R.layout.show_events_layout, null);
+                RecyclerView recyclerView = showView.findViewById(R.id.eventsRV);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(showView.getContext());
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setHasFixedSize(true);
+
+                ArrayList<Events> athleticEvents = new ArrayList<>();
+                for(Events e : eventsList) {
+                    if(e.getEventType().equalsIgnoreCase("athletic")) {
+                        athleticEvents.add(e);
+                    }
+                }
+
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), athleticEvents, (ArrayList<Events>) selectedEvent);
+                recyclerView.setAdapter(eventRecyclerAdapter);
+                eventRecyclerAdapter.notifyDataSetChanged();
+
+                builder.setView(showView);
+                alertDialog = builder.create();
+                alertDialog.show();
+
+                alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        SetUpCalendar();
+                    }
+                });
+
+            }
+        });
+
+        /* Displays a List of academic events */
+        academicsBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setCancelable(true);
+                View showView = LayoutInflater.from(context).inflate(R.layout.show_events_layout, null);
+                RecyclerView recyclerView = showView.findViewById(R.id.eventsRV);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(showView.getContext());
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setHasFixedSize(true);
+
+                ArrayList<Events> academicEvents = new ArrayList<>();
+                for(Events e : eventsList) {
+                    if(e.getEventType().equalsIgnoreCase("academic")) {
+                        academicEvents.add(e);
+                    }
+                }
+
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), academicEvents, (ArrayList<Events>) selectedEvent);
+                recyclerView.setAdapter(eventRecyclerAdapter);
+                eventRecyclerAdapter.notifyDataSetChanged();
+
+                builder.setView(showView);
+                alertDialog = builder.create();
+                alertDialog.show();
+
+                alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        SetUpCalendar();
+                    }
+                });
+
+            }
+        });
+
+        /* Displays a List of google events */
+        googleCalBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setCancelable(true);
+                View showView = LayoutInflater.from(context).inflate(R.layout.show_events_layout, null);
+                RecyclerView recyclerView = showView.findViewById(R.id.eventsRV);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(showView.getContext());
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setHasFixedSize(true);
+
+                ArrayList<Events> googleEvents = new ArrayList<>();
+                for(Events e : eventsList) {
+                    if(e.getEventType().equalsIgnoreCase("google") || e.getEventType().equalsIgnoreCase("personal")) {
+                        googleEvents.add(e);
+                    }
+                }
+
+                EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext(), googleEvents, (ArrayList<Events>) selectedEvent);
                 recyclerView.setAdapter(eventRecyclerAdapter);
                 eventRecyclerAdapter.notifyDataSetChanged();
 
@@ -344,10 +500,6 @@ import java.util.concurrent.TimeUnit;
                 addEvent.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String Weather = "";
-                        // UPDATE WEATHER AND TEMPERATURE HERE
-                        // format for Weather --> Rain/Snow/Sunny/Clear/etc but add a '-' at the end just to make it display nicer when listing events
-                        // format for Temperature --> "XX F"
 
                         /*Calculate the difference in days*/
                         Date curDate = Calendar.getInstance().getTime();
@@ -413,10 +565,10 @@ import java.util.concurrent.TimeUnit;
                             Calendar calendar = Calendar.getInstance();
                             calendar.set(alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute);
                             setAlarm(calendar, eventName.getText().toString(), eventStartTime.getText().toString(), getRequestCode(date
-                                , eventName.getText().toString(), eventStartTime.getText().toString()));
+                                    , eventName.getText().toString(), eventStartTime.getText().toString()));
                             alertDialog.dismiss();
                         } else if(alarmMe.isChecked() && !isOutside.isChecked()) {
-                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on", "personal", "no", "N/A", "");
+                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on", "personal", "no", desc_forWeatherTask, temp_forWeatherTask);
                             Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
                             SetUpCalendar();
                             Calendar calendar = Calendar.getInstance();
@@ -430,7 +582,7 @@ import java.util.concurrent.TimeUnit;
                             SetUpCalendar();
                             alertDialog.dismiss();
                         } else {
-                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off", "personal", "no","N/A", "");
+                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off", "personal", "no",desc_forWeatherTask, temp_forWeatherTask);
                             Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
                             SetUpCalendar();
                             alertDialog.dismiss();
@@ -591,10 +743,6 @@ import java.util.concurrent.TimeUnit;
                         addEvent.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                String Weather = "";
-                                // UPDATE WEATHER AND TEMPERATURE HERE
-                                // format for Weather --> Rain/Snow/Sunny/Clear/etc but add a '-' at the end just to make it display nicer when listing events
-                                // format for Temperature --> "XX F"
 
                                 /*Calculate the difference in days*/
                                 Date curDate = Calendar.getInstance().getTime();
@@ -659,7 +807,7 @@ import java.util.concurrent.TimeUnit;
                                     eventToUpdate = null;
                                     alertDialog.dismiss();
                                 } else if(alarmMe.isChecked() && !isOutside.isChecked()) {
-                                    ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on", "personal", "no", "N/A", "");
+                                    ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on", "personal", "no", desc_forWeatherTask, temp_forWeatherTask);
                                     updateEvent(eventToUpdate, values);
                                     Toast.makeText(context, "Event Updated", Toast.LENGTH_SHORT).show();
                                     SetUpCalendar();
@@ -679,7 +827,7 @@ import java.util.concurrent.TimeUnit;
                                     eventToUpdate = null;
                                     alertDialog.dismiss();
                                 } else {
-                                    ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off", "personal", "no", "N/A", "");
+                                    ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off", "personal", "no", desc_forWeatherTask, temp_forWeatherTask);
                                     updateEvent(eventToUpdate, values);
                                     Toast.makeText(context, "Event Updated", Toast.LENGTH_SHORT).show();
                                     SetUpCalendar();
@@ -732,7 +880,7 @@ import java.util.concurrent.TimeUnit;
                 //JSONObject main = jsonObj.getJSONObject("main");
                 //JSONObject sys = jsonObj.getJSONObject("sys");
                 //JSONObject wind = jsonObj.getJSONObject("wind");
-               //JSONObject weather = jsonObj.getJSONArray("weather").getJSONObject(0);
+                //JSONObject weather = jsonObj.getJSONArray("weather").getJSONObject(0);
                 Log.d("DAYS", "getting: "+NumDays);
                 JSONObject thisDay = jsonObj.getJSONArray("list").getJSONObject(NumDays);
                 JSONObject thisMain = thisDay.getJSONObject("main");
@@ -774,83 +922,83 @@ import java.util.concurrent.TimeUnit;
         }
     }
 
-        class weatherTemp extends AsyncTask<String, Void, String> {
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
+    class weatherTemp extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
 
-                /* Showing the ProgressBar, Making the main design GONE */
-                //findViewById(R.id.loader).setVisibility(View.VISIBLE);
-                //findViewById(R.id.mainContainer).setVisibility(View.GONE);
-                //findViewById(R.id.errorText).setVisibility(View.GONE);
-            }
-
-            protected String doInBackground(String... args) {
-                //String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?q=" + CITY + "&units=metric&appid=" + API);
-                //String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?id=" + ID + "&units=metric&appid=" + API);
-                String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/forecast?id=" + ID + "&units=metric&appid=" + API);
-                try {
-                    JSONObject jsonObj = new JSONObject(response);
-                    JSONObject thisDay = jsonObj.getJSONArray("list").getJSONObject(NumDays);
-                    JSONObject thisMain = thisDay.getJSONObject("main");
-                    JSONObject thisWeather = thisDay.getJSONArray("weather").getJSONObject(0);
-                    String temp2 = thisMain.getString("temp") + "°C";
-
-                    //JSONObject thisDay =jsonObj.getJSONArray("list").getJSONObject(NumDays);
-                    //JSONObject thisWeather =thisDay.getJSONArray("weather").getJSONObject(0);
-                    //JSONObject thisMain =jsonObj.getJSONObject("main");
-
-
-                    //String weatherDescription = weather.getString("description").toUpperCase();
-                    String temp3 =  thisWeather.getString("description").toUpperCase();
-                    temp_forWeatherTask = thisMain.getString("temp") + "°C";
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                return temp_forWeatherTask;
-            }
-
-
+            /* Showing the ProgressBar, Making the main design GONE */
+            //findViewById(R.id.loader).setVisibility(View.VISIBLE);
+            //findViewById(R.id.mainContainer).setVisibility(View.GONE);
+            //findViewById(R.id.errorText).setVisibility(View.GONE);
         }
 
-        class weatherDesc extends AsyncTask<String, Void, String> {
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
+        protected String doInBackground(String... args) {
+            //String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?q=" + CITY + "&units=metric&appid=" + API);
+            //String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?id=" + ID + "&units=metric&appid=" + API);
+            String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/forecast?id=" + ID + "&units=metric&appid=" + API);
+            try {
+                JSONObject jsonObj = new JSONObject(response);
+                JSONObject thisDay = jsonObj.getJSONArray("list").getJSONObject(NumDays);
+                JSONObject thisMain = thisDay.getJSONObject("main");
+                JSONObject thisWeather = thisDay.getJSONArray("weather").getJSONObject(0);
+                String temp2 = thisMain.getString("temp") + "°C";
 
-                /* Showing the ProgressBar, Making the main design GONE */
-                //findViewById(R.id.loader).setVisibility(View.VISIBLE);
-                //findViewById(R.id.mainContainer).setVisibility(View.GONE);
-                //findViewById(R.id.errorText).setVisibility(View.GONE);
+                //JSONObject thisDay =jsonObj.getJSONArray("list").getJSONObject(NumDays);
+                //JSONObject thisWeather =thisDay.getJSONArray("weather").getJSONObject(0);
+                //JSONObject thisMain =jsonObj.getJSONObject("main");
+
+
+                //String weatherDescription = weather.getString("description").toUpperCase();
+                String temp3 =  thisWeather.getString("description").toUpperCase();
+                temp_forWeatherTask = thisMain.getString("temp") + "°C";
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-
-            protected String doInBackground(String... args) {
-                //String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?q=" + CITY + "&units=metric&appid=" + API);
-                //String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?id=" + ID + "&units=metric&appid=" + API);
-                String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/forecast?id=" + ID + "&units=metric&appid=" + API);
-                try {
-                    JSONObject jsonObj = new JSONObject(response);
-                    JSONObject thisDay = jsonObj.getJSONArray("list").getJSONObject(NumDays);
-                    JSONObject thisMain = thisDay.getJSONObject("main");
-                    JSONObject thisWeather = thisDay.getJSONArray("weather").getJSONObject(0);
-                    String temp2 = thisMain.getString("temp") + "°C";
-
-                    //JSONObject thisDay =jsonObj.getJSONArray("list").getJSONObject(NumDays);
-                    //JSONObject thisWeather =thisDay.getJSONArray("weather").getJSONObject(0);
-                    //JSONObject thisMain =jsonObj.getJSONObject("main");
-
-
-                    //String weatherDescription = weather.getString("description").toUpperCase();
-                    String temp3 =  thisWeather.getString("description").toUpperCase();
-                    desc_forWeatherTask = thisWeather.getString("description").toUpperCase() + " - ";
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                return desc_forWeatherTask ;
-            }
-
-
+            return temp_forWeatherTask;
         }
+
+
+    }
+
+    class weatherDesc extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            /* Showing the ProgressBar, Making the main design GONE */
+            //findViewById(R.id.loader).setVisibility(View.VISIBLE);
+            //findViewById(R.id.mainContainer).setVisibility(View.GONE);
+            //findViewById(R.id.errorText).setVisibility(View.GONE);
+        }
+
+        protected String doInBackground(String... args) {
+            //String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?q=" + CITY + "&units=metric&appid=" + API);
+            //String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?id=" + ID + "&units=metric&appid=" + API);
+            String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/forecast?id=" + ID + "&units=metric&appid=" + API);
+            try {
+                JSONObject jsonObj = new JSONObject(response);
+                JSONObject thisDay = jsonObj.getJSONArray("list").getJSONObject(NumDays);
+                JSONObject thisMain = thisDay.getJSONObject("main");
+                JSONObject thisWeather = thisDay.getJSONArray("weather").getJSONObject(0);
+                String temp2 = thisMain.getString("temp") + "°C";
+
+                //JSONObject thisDay =jsonObj.getJSONArray("list").getJSONObject(NumDays);
+                //JSONObject thisWeather =thisDay.getJSONArray("weather").getJSONObject(0);
+                //JSONObject thisMain =jsonObj.getJSONObject("main");
+
+
+                //String weatherDescription = weather.getString("description").toUpperCase();
+                String temp3 =  thisWeather.getString("description").toUpperCase();
+                desc_forWeatherTask = thisWeather.getString("description").toUpperCase() + " - ";
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return desc_forWeatherTask ;
+        }
+
+
+    }
     /**
      * Something to do with setting up notifications
      *
@@ -926,7 +1074,7 @@ import java.util.concurrent.TimeUnit;
     }
 
     /**
-    * Helper method to Save event to SQLite database
+     * Helper method to Save event to SQLite database
      * It calls SaveEvent(...) method in DBOpenHelper.java
      *
      * @param event
@@ -946,7 +1094,6 @@ import java.util.concurrent.TimeUnit;
         dbOpenHelper.close();
 
         String[] eventData = {event, startTime, endTime, year, month, date, Account.email(), priority, notes, outside, notify, weather};
-        //new GetCommunityEventsAsync(this).execute("athletic");
         new AddEventAsync().execute();
 
     }
@@ -1093,9 +1240,13 @@ import java.util.concurrent.TimeUnit;
     public void processFinish(Object output){
         this.dbEvents = (List<Events>) output;
 
-        for (Events e:dbEvents) {
-            if(e != null)
-                saveEvent(e.getEVENT(), e.getStartTIME(), e.getEndTIME(), e.getDATE(), e.getMONTH(), e.getYEAR(), e.getPRIORITY(), e.getNOTES(), e.getALARM(), e.getEventType(), e.getOUTSIDE(), e.getWEATHER(), e.getTEMPERATURE());
+        try {
+            for (Events e : dbEvents) {
+                if (e != null)
+                    saveEvent(e.getEVENT(), e.getStartTIME(), e.getEndTIME(), e.getDATE(), e.getMONTH(), e.getYEAR(), e.getPRIORITY(), e.getNOTES(), e.getALARM(), e.getEventType(), e.getOUTSIDE(), e.getWEATHER(), e.getTEMPERATURE());
+            }
+        } catch (Exception e) {
+            Toast.makeText(context.getApplicationContext(), "Nothing to Snyc! " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 }
