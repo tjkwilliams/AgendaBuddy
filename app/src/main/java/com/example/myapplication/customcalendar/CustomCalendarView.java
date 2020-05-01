@@ -136,17 +136,33 @@ import java.util.concurrent.TimeUnit;
             @Override
             public void onClick(View v) {
 
-                //something that connects to the server
                 if(checkbox_email.isChecked()) {
-                    // need to do something the same as below here
+                    try {
+                        new GetCommunityEventsAsync(reference).execute("campus");
+                        SetUpCalendar();
+                        Toast.makeText(context.getApplicationContext(), "Sync Success!", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(context.getApplicationContext(), "Failed to Snyc!", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
                 if(checkbox_ath.isChecked()) {
-                    new GetCommunityEventsAsync(reference).execute("athletic");
-                    SetUpCalendar();
-                    Toast.makeText(context.getApplicationContext(),"Sync Success!",Toast. LENGTH_SHORT).show();
+                    try {
+                        new GetCommunityEventsAsync(reference).execute("athletic");
+                        SetUpCalendar();
+                        Toast.makeText(context.getApplicationContext(), "Sync Success!", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(context.getApplicationContext(), "Failed to Snyc!", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 if(checkbox_ac.isChecked()){
-                    // need to do something the same as above here
+                    try {
+                        new GetCommunityEventsAsync(reference).execute("academic");
+                        SetUpCalendar();
+                        Toast.makeText(context.getApplicationContext(), "Sync Success!", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(context.getApplicationContext(), "Failed to Snyc!", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 if(!checkbox_email.isChecked() && !checkbox_ac.isChecked() && !checkbox_ath.isChecked())
@@ -969,7 +985,8 @@ import java.util.concurrent.TimeUnit;
         this.dbEvents = (List<Events>) output;
 
         for (Events e:dbEvents) {
-            saveEvent(e.getEVENT(), e.getStartTIME(), e.getEndTIME(), e.getDATE(), e.getMONTH(), e.getYEAR(), e.getPRIORITY(), e.getNOTES(), e.getALARM(), e.getEventType(), e.getOUTSIDE(), e.getWEATHER(), e.getTEMPERATURE());
+            if(e != null)
+                saveEvent(e.getEVENT(), e.getStartTIME(), e.getEndTIME(), e.getDATE(), e.getMONTH(), e.getYEAR(), e.getPRIORITY(), e.getNOTES(), e.getALARM(), e.getEventType(), e.getOUTSIDE(), e.getWEATHER(), e.getTEMPERATURE());
         }
     }
 }
