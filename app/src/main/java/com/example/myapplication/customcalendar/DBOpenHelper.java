@@ -23,7 +23,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     private static final String CREATE_EVENTS_TABLE = "create table " + DBStructure.EVENT_TABLE_NAME + " (ID INTEGER UNIQUE, "
             + DBStructure.EVENT + " TEXT, " + DBStructure.START_TIME + " TEXT, " + DBStructure.END_TIME + " TEXT, " + DBStructure.DATE + " TEXT, " + DBStructure.MONTH + " TEXT, "
             + DBStructure.YEAR + " TEXT, "+DBStructure.PRIORITY + " TEXT, " + DBStructure.NOTES + " TEXT, " + DBStructure.Notify + " TEXT, " + DBStructure.EVENT_TYPE + " TEXT, "
-            + DBStructure.OUTSIDE + " TEXT, " + DBStructure.WEATHER + " TEXT, " + DBStructure.TEMPERATURE + " TEXT, " + "PRIMARY KEY(" + DBStructure.START_TIME + ", " + DBStructure.DATE + "))";
+            + DBStructure.OUTSIDE + " TEXT, " + DBStructure.WEATHER + " TEXT, " + DBStructure.TEMPERATURE + " TEXT, " + "PRIMARY KEY(" + DBStructure.EVENT + ", " + DBStructure.START_TIME + "))";
 
     /**
      * The SQL command to drop the table

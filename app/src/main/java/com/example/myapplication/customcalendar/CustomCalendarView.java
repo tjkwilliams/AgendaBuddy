@@ -58,7 +58,8 @@ import java.util.concurrent.TimeUnit;
     public class CustomCalendarView extends LinearLayout implements AsyncResponse {
 
         Button priorityLow, priorityHigh, updateEvent, syncButton;
-        CheckBox checkbox_email, checkbox_ath, checkbox_ac;
+        Button campusBtn, athleticsBtn, academicsBtn, googleCalBtn;
+        CheckBox checkbox_email, checkbox_ath, checkbox_ac, checkbox_google;
         ImageButton nextButton, previousButton;
         TextView currentDate;
         GridView gridView;
@@ -398,7 +399,7 @@ import java.util.concurrent.TimeUnit;
                                 , eventName.getText().toString(), eventStartTime.getText().toString()));
                             alertDialog.dismiss();
                         } else if(alarmMe.isChecked() && !isOutside.isChecked()) {
-                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on", "personal", "no", "No forecast for indoor events", "");
+                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on", "personal", "no", "N/A", "");
                             Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
                             SetUpCalendar();
                             Calendar calendar = Calendar.getInstance();
@@ -412,7 +413,7 @@ import java.util.concurrent.TimeUnit;
                             SetUpCalendar();
                             alertDialog.dismiss();
                         } else {
-                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off", "personal", "no","No forecast for indoor events", "");
+                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off", "personal", "no","N/A", "");
                             Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
                             SetUpCalendar();
                             alertDialog.dismiss();
@@ -632,7 +633,7 @@ import java.util.concurrent.TimeUnit;
                                     eventToUpdate = null;
                                     alertDialog.dismiss();
                                 } else if(alarmMe.isChecked() && !isOutside.isChecked()) {
-                                    ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on", "personal", "no", "No forecast for indoor events", "");
+                                    ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on", "personal", "no", "N/A", "");
                                     updateEvent(eventToUpdate, values);
                                     Toast.makeText(context, "Event Updated", Toast.LENGTH_SHORT).show();
                                     SetUpCalendar();
@@ -652,7 +653,7 @@ import java.util.concurrent.TimeUnit;
                                     eventToUpdate = null;
                                     alertDialog.dismiss();
                                 } else {
-                                    ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off", "personal", "no", "No forecast for indoor events", "");
+                                    ContentValues values = getUpdateValues(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off", "personal", "no", "N/A", "");
                                     updateEvent(eventToUpdate, values);
                                     Toast.makeText(context, "Event Updated", Toast.LENGTH_SHORT).show();
                                     SetUpCalendar();
@@ -912,6 +913,12 @@ import java.util.concurrent.TimeUnit;
         checkbox_email = view.findViewById(R.id.checkbox_email);
         checkbox_ath = view.findViewById(R.id.checkbox_ath);
         checkbox_ac  = view.findViewById(R.id.checkbox_ac);
+        checkbox_google = view.findViewById(R.id.checkbox_google);
+        campusBtn = view.findViewById(R.id.campusBtn);
+        athleticsBtn = view.findViewById(R.id.athleticsBtn);
+        academicsBtn = view.findViewById(R.id.academicsBtn);
+        googleCalBtn = view.findViewById(R.id.googleBtn);
+
         eventToUpdate = null;
         reference = this;
     }
