@@ -50,18 +50,18 @@ import java.util.TimeZone;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-/**
- * The Master Calendar
- *
- * This class handles all user interaction/inputs in the main activity page where the calendar is located at
- */
-public class CustomCalendarView extends LinearLayout implements AsyncResponse {
+    /**
+     * The Master Calendar
+     *
+     * This class handles all user interaction/inputs in the main activity page where the calendar is located at
+     */
+    public class CustomCalendarView extends LinearLayout implements AsyncResponse {
 
-    Button priorityLow, priorityHigh, updateEvent, syncButton;
-    CheckBox checkbox_email, checkbox_ath, checkbox_ac;
-    ImageButton nextButton, previousButton;
-    TextView currentDate;
-    GridView gridView;
+        Button priorityLow, priorityHigh, updateEvent, syncButton;
+        CheckBox checkbox_email, checkbox_ath, checkbox_ac;
+        ImageButton nextButton, previousButton;
+        TextView currentDate;
+        GridView gridView;
 
     /*For Weather*/
     String temp_forWeatherTask = "";
@@ -69,6 +69,7 @@ public class CustomCalendarView extends LinearLayout implements AsyncResponse {
     String API = "22679e0129e892d323227914093f8217";
     String ID = "4887398";
     int NumDays=0;
+    boolean updated=false;
 
     private static final int MAX_CALENDAR_DAYS = 42;
     Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
@@ -355,13 +356,18 @@ public class CustomCalendarView extends LinearLayout implements AsyncResponse {
                             desc_forWeatherTask = "Too Early - Check back 5 days before event";
                             temp_forWeatherTask ="";
                         }else{
-                            try {
-                                String str_result = new weatherTask().execute().get(); //update value for desc_forWeatherTask
-                            } catch (ExecutionException e) {
-                                e.printStackTrace();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                            updated = false;
+                            new weatherTask().execute(); //update value for desc_forWeatherTask
+                            /*
+                            while(!updated){
+                                try {
+                                    TimeUnit.SECONDS.sleep(1);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                             }
+
+                             */
 
 
                         }
@@ -584,12 +590,18 @@ public class CustomCalendarView extends LinearLayout implements AsyncResponse {
                                     desc_forWeatherTask = "Too Early - Check back 5 days before event";
                                     temp_forWeatherTask ="";
                                 }else{
+                                    updated = false;
                                     new weatherTask().execute(); //update value for desc_forWeatherTask
-                                    try {
-                                        Thread.sleep(50);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
+                                    /*
+                                    while(!updated){
+                                        try {
+                                            TimeUnit.SECONDS.sleep(1);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
+                                    
+                                     */
 
                                 }
                                 /* check if the 'notify me' checkbox is checked or not --> basically check if user wants to be notified or not */
@@ -697,6 +709,7 @@ public class CustomCalendarView extends LinearLayout implements AsyncResponse {
 
                 desc_forWeatherTask = thisWeather.getString("description").toUpperCase();
 
+                updated = true;
 
                 /* Populating extracted data into our views */
 
@@ -711,6 +724,8 @@ public class CustomCalendarView extends LinearLayout implements AsyncResponse {
             } catch (JSONException e) {
                 temp_forWeatherTask="error";
                 desc_forWeatherTask="error";
+                updated = true;
+
                 //findViewById(R.id.loader).setVisibility(View.GONE);
                 //findViewById(R.id.errorText).setVisibility(View.VISIBLE);
             }
