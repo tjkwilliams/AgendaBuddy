@@ -209,7 +209,6 @@
             android:id="@+id/checkbox_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onCheckboxClicked"
             android:text="campus email"
             android:textSize="12sp"/>
 
@@ -217,14 +216,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="athletics"
-            android:onClick="onCheckboxClicked"
             android:textSize="12sp"/>
 
         <CheckBox android:id="@+id/checkbox_ac"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="academics"
-            android:onClick="onCheckboxClicked"
             android:textSize="12sp"/>
 
     </LinearLayout>
