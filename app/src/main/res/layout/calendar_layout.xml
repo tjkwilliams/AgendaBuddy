@@ -130,19 +130,18 @@
 
     </GridView>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="List events by:"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_marginLeft="5dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="List events:"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="5dp"/>
 
         <Button
             android:id="@+id/priorityHigh"
@@ -172,6 +171,59 @@
         android:orientation="horizontal" >
 
         <Button
+            android:id="@+id/campusBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Campus Events"
+            android:textAllCaps="false"
+            android:layout_gravity="center"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/athleticsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Athletics Events"
+            android:textAllCaps="false"
+            android:layout_gravity="center"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/academicsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Academics Events"
+            android:textAllCaps="false"
+            android:layout_gravity="center"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/googleBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Google Calendar"
+            android:textAllCaps="false"
+            android:layout_gravity="center"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_margin="5dp"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
             android:id="@+id/syncButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -192,18 +244,18 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sync options:"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_marginLeft="5dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sync options:"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:layout_marginLeft="5dp"/>
 
         <CheckBox
             android:id="@+id/checkbox_email"
@@ -222,6 +274,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="academics"
+            android:textSize="12sp"/>
+
+        <CheckBox android:id="@+id/checkbox_google"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="google_cal"
             android:textSize="12sp"/>
 
     </LinearLayout>
