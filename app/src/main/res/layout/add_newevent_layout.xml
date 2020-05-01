@@ -97,18 +97,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:background="@android:color/white"
-            android:hint="campus/academic/athletic/other"
-            android:textSize="12sp"
-            android:autofillHints=""
-            android:gravity="center"
-            android:id="@+id/eventType"
-            android:layout_weight="1"
-            android:inputType="text"
-            android:layout_marginLeft="10dp" />
+            android:layout_height="wrap_content"
+            android:text="Enter Priority Level: "
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.1"
+            android:textColor="@android:color/black"/>
 
         <EditText
             android:layout_width="wrap_content"
@@ -122,7 +118,8 @@
             android:layout_weight="1"
             android:inputType="text"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:maxLength="20"/>
 
 
     </LinearLayout>
@@ -137,7 +134,8 @@
         android:id="@+id/eventNotes"
         android:layout_margin="10dp"
         android:gravity="start"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:maxLength="300"/>
     
     <Button
         android:layout_width="wrap_content"
