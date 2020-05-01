@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,6 +46,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -61,10 +63,11 @@ public class CustomCalendarView extends LinearLayout {
     GridView gridView;
 
     /*For Weather*/
-    String temp_forWeatherTask = "default";
+    String temp_forWeatherTask = "";
     String desc_forWeatherTask = "default";
     String API = "22679e0129e892d323227914093f8217";
     String ID = "4887398";
+    int NumDays=0;
 
     private static final int MAX_CALENDAR_DAYS = 42;
     Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
@@ -317,15 +320,51 @@ public class CustomCalendarView extends LinearLayout {
                 addEvent.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        String Weather = "", Temperature = "";
+                        String Weather = "";
                         // UPDATE WEATHER AND TEMPERATURE HERE
                         // format for Weather --> Rain/Snow/Sunny/Clear/etc but add a '-' at the end just to make it display nicer when listing events
                         // format for Temperature --> "XX F"
 
+                        /*Calculate the difference in days*/
+                        Date curDate = Calendar.getInstance().getTime();
+                        Date eventDate;
+                        try {
+                            eventDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+                        } catch (ParseException e) {
+                            eventDate = null;
+                        }
+                        //determine length until date
+                        long diff = eventDate.getTime() - curDate.getTime(); //gets time in milliseconds
+                        int days = (int)TimeUnit.MILLISECONDS.toDays(diff);
+                        NumDays = days;
+                        String toTest = Integer.toString(days);
+                        Log.d("DAYS", date);
+                        Log.d("DAYS", toTest);
+
+                        /*Determine if we can get the weather*/
+                        if(eventDate == null){
+                            desc_forWeatherTask = "Error, couldn't get weather";
+                            temp_forWeatherTask ="";
+
+                        }else if(days > 5){
+                            //can't get weather that far out
+                            desc_forWeatherTask = "Too Early - Check back 5 days before event";
+                            temp_forWeatherTask ="";
+                        }else{
+                            try {
+                                String str_result = new weatherTask().execute().get(); //update value for desc_forWeatherTask
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+
                         /* check if the 'notify me' checkbox is checked or not --> basically check if user wants to be notified or not */
                         if(alarmMe.isChecked() && isOutside.isChecked()) {
-                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on", eventType.getText().toString(), "yes", Weather, Temperature);
+                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on", eventType.getText().toString(), "yes", desc_forWeatherTask, temp_forWeatherTask);
                             Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
                             SetUpCalendar();
                             Calendar calendar = Calendar.getInstance();
@@ -334,7 +373,7 @@ public class CustomCalendarView extends LinearLayout {
                                 , eventName.getText().toString(), eventStartTime.getText().toString()));
                             alertDialog.dismiss();
                         } else if(alarmMe.isChecked() && !isOutside.isChecked()) {
-                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on", eventType.getText().toString(), "no", Weather, Temperature);
+                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "on", eventType.getText().toString(), "no", "No forecast for indoor events", "");
                             Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
                             SetUpCalendar();
                             Calendar calendar = Calendar.getInstance();
@@ -343,12 +382,12 @@ public class CustomCalendarView extends LinearLayout {
                                     , eventName.getText().toString(), eventStartTime.getText().toString()));
                             alertDialog.dismiss();
                         } else if(!alarmMe.isChecked() && isOutside.isChecked()) {
-                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off", eventType.getText().toString(), "yes", Weather, Temperature);
+                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off", eventType.getText().toString(), "yes", desc_forWeatherTask, temp_forWeatherTask);
                             Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
                             SetUpCalendar();
                             alertDialog.dismiss();
                         } else {
-                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off", eventType.getText().toString(), "no", Weather, Temperature);
+                            saveEvent(eventName.getText().toString(), eventStartTime.getText().toString(), eventEndTime.getText().toString(), date, month, year, eventPriority.getText().toString(), eventNotes.getText().toString(), "off", eventType.getText().toString(), "no","No forecast for indoor events", "");
                             Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
                             SetUpCalendar();
                             alertDialog.dismiss();
@@ -515,6 +554,7 @@ public class CustomCalendarView extends LinearLayout {
                                 // format for Weather --> Rain/Snow/Sunny/Clear/etc but add a '-' at the end just to make it display nicer when listing events
                                 // format for Temperature --> "XX F"
 
+                                /*Calculate the difference in days*/
                                 Date curDate = Calendar.getInstance().getTime();
                                 Date eventDate;
                                 try {
@@ -524,21 +564,29 @@ public class CustomCalendarView extends LinearLayout {
                                 }
                                 //determine length until date
                                 long diff = eventDate.getTime() - curDate.getTime(); //gets time in milliseconds
-                                int diffDays = (int) (diff / (24 * 60 * 60 * 1000) ); //divides time by millisecs to det days
-                                long days = TimeUnit.MILLISECONDS.toDays(diff);
+                                int days = (int)TimeUnit.MILLISECONDS.toDays(diff);
+                                NumDays = days;
+                                String toTest = Integer.toString(days);
+                                Log.d("DAYS", date);
+                                Log.d("DAYS", toTest);
+
+                                /*Determine if we can get the weather*/
                                 if(eventDate == null){
-                                    Weather = "Error, couldn't get weather";
+                                    desc_forWeatherTask = "Error, couldn't get weather";
+                                    temp_forWeatherTask ="";
+
                                 }else if(days > 5){
                                     //can't get weather that far out
-                                    Weather = "Too Early - Check back 5 days before event";
+                                    desc_forWeatherTask = "Too Early - Check back 5 days before event";
+                                    temp_forWeatherTask ="";
                                 }else{
-                                    new weatherTask().execute();
-                                    //calculate weather and update
-                                   // new GetWeather.execute();
+                                    new weatherTask().execute(); //update value for desc_forWeatherTask
+                                    try {
+                                        Thread.sleep(50);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
 
-                                    //Weather w = new Weather(context);
-                                    //Weather = w.getDesc();
-                                    //Temperature = w.getTemp();
                                 }
                                 /* check if the 'notify me' checkbox is checked or not --> basically check if user wants to be notified or not */
                                 if (alarmMe.isChecked() && isOutside.isChecked()) {
@@ -612,7 +660,8 @@ public class CustomCalendarView extends LinearLayout {
 
         protected String doInBackground(String... args) {
             //String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?q=" + CITY + "&units=metric&appid=" + API);
-            String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?id=" + ID + "&units=metric&appid=" + API);
+            //String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?id=" + ID + "&units=metric&appid=" + API);
+            String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/forecast?id=" + ID + "&units=metric&appid=" + API);
 
             return response;
         }
@@ -623,16 +672,26 @@ public class CustomCalendarView extends LinearLayout {
 
             try {
                 JSONObject jsonObj = new JSONObject(result);
-                JSONObject main = jsonObj.getJSONObject("main");
-                JSONObject sys = jsonObj.getJSONObject("sys");
-                JSONObject wind = jsonObj.getJSONObject("wind");
-                JSONObject weather = jsonObj.getJSONArray("weather").getJSONObject(0);
+                //JSONObject main = jsonObj.getJSONObject("main");
+                //JSONObject sys = jsonObj.getJSONObject("sys");
+                //JSONObject wind = jsonObj.getJSONObject("wind");
+               //JSONObject weather = jsonObj.getJSONArray("weather").getJSONObject(0);
+                Log.d("DAYS", "getting: "+NumDays);
+                JSONObject thisDay = jsonObj.getJSONArray("list").getJSONObject(NumDays);
+                JSONObject thisMain = thisDay.getJSONObject("main");
+                JSONObject thisWeather = thisDay.getJSONArray("weather").getJSONObject(0);
+                String temp2 = thisMain.getString("temp") + "°C";
 
-                temp_forWeatherTask = main.getString("temp") + "°C";
+                //JSONObject thisDay =jsonObj.getJSONArray("list").getJSONObject(NumDays);
+                //JSONObject thisWeather =thisDay.getJSONArray("weather").getJSONObject(0);
+                //JSONObject thisMain =jsonObj.getJSONObject("main");
 
-                String weatherDescription = weather.getString("description");
 
-                desc_forWeatherTask = jsonObj.getString("name") + ", " + sys.getString("country");
+                temp_forWeatherTask = thisMain.getString("temp") + "°C";
+
+                //String weatherDescription = weather.getString("description").toUpperCase();
+
+                desc_forWeatherTask = thisWeather.getString("description").toUpperCase();
 
 
                 /* Populating extracted data into our views */
