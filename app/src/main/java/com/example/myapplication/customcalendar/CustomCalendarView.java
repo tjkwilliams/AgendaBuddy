@@ -142,7 +142,7 @@ import java.util.concurrent.TimeUnit;
 
                 if(checkbox_email.isChecked()) {
                     try {
-                        new GetCommunityEventsAsync(reference).execute("campus");
+                        new GetCommunityEventsAsync(reference).execute("email");
                         SetUpCalendar();
                         Toast.makeText(context.getApplicationContext(), "Sync Success!", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
