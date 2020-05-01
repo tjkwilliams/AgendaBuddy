@@ -244,18 +244,18 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sync options:"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"
-        android:layout_marginLeft="5dp"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sync options:"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:layout_marginLeft="5dp"/>
 
         <CheckBox
             android:id="@+id/checkbox_email"
