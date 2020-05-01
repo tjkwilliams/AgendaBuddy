@@ -6,6 +6,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
+import com.example.myapplication.connect.CreateUserAsync;
+import com.example.myapplication.connect.GetCommunityEventsAsync;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 /**
@@ -43,6 +45,21 @@ public class MainActivity extends AppCompatActivity {
 
             if(!s.equals(""))
                 Toast.makeText(this, s,Toast.LENGTH_SHORT).show();
+
+             try {
+
+                 String googleUserEmail = Account.email();
+
+                 if (googleUserEmail != null && !googleUserEmail.isEmpty()){
+                     Toast.makeText(this, "Email worked!!!",Toast.LENGTH_SHORT).show();
+                     new CreateUserAsync().execute(Account.email());
+
+                  } else
+                     Toast.makeText(this, "No email.",Toast.LENGTH_SHORT).show();
+
+             } catch(Exception e) {
+                 Toast.makeText(this, "Error instantiating email in DB.", Toast.LENGTH_SHORT).show();
+             }
 
         } else {
             Toast.makeText(this, "Account activation failure.",Toast.LENGTH_SHORT).show();

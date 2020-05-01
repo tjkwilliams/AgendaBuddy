@@ -373,7 +373,21 @@ import java.util.concurrent.TimeUnit;
                             temp_forWeatherTask ="";
                         }else{
                             updated = false;
-                            new weatherTask().execute(); //update value for desc_forWeatherTask
+                            try {
+                                new weatherTemp().execute().get(); //update value for desc_forWeatherTask
+                                new weatherDesc().execute().get();
+
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                             /*
                             while(!updated){
                                 try {
@@ -606,7 +620,16 @@ import java.util.concurrent.TimeUnit;
                                     temp_forWeatherTask ="";
                                 }else{
                                     updated = false;
-                                    new weatherTask().execute(); //update value for desc_forWeatherTask
+                                    try {
+                                        new weatherTemp().execute().get(); //update value for desc_forWeatherTask
+                                        new weatherDesc().execute().get();
+                                    } catch (ExecutionException e) {
+                                        e.printStackTrace();
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    //new weatherTask().execute(); //update value for desc_forWeatherTask
+
                                     /*
                                     while(!updated){
                                         try {
@@ -615,7 +638,7 @@ import java.util.concurrent.TimeUnit;
                                             e.printStackTrace();
                                         }
                                     }
-                                    
+
                                      */
 
                                 }
@@ -748,7 +771,83 @@ import java.util.concurrent.TimeUnit;
         }
     }
 
+        class weatherTemp extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
 
+                /* Showing the ProgressBar, Making the main design GONE */
+                //findViewById(R.id.loader).setVisibility(View.VISIBLE);
+                //findViewById(R.id.mainContainer).setVisibility(View.GONE);
+                //findViewById(R.id.errorText).setVisibility(View.GONE);
+            }
+
+            protected String doInBackground(String... args) {
+                //String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?q=" + CITY + "&units=metric&appid=" + API);
+                //String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?id=" + ID + "&units=metric&appid=" + API);
+                String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/forecast?id=" + ID + "&units=metric&appid=" + API);
+                try {
+                    JSONObject jsonObj = new JSONObject(response);
+                    JSONObject thisDay = jsonObj.getJSONArray("list").getJSONObject(NumDays);
+                    JSONObject thisMain = thisDay.getJSONObject("main");
+                    JSONObject thisWeather = thisDay.getJSONArray("weather").getJSONObject(0);
+                    String temp2 = thisMain.getString("temp") + "°C";
+
+                    //JSONObject thisDay =jsonObj.getJSONArray("list").getJSONObject(NumDays);
+                    //JSONObject thisWeather =thisDay.getJSONArray("weather").getJSONObject(0);
+                    //JSONObject thisMain =jsonObj.getJSONObject("main");
+
+
+                    //String weatherDescription = weather.getString("description").toUpperCase();
+                    String temp3 =  thisWeather.getString("description").toUpperCase();
+                    temp_forWeatherTask = thisMain.getString("temp") + "°C";
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return temp_forWeatherTask;
+            }
+
+
+        }
+
+        class weatherDesc extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+                /* Showing the ProgressBar, Making the main design GONE */
+                //findViewById(R.id.loader).setVisibility(View.VISIBLE);
+                //findViewById(R.id.mainContainer).setVisibility(View.GONE);
+                //findViewById(R.id.errorText).setVisibility(View.GONE);
+            }
+
+            protected String doInBackground(String... args) {
+                //String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?q=" + CITY + "&units=metric&appid=" + API);
+                //String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?id=" + ID + "&units=metric&appid=" + API);
+                String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/forecast?id=" + ID + "&units=metric&appid=" + API);
+                try {
+                    JSONObject jsonObj = new JSONObject(response);
+                    JSONObject thisDay = jsonObj.getJSONArray("list").getJSONObject(NumDays);
+                    JSONObject thisMain = thisDay.getJSONObject("main");
+                    JSONObject thisWeather = thisDay.getJSONArray("weather").getJSONObject(0);
+                    String temp2 = thisMain.getString("temp") + "°C";
+
+                    //JSONObject thisDay =jsonObj.getJSONArray("list").getJSONObject(NumDays);
+                    //JSONObject thisWeather =thisDay.getJSONArray("weather").getJSONObject(0);
+                    //JSONObject thisMain =jsonObj.getJSONObject("main");
+
+
+                    //String weatherDescription = weather.getString("description").toUpperCase();
+                    String temp3 =  thisWeather.getString("description").toUpperCase();
+                    desc_forWeatherTask = thisWeather.getString("description").toUpperCase() + " - ";
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return desc_forWeatherTask ;
+            }
+
+
+        }
     /**
      * Something to do with setting up notifications
      *

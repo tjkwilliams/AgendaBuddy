@@ -20,12 +20,10 @@ public class Account {
     public static String username, personGivenName, personFamilyName, email, personId;
     private static Uri personPhoto;
     private static GoogleSignInAccount acct;
-    private static DBOpenHelper dbOpenHelper;
     GoogleSignInAccount account;
 
     public static void initializeAccount(Activity activity, Context context){
 
-        dbOpenHelper = new DBOpenHelper(context);
 
         acct = GoogleSignIn.getLastSignedInAccount(activity);
         if (acct != null) {
