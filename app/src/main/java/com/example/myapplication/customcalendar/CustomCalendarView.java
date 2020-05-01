@@ -32,8 +32,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.androdocs.httprequest.HttpRequest;
 import com.example.myapplication.R;
+import com.example.myapplication.connect.AddEventAsync;
 import com.example.myapplication.connect.AsyncResponse;
 import com.example.myapplication.connect.GetCommunityEventsAsync;
+
+import com.example.myapplication.customcalendar.Account;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -942,7 +945,9 @@ import java.util.concurrent.TimeUnit;
         dbOpenHelper.SaveEvent(event, startTime, endTime, date, month, year, priority, notes, notify, eventType, outside, weather, temperature, database);
         dbOpenHelper.close();
 
+        String[] eventData = {event, startTime, endTime, year, month, date, Account.email(), priority, notes, outside, notify, weather};
         //new GetCommunityEventsAsync(this).execute("athletic");
+        new AddEventAsync().execute();
 
     }
 
