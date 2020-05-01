@@ -62,7 +62,7 @@ public class CustomCalendarView extends LinearLayout implements AsyncResponse {
 
     Button priorityLow, priorityHigh, updateEvent, syncButton;
     Button campusBtn, athleticsBtn, academicsBtn, googleCalBtn;
-    CheckBox checkbox_email, checkbox_ath, checkbox_ac, checkbox_google;
+    CheckBox checkbox_email, checkbox_ath, checkbox_ac;
     ImageButton nextButton, previousButton;
     TextView currentDate;
     GridView gridView;
@@ -147,7 +147,6 @@ public class CustomCalendarView extends LinearLayout implements AsyncResponse {
                     } catch (Exception e) {
                         Toast.makeText(context.getApplicationContext(), "Failed to Synchronize! " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-
                 }
                 if(checkbox_ath.isChecked()) {
                     try {
@@ -167,17 +166,8 @@ public class CustomCalendarView extends LinearLayout implements AsyncResponse {
                         Toast.makeText(context.getApplicationContext(), "Failed to Synchronize! " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
-                if(checkbox_google.isChecked()){
-                    try {
-                        new GetCommunityEventsAsync(reference).execute("google");
-                        SetUpCalendar();
-                        Toast.makeText(context.getApplicationContext(), "Sync google events success!", Toast.LENGTH_SHORT).show();
-                    } catch (Exception e) {
-                        Toast.makeText(context.getApplicationContext(), "Failed to Synchronize! " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
 
-                if(!checkbox_email.isChecked() && !checkbox_ac.isChecked() && !checkbox_ath.isChecked() && !checkbox_google.isChecked())
+                if(!checkbox_email.isChecked() && !checkbox_ac.isChecked() && !checkbox_ath.isChecked())
                     Toast.makeText(context.getApplicationContext(),"Please check at least one checkbox",Toast. LENGTH_SHORT).show();
 
             }
@@ -369,7 +359,7 @@ public class CustomCalendarView extends LinearLayout implements AsyncResponse {
 
                 ArrayList<Events> googleEvents = new ArrayList<>();
                 for(Events e : eventsList) {
-                    if(e.getEventType().equalsIgnoreCase("google") || e.getEventType().equalsIgnoreCase("personal")) {
+                    if(e.getEventType().equalsIgnoreCase("personal")) {
                         googleEvents.add(e);
                     }
                 }
@@ -1166,7 +1156,6 @@ public class CustomCalendarView extends LinearLayout implements AsyncResponse {
         checkbox_email = view.findViewById(R.id.checkbox_email);
         checkbox_ath = view.findViewById(R.id.checkbox_ath);
         checkbox_ac  = view.findViewById(R.id.checkbox_ac);
-        checkbox_google = view.findViewById(R.id.checkbox_google);
         campusBtn = view.findViewById(R.id.campusBtn);
         athleticsBtn = view.findViewById(R.id.athleticsBtn);
         academicsBtn = view.findViewById(R.id.academicsBtn);

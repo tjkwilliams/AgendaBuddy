@@ -123,9 +123,9 @@
     </LinearLayout>
 
     <GridView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="379dp"
         android:numColumns="7">
 
     </GridView>
@@ -151,7 +151,7 @@
             android:textAllCaps="false"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/priorityLow"
@@ -204,7 +204,7 @@
             android:id="@+id/googleBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Google and Personal"
+            android:text="Personal Events"
             android:textAllCaps="false"
             android:layout_gravity="center"
             android:layout_marginLeft="3dp"
@@ -274,12 +274,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="academics"
-            android:textSize="12sp"/>
-
-        <CheckBox android:id="@+id/checkbox_google"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="google_cal"
             android:textSize="12sp"/>
 
     </LinearLayout>
