@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:textColor="@android:color/holo_purple"
+                android:textColor="@android:color/holo_red_light"
                 android:id="@+id/eventDate"
                 android:textStyle="bold"
                 android:text="0000-00-00"
@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorPrimary"
                 android:id="@+id/eventname"
                 android:textStyle="bold"
                 android:text="Event"
@@ -51,42 +51,42 @@
                     android:layout_marginLeft="5dp"
                     android:gravity="center"
                     android:text="Start:"
-                    android:textColor="@android:color/holo_blue_dark"
+                    android:textColor="@android:color/holo_orange_dark"
                     android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:layout_weight="0.01"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start"
-                    android:textColor="@android:color/holo_green_dark"
+                    android:textColor="@android:color/holo_red_light"
                     android:id="@+id/event_start_time"
-                    android:textStyle="bold"
                     android:text="00:00 AM"
                     android:textSize="15sp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"/>
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0.1"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@android:color/holo_blue_dark"
-                    android:textStyle="bold"
+                    android:textColor="@android:color/holo_orange_dark"
                     android:text="End:"
                     android:textSize="15sp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"/>
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0.01"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start"
-                    android:textColor="@android:color/holo_green_dark"
+                    android:textColor="@android:color/holo_red_light"
                     android:id="@+id/event_end_time"
-                    android:textStyle="bold"
                     android:text="00:00 AM"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:layout_weight="0.1"/>
 
             </LinearLayout>
 
@@ -100,42 +100,42 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="@android:color/holo_orange_dark"
-                    android:textStyle="bold"
                     android:text="Priority: "
                     android:textSize="15sp"
-                    android:layout_marginLeft="5dp"/>
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="0.01"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:textColor="@android:color/black"
-                    android:textStyle="bold"
                     android:text="N/A"
                     android:textSize="15sp"
                     android:layout_marginLeft="5dp"
-                    android:id="@+id/event_priority" />
+                    android:id="@+id/event_priority"
+                    android:layout_weight="0.1"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="@android:color/holo_orange_dark"
-                    android:textStyle="bold"
                     android:text="Event Type:"
                     android:textSize="15sp"
-                    android:layout_marginLeft="20dp" />
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="0.01"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:textColor="@android:color/black"
-                    android:textStyle="bold"
                     android:text="other"
                     android:textSize="15sp"
                     android:layout_marginLeft="5dp"
-                    android:id="@+id/event_type" />
+                    android:id="@+id/event_type"
+                    android:layout_weight="0.1"/>
 
             </LinearLayout>
 
@@ -148,7 +148,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Notes:"
-                    android:textStyle="bold"
                     android:textSize="15sp"
                     android:layout_marginLeft="5dp"
                     android:textColor="@android:color/holo_orange_dark"/>
@@ -174,7 +173,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/holo_orange_dark"
                     android:text="Forecast:"
                     android:textSize="15sp"
                     android:layout_marginLeft="5dp"/>
@@ -183,7 +182,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/holo_red_light"
                     android:text="weather - "
                     android:textSize="15sp"
                     android:id="@+id/weather"
@@ -193,7 +192,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/holo_red_light"
                     android:text="00 F"
                     android:textSize="15sp"
                     android:id="@+id/temperature"
@@ -225,7 +224,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:src="@drawable/ic_action_notification_off"
-                    android:background="@color/colorAccent"/>
+                    android:background="@color/colorPrimaryDark"/>
 
                 <Button
                     android:layout_width="wrap_content"

@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#B66600">
+    android:background="@color/colorAccent">
 
     <EditText
         android:layout_width="match_parent"
