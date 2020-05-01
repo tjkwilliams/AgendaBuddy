@@ -19,8 +19,7 @@ public class AddEventAsync extends AsyncTask<String, Void, Integer>{
         try {
             String urlText = "http://18.233.165.117/agenda-buddy/create_event.php";
             URL url = new URL(urlText);
-            String postData = String.format("title=%s&location=%s&start_time=%s&end_time=%s&year=%s&month=%s&day=%s$user_email=%s",
-                    params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7]);
+            String postData = String.format("title=%s&start_time=%s&end_time=%s&year=%s&month=%s&day=%s&user_email=%s&priority=%s&notes=%s&outside=%s&notify=%s&weather=%s", params);
 
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
