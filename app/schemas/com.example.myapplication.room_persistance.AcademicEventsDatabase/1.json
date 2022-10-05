@@ -1,0 +1,118 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "3fcd8fc5c61cbc3959cfb0a3ad5bb46b",
+    "entities": [
+      {
+        "tableName": "Events",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `EVENT` TEXT, `startTIME` TEXT, `endTIME` TEXT, `DATE` TEXT, `MONTH` TEXT, `YEAR` TEXT, `PRIORITY` TEXT, `NOTES` TEXT, `ALARM` TEXT, `eventType` TEXT, `OUTSIDE` TEXT, `WEATHER` TEXT, `TEMPERATURE` TEXT, `priorityInt` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "EVENT",
+            "columnName": "EVENT",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "startTIME",
+            "columnName": "startTIME",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "endTIME",
+            "columnName": "endTIME",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "DATE",
+            "columnName": "DATE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "MONTH",
+            "columnName": "MONTH",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "YEAR",
+            "columnName": "YEAR",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "PRIORITY",
+            "columnName": "PRIORITY",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "NOTES",
+            "columnName": "NOTES",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ALARM",
+            "columnName": "ALARM",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "eventType",
+            "columnName": "eventType",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "OUTSIDE",
+            "columnName": "OUTSIDE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "WEATHER",
+            "columnName": "WEATHER",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "TEMPERATURE",
+            "columnName": "TEMPERATURE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "priorityInt",
+            "columnName": "priorityInt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3fcd8fc5c61cbc3959cfb0a3ad5bb46b')"
+    ]
+  }
+}

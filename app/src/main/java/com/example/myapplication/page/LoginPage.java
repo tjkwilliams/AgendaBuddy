@@ -217,8 +217,6 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
             case R.id.googleSignInButton:
 
-
-
                 Intent googleIntent = Auth.GoogleSignInApi.getSignInIntent(gapi);
                 startActivityForResult(googleIntent,SIGN_IN);
 
